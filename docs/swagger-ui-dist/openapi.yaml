@@ -1,0 +1,235 @@
+openapi: '3.0.0'
+info:
+  title: I-Connect v2
+  version: 0.0.0
+servers:
+  - url: http://localhost:4567
+    description: Local development
+security:
+  - OAuth2: []
+paths:
+  /api/students/{username}:  # TODO: Prefix api for paths, but not OAuth? (See below)
+    get:
+      tags:
+        - students
+      summary: Get student information for mobile app
+      operationId: getStudentData
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema: # TODO: Put this into components as needed
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  username:
+                    type: string
+                  first_name:
+                    type: string
+                  middle_name:
+                    type: string
+                    nullable: true
+                  last_name:
+                    type: string
+                  birthdate:
+                    type: string
+                  gender_id:
+                    type: integer
+                  mentor_id:
+                    type: integer
+                    nullable: true
+                  created_at:
+                    type: string
+                    nullable: true
+                  updated_at:
+                    type: string
+                    nullable: true
+                  full_name:
+                    type: string
+                  monitoring_location_assignments:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        student_id:
+                          type: integer
+                        monitoring_location_id:
+                          type: integer
+                        label:
+                          type: string
+                        created_at:
+                          type: string
+                        updated_at:
+                          type: string
+                        monitoring_location:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            category_id:
+                              type: integer
+                            name:
+                              type: string
+                            created_at:
+                              type: string
+                            updated_at:
+                              type: string
+                            category:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                name:
+                                  type: string
+                                created_at:
+                                  type: string
+                                updated_at:
+                                  type: string
+                            citizenship_value_assignments:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  id:
+                                    type: integer
+                                  monitoring_location_assignment_id:
+                                    type: integer
+                                  citizenship_value_id:
+                                    type: integer
+                                  alert_interval_in_seconds:
+                                    type: integer
+                                  alert_interval_varies:
+                                    type: boolean
+                                  custom_phrasing:
+                                    type: string
+                                    nullable: true
+                                  goal_percentage:
+                                    type: integer
+                                  created_at:
+                                    type: string
+                                  updated_at:
+                                    type: string
+                                  citizenship_value:
+                                    type: object
+                                    properties:
+                                      id:
+                                        type: integer
+                                      type_id:
+                                        type: integer
+                                      phrasing:
+                                        type: string
+                                      created_at:
+                                        type: string
+                                      updated_at:
+                                        type: string
+                                      type:  # Domain model type, not to be confused with OpenAPI schema type (see next)
+                                        type: object
+                                        properties:
+                                          id:
+                                            type: integer
+                                          name:
+                                            type: string
+                                          created_at:
+                                            type: string
+                                          updated_at:
+                                            type: string
+        # TODO: Error responses
+  /api/monitoring_sessions:  # TODO: Prefix api for paths, but not OAuth? (See below)
+    post:
+      tags:
+        - monitoringSessions
+      summary: Save monitoring session
+      operationId: newMonitoringSession
+      requestBody:
+        description: 'Timestamps must be specified using this format `YYYY-MM-DD HH:MM:SS` **and are expected to be in UTC**.'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewMonitoringSession'
+      responses:
+        '201':
+          description: Resource successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrievedMonitoringSession'
+        '403':
+          description: Authorization failed trying to add a session to the specified location assignment
+        '422':
+          description: Validation failed (e.g. missing required fields, invalid dates, mismatched location assignment and citizenship value assignments)
+components:
+  schemas:
+    # TODO: Revisit schema naming scheme!
+
+    # TODO: Reconcile weird diffs with new response vs. fetched response
+    NewMonitoringSessionResponse:
+      type: object
+      properties:
+        citizenship_value_assignment_id:
+          type: integer
+        response:
+          type: string
+        responded_at:
+          type: string
+    RetrievedMonitoringSessionResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        session_id:
+          type: integer
+        citizenship_value_assignment_id:
+          type: integer
+        response_id:
+          type: integer
+        responded_at:
+          type: string
+
+    BasicMonitoringSession:
+      type: object
+      properties:
+        started_at:
+          type: string
+        ended_at:
+          type: string
+    NewMonitoringSession:
+      allOf:
+        - $ref: '#/components/schemas/BasicMonitoringSession'
+        - type: object
+          properties:
+            monitoring_location_assignment_id:
+              type: integer
+            responses:
+              type: array
+              minItems: 1
+              items:
+                $ref: '#/components/schemas/NewMonitoringSessionResponse'
+    RetrievedMonitoringSession:
+      allOf:
+        - $ref: '#/components/schemas/BasicMonitoringSession'
+        - type: object
+          properties:
+            id:
+              type: integer
+            responses:
+              type: array
+              items:
+                $ref: '#/components/schemas/RetrievedMonitoringSessionResponse'
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: http://localhost:4567/oauth/token  # TODO: Prefix api for paths, but not OAuth? (See above)
+          scopes: {}

@@ -1,0 +1,39 @@
+
+// Bootstrap
+// TODO: If we start using Bootstrap 4, we can start using bootstrap with built-in SASS
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+// Bootstrap datepicker
+// Note that bootstrap-datepicker v1 doesn't provide any SASS, so we can't readily mix anything in
+// See also [Including SCSS file for sass-bootstrap v3](https://github.com/uxsolutions/bootstrap-datepicker/pull/1042)
+// See also [Bootstrap 4 support](https://github.com/uxsolutions/bootstrap-datepicker/issues/1574)
+// See also [Release 2.0.0](https://github.com/uxsolutions/bootstrap-datepicker/issues/2034)
+// TODO: If we start using Bootstrap 4, we can start using bootstrap with built-in SASS
+@import "../../../node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css";
+
+// Adding top/bottom padding to grid content so that wrapped rows are properly spaced
+@media (min-width: $screen-md-min) {
+    // TODO: Make sure this applies to relevant column widths in use (or generate all using Bootstrap's mixins)
+    .col-md-4, .col-md-12 {
+        $verticalGutter : ($grid-gutter-width / 2);
+        padding-top     : $verticalGutter;
+        padding-bottom  : $verticalGutter;
+    }
+}
+
+// "Top" nav items in a panel
+.panel-body nav:first-child {
+    margin-bottom: 1em;
+}
+
+.footer {
+    height     : 60px;
+    margin-top : 20px;
+    padding    : 20px;
+    border-top : 1px solid #e7e7e7;
+}
+
+// First options that are disabled are considered “placeholder” options and will not be displayed
+select > option:first-child[disabled] {
+    display: none;
+}

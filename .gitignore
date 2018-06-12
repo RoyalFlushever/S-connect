@@ -1,0 +1,23 @@
+# Vagrant VM
+/.vagrant
+
+# Vendor files
+/vendor
+/node_modules
+
+/public/storage
+
+# Passport OAuth keys
+/storage/*.key
+
+# Dot env files
+.env
+
+# OS X Files
+.DS_Store
+
+# Testing files
+/database/testing.sqlite
+
+# JetBrains project files
+/.idea
