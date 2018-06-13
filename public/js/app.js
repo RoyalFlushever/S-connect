@@ -1,6 +1,7 @@
 webpackJsonp([1],[
 /* 0 */,
-/* 1 */
+/* 1 */,
+/* 2 */
 /***/ (function(module, exports) {
 
 /* globals __VUE_SSR_CONTEXT__ */
@@ -109,7 +110,6 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
-/* 2 */,
 /* 3 */,
 /* 4 */,
 /* 5 */,
@@ -135,12 +135,12 @@ module.exports = __webpack_require__(27);
 
 window.$ = __webpack_provided_window_dot_jQuery = __webpack_require__(0);
 
-__webpack_require__(3);
-
-// TODO: Import this only where needed (e.g. in a component)
 __webpack_require__(4);
 
-window.Vue = __webpack_require__(5);
+// TODO: Import this only where needed (e.g. in a component)
+__webpack_require__(5);
+
+window.Vue = __webpack_require__(6);
 
 Vue.component('citizenship-value-fields', __webpack_require__(14));
 Vue.component('dual-list', __webpack_require__(17));
@@ -160,13 +160,13 @@ app = new Vue({
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(15)
 /* template */
 var __vue_template__ = __webpack_require__(16)
 /* template functional */
-  var __vue_template_functional__ = false
+var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = null
 /* scopeId */
@@ -182,7 +182,6 @@ var Component = normalizeComponent(
   __vue_module_identifier__
 )
 Component.options.__file = "resources/assets/js/components/CitizenshipValueFields.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
 if (false) {(function () {
@@ -191,10 +190,10 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-5397e1ff", Component.options)
+    hotAPI.createRecord("data-v-1a8d4186", Component.options)
   } else {
-    hotAPI.reload("data-v-5397e1ff", Component.options)
-' + '  }
+    hotAPI.reload("data-v-1a8d4186", Component.options)
+  }
   module.hot.dispose(function (data) {
     disposed = true
   })
@@ -1416,7 +1415,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-5397e1ff", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-1a8d4186", module.exports)
   }
 }
 
@@ -1425,13 +1424,13 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(18)
 /* template */
 var __vue_template__ = __webpack_require__(19)
 /* template functional */
-  var __vue_template_functional__ = false
+var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = null
 /* scopeId */
@@ -1447,7 +1446,6 @@ var Component = normalizeComponent(
   __vue_module_identifier__
 )
 Component.options.__file = "resources/assets/js/components/DualList.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
 if (false) {(function () {
@@ -1456,10 +1454,10 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-7aaaa9b3", Component.options)
+    hotAPI.createRecord("data-v-68310b71", Component.options)
   } else {
-    hotAPI.reload("data-v-7aaaa9b3", Component.options)
-' + '  }
+    hotAPI.reload("data-v-68310b71", Component.options)
+  }
   module.hot.dispose(function (data) {
     disposed = true
   })
@@ -1834,7 +1832,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-7aaaa9b3", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-68310b71", module.exports)
   }
 }
 
@@ -1843,13 +1841,13 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(21)
 /* template */
 var __vue_template__ = __webpack_require__(26)
 /* template functional */
-  var __vue_template_functional__ = false
+var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = null
 /* scopeId */
@@ -1865,7 +1863,6 @@ var Component = normalizeComponent(
   __vue_module_identifier__
 )
 Component.options.__file = "resources/assets/js/components/RegistrationAuthFields.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
 if (false) {(function () {
@@ -1874,10 +1871,10 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-6a0e38d3", Component.options)
+    hotAPI.createRecord("data-v-092fb611", Component.options)
   } else {
-    hotAPI.reload("data-v-6a0e38d3", Component.options)
-' + '  }
+    hotAPI.reload("data-v-092fb611", Component.options)
+  }
   module.hot.dispose(function (data) {
     disposed = true
   })
@@ -2095,7 +2092,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-6a0e38d3", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-092fb611", module.exports)
   }
 }
 
