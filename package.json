@@ -19,6 +19,12 @@
     "zxcvbn": "^4.4.2"
   },
   "dependencies": {
-    
+    "bootstrap-datepicker": "^1.7.1",
+    "bootstrap-sass": "^3.3.7",
+    "cross-env": "^3.2.3",
+    "jquery": "^3.2.1",
+    "laravel-mix": "^1.0",
+    "vue": "^2.4.2",
+    "zxcvbn": "^4.4.2"
   }
 }
