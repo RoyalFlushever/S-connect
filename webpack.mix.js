@@ -18,7 +18,7 @@ mix.autoload({
 
 mix.js('resources/assets/js/app.js', 'public/js')
    .extract([ 'jquery', 'bootstrap-sass', 'bootstrap-datepicker', 'vue', 'zxcvbn' ])
-   .sass('resources/assets/scss/app.scss', 'public/css');
+   .sass('resources/assets/sass/app.scss', 'public/css');
 
 // Use cache-busting version suffix for production compilations
 if (mix.inProduction()) {
