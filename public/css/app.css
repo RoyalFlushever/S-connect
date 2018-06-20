@@ -9030,6 +9030,15 @@ button.close {
   }
 }
 
+.navbar-brand {
+  height: 80px;
+}
+
+.navbar-nav > li > a {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
 @media (min-width: 992px) {
   .col-md-4,
   .col-md-12 {

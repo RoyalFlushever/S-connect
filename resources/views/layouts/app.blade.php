@@ -40,8 +40,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="@yield('homeUrl', url('/'))">
-                        {{ config('app.name', 'Laravel') }}
-                        <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                        <img src="{{asset('/images/brand.png')}}" alt="iConnect" height="55px">
                     </a>
                 </div>
 
