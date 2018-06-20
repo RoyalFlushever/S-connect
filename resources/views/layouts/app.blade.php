@@ -76,7 +76,12 @@
                                 </div>
                                 <button type="submit" class="btn btn-default btn-lg btn-cta">Login</button>
                             </form>
-                            @else
+                            <div>
+                                <a class="btn btn-link pull-right" href="{{ url('/password/reset') }}">
+                                    Forgot Password?
+                                </a>
+                            </div>
+                        @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->full_name }} <span class="caret"></span>
@@ -88,20 +93,15 @@
                                         onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">
                                         Logout
-                                    </a>
-                                    
-                                    <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                                    {{ csrf_field() }}
-                                </form>
+                                        </a>
+                                        
+                                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
+                                    </li>
+                                </ul>
                             </li>
-                        </ul>
-                    </li>
-                    @endif
-                    <div>
-                        <a class="btn btn-link pull-right" href="{{ url('/password/reset') }}">
-                            Forgot Password?
-                        </a>
-                    </div>
+                        @endif
                 </ul>
             </div>
             </div>
