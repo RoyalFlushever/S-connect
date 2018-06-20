@@ -9039,6 +9039,13 @@ button.close {
   padding-bottom: 30px;
 }
 
+.btn-link {
+  margin-right: 130px;
+  text-decoration: none !important;
+  color: #2e9cf4 !important;
+  font-size: 1.15em !important;
+}
+
 @media (min-width: 992px) {
   .col-md-4,
   .col-md-12 {
@@ -9060,5 +9067,13 @@ button.close {
 
 select > option:first-child[disabled] {
   display: none;
+}
+
+.btn-cta {
+  background-color: #5cb85c;
+  color: white;
+  width: 100px;
+  padding: 3px;
+  font-size: 1.4em;
 }
 

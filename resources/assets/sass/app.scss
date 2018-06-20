@@ -11,6 +11,9 @@
 // TODO: If we start using Bootstrap 4, we can start using bootstrap with built-in SASS
 @import "../../../node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css";
 
+// Import variables
+@import "variables";
+
 // Import other scss files
 @import "navbar";
 
@@ -40,4 +43,12 @@
 // First options that are disabled are considered “placeholder” options and will not be displayed
 select > option:first-child[disabled] {
     display: none;
+}
+
+.btn-cta {
+    background-color: $iconnect-green;
+    color: white;
+    width: 100px;
+    padding: 3px;
+    font-size: 1.4em;
 }
