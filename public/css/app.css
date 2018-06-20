@@ -9054,6 +9054,11 @@ button.close {
   }
 }
 
+html,
+body {
+  font-family: 'Circular Bold', Helvetica, sans-serif;
+}
+
 .panel-body nav:first-child {
   margin-bottom: 1em;
 }
@@ -9075,5 +9080,11 @@ select > option:first-child[disabled] {
   width: 100px;
   padding: 3px;
   font-size: 1.4em;
+}
+
+.btn-cta:hover {
+  color: #5cb85c;
+  background-color: white;
+  border-color: #5cb85c;
 }
 
