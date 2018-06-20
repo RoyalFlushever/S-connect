@@ -412,6 +412,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['citizenshipValuesByType', 'monitoringLocationNamesById', 'monitoringLocationsByCategory'],
@@ -535,6 +551,7 @@ var render = function() {
               expression: "locationCanBeSelected(locationIndex)"
             }
           ],
+          key: locationIndex,
           staticClass: "panel panel-default"
         },
         [
@@ -655,8 +672,17 @@ var render = function() {
                               _vm._l(locations, function(location) {
                                 return _c(
                                   "option",
-                                  { domProps: { value: location.id } },
-                                  [_vm._v(_vm._s(location.name))]
+                                  {
+                                    key: location.id,
+                                    domProps: { value: location.id }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                        " +
+                                        _vm._s(location.name) +
+                                        "\n                                    "
+                                    )
+                                  ]
                                 )
                               })
                             )
@@ -817,6 +843,7 @@ var render = function() {
                                         return _c(
                                           "option",
                                           {
+                                            key: citizenshipValue.id,
                                             domProps: {
                                               value: citizenshipValue.id
                                             }
@@ -1230,7 +1257,7 @@ var render = function() {
                                               }
                                             },
                                             _vm._l(25, function(i) {
-                                              return _c("option", [
+                                              return _c("option", { key: i }, [
                                                 _vm._v(_vm._s(i - 1))
                                               ])
                                             })
@@ -1260,8 +1287,12 @@ var render = function() {
                                               }
                                             },
                                             _vm._l(60, function(i) {
-                                              return _c("option", [
-                                                _vm._v(_vm._s(i - 1))
+                                              return _c("option", { key: i }, [
+                                                _vm._v(
+                                                  "\n                                                                " +
+                                                    _vm._s(i - 1) +
+                                                    "\n                                                            "
+                                                )
                                               ])
                                             })
                                           )
@@ -1290,7 +1321,7 @@ var render = function() {
                                               }
                                             },
                                             _vm._l(60, function(i) {
-                                              return _c("option", [
+                                              return _c("option", { key: i }, [
                                                 _vm._v(_vm._s(i - 1))
                                               ])
                                             })
@@ -1669,9 +1700,11 @@ var render = function() {
           }
         },
         _vm._l(_vm.available, function(student) {
-          return _c("option", { domProps: { value: student.id } }, [
-            _vm._v(_vm._s(student.full_name))
-          ])
+          return _c(
+            "option",
+            { key: student.id, domProps: { value: student.id } },
+            [_vm._v(_vm._s(student.full_name))]
+          )
         })
       )
     ]),
@@ -1816,9 +1849,11 @@ var render = function() {
           }
         },
         _vm._l(_vm.assigned, function(student) {
-          return _c("option", { domProps: { value: student.id } }, [
-            _vm._v(_vm._s(student.full_name))
-          ])
+          return _c(
+            "option",
+            { key: student.id, domProps: { value: student.id } },
+            [_vm._v(_vm._s(student.full_name))]
+          )
         })
       )
     ]),
@@ -1964,6 +1999,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return this.passwordScore === null ? '' : 'glyphicon glyphicon-lock';
         }
     }
+
 });
 
 /***/ }),

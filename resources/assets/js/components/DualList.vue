@@ -5,7 +5,7 @@
 
         <div class="col-md-5">
             <select v-model="availableSelectedIds" id="student-list-available" multiple size=7 class="form-control">
-                <option v-for="student in available" :value="student.id">{{ student.full_name }}</option>
+                <option v-for="student in available" :key="student.id" :value="student.id">{{ student.full_name }}</option>
             </select>
         </div>
 
@@ -32,7 +32,7 @@
 
         <div class="col-md-5">
             <select v-model="assignedSelectedIds" id="student-list-assigned" name="student-list-assigned[]" multiple size=7 class="form-control">
-                <option v-for="student in assigned" :value="student.id">{{ student.full_name }}</option>
+                <option v-for="student in assigned" :key="student.id" :value="student.id">{{ student.full_name }}</option>
             </select>
         </div>
 

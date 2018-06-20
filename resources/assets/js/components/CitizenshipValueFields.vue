@@ -2,7 +2,9 @@
 
     <div class="panel-group">
 
-        <div class="panel panel-default" v-for="(locationId, locationIndex) in selectedLocationIds" v-show="locationCanBeSelected(locationIndex)">
+        <div class="panel panel-default" v-for="(locationId, locationIndex) in selectedLocationIds" 
+            :key="locationIndex"
+            v-show="locationCanBeSelected(locationIndex)">
             <div class="panel-heading" role="tab" :id="formAttributeAsPhpArray('locationTab', locationIndex)">
                 <h2 class="panel-title">
                     <a role="button" :aria-controls="formAttributeAsPhpArray('locationPanel', locationIndex)" @click="toggleLocation">
@@ -24,8 +26,14 @@
                                     :id="formAttributeAsPhpArray('monitoringLocations', locationIndex)"
                                 >
                                     <option :value="null" disabled>Select a location</option>
-                                    <optgroup v-for="(locations, categoryName) in monitoringLocationsByCategory" :label="categoryName">
-                                        <option v-for="location in locations" :value="location.id">{{ location.name }}</option>
+                                    <optgroup v-for="(locations, categoryName) in monitoringLocationsByCategory" 
+                                        :label="categoryName">
+                                        <option 
+                                            v-for="location in locations"
+                                            :key="location.id"
+                                            :value="location.id">
+                                            {{ location.name }}
+                                        </option>
                                     </optgroup>
                                 </select>
                             </div>
@@ -55,7 +63,10 @@
                                                     :id="formAttributeAsPhpArray('citizenshipValues', locationIndex, typeName)"
                                                 >
                                                     <option :value="null">Select {{ typeName }} prompt</option>
-                                                    <option v-for="citizenshipValue in citizenshipValues" :value="citizenshipValue.id">
+                                                    <option 
+                                                        v-for="citizenshipValue in citizenshipValues" 
+                                                        :key="citizenshipValue.id"
+                                                        :value="citizenshipValue.id">
                                                         {{ citizenshipValue.phrasing }}
                                                     </option>
                                                 </select>
@@ -135,7 +146,7 @@
                                                                 :disabled="!selectedPromptIds[locationIndex][typeName]"
                                                             >
                                                                 <!-- v-for range starts at 1 -->
-                                                                <option v-for="i in 25">{{ i - 1 }}</option>
+                                                                <option v-for="i in 25" :key="i">{{ i - 1 }}</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-sm-4">
@@ -146,7 +157,12 @@
                                                                 :disabled="!selectedPromptIds[locationIndex][typeName]"
                                                             >
                                                                 <!-- v-for range starts at 1 -->
-                                                                <option v-for="i in 60">{{ i - 1 }}</option>
+                                                                <option 
+                                                                    v-for="i in 60"
+                                                                    :key="i"
+                                                                    >
+                                                                    {{ i - 1 }}
+                                                                </option>
                                                             </select>
                                                         </div>
                                                         <div class="col-sm-4">
@@ -157,7 +173,7 @@
                                                                 :disabled="!selectedPromptIds[locationIndex][typeName]"
                                                             >
                                                                 <!-- v-for range starts at 1 -->
-                                                                <option v-for="i in 60">{{ i - 1 }}</option>
+                                                                <option v-for="i in 60" :key="i">{{ i - 1 }}</option>
                                                             </select>
                                                         </div>
                                                     </div>

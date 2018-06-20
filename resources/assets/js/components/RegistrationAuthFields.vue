@@ -74,6 +74,7 @@
             iconClass() {
                 return this.passwordScore === null ? '' : 'glyphicon glyphicon-lock';
             }
-        }
+        },
+
     };
 </script>
