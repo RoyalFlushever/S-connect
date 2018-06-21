@@ -12,9 +12,10 @@
 */
 
 // Require site users to be logged in; authenticated users are automatically sent to /home
-Route::get('/', function() {
-    return redirect('/home');
-})->middleware('auth');
+// Route::get('/', function() {
+//     return redirect('/home');
+// })->middleware('auth');
+Route::get('/', 'HomeController@welcome');
 
 // Manually use authentication routes from Laravel's router, excluding registration routes
 // See \Illuminate\Routing\Router@auth
