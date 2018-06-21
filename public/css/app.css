@@ -9088,3 +9088,33 @@ select > option:first-child[disabled] {
   border-color: #5cb85c;
 }
 
+.form-wrapper {
+  padding: 20px;
+}
+
+.heading.description {
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #616161;
+  font-size: 1.4em;
+}
+
+.description {
+  width: 100%;
+  border: solid 1px #dddddd;
+  padding: 10px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.2em;
+  color: #616161;
+}
+
+div.checkbox {
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: flex;
+  -ms-flex-align: center;
+  -webkit-box-align: center;
+  align-items: center;
+}
+

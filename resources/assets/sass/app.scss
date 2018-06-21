@@ -62,3 +62,35 @@ select > option:first-child[disabled] {
     background-color: white;
     border-color: $iconnect-green;
 }
+
+// First User Agreement Form
+.form-wrapper {
+    padding: 20px;
+}
+
+.heading.description {
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: $iconnect-gray;
+    font-size: 1.4em;
+}
+
+.description {
+    width: 100%;
+    border: solid 1px $iconnect-lightgray;
+    padding: 10px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 1.2em;
+    color: $iconnect-gray;
+}
+// vertical align checkbox
+div.checkbox {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    align-items: center;
+}
