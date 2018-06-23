@@ -12,9 +12,10 @@
 */
 
 // Require site users to be logged in; authenticated users are automatically sent to /home
-Route::get('/', function() {
-    return redirect('/home');
-})->middleware('auth');
+// Route::get('/', function() {
+//     return redirect('/home');
+// })->middleware('auth');
+Route::get('/', 'HomeController@welcome');
 
 // Manually use authentication routes from Laravel's router, excluding registration routes
 // See \Illuminate\Routing\Router@auth
@@ -52,3 +53,8 @@ Route::post('login/stakeholder', 'Auth\LoginStakeholderController@login');
 
 // Stakeholder home
 Route::get('stakeholder-home', 'Stakeholders\HomeController@index');
+
+// Multistep Registration
+
+Route::get('registration', 'RegistrationController@registration');
+// Route::post('registration', 'RegistrationController@create');

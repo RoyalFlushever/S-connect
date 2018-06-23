@@ -1,0 +1,19 @@
+@import "variables";
+
+// Styles for navbar
+.navbar-brand {
+    height: 80px;
+}
+
+.navbar-nav>li>a {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.btn-link {
+    margin-right: 130px;
+    text-decoration: none !important;
+    color: $iconnect-blue !important;
+    font-size: 1.15em !important;
+}
+

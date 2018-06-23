@@ -11,6 +11,13 @@
 // TODO: If we start using Bootstrap 4, we can start using bootstrap with built-in SASS
 @import "../../../node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css";
 
+// Import variables
+@import "variables";
+
+// Import other scss files
+@import "navbar";
+
+
 // Adding top/bottom padding to grid content so that wrapped rows are properly spaced
 @media (min-width: $screen-md-min) {
     // TODO: Make sure this applies to relevant column widths in use (or generate all using Bootstrap's mixins)
@@ -19,6 +26,10 @@
         padding-top     : $verticalGutter;
         padding-bottom  : $verticalGutter;
     }
+}
+
+html, body {
+    font-family: 'Circular Bold', Helvetica, sans-serif;
 }
 
 // "Top" nav items in a panel
@@ -36,4 +47,72 @@
 // First options that are disabled are considered “placeholder” options and will not be displayed
 select > option:first-child[disabled] {
     display: none;
+}
+
+.btn-cta {
+    background-color: $iconnect-green;
+    color: white;
+    padding: 3px 35px;
+    font-size: 1.4em;
+}
+
+.btn-cta:hover {
+    color: $iconnect-green;
+    background-color: white;
+    border-color: $iconnect-green;
+}
+
+// First User Agreement Form
+.form-wrapper {
+    padding: 20px;
+}
+
+.heading.description {
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: $iconnect-gray;
+    font-size: 1.4em;
+}
+
+.description {
+    width: 100%;
+    border: solid 1px $iconnect-lightgray;
+    padding: 10px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 1.2em;
+    color: $iconnect-gray;
+}
+// vertical align checkbox
+div.checkbox {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+button.red {
+    background-color: $iconnect-red;
+    color: white;
+    width: 100px;
+    padding: 3px;
+    font-size: 1.4em;
+
+    &:hover {
+        color: $iconnect-red;
+        background-color: white;
+        border-color: $iconnect-red;
+    }
+}
+
+.tab-content {
+    border: 1px solid $iconnect-lightgray;
+    padding: 40px;
+}
+
+.gray-border {
+    border: 1px solid $iconnect-lightgray;
 }

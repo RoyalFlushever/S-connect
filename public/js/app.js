@@ -145,6 +145,7 @@ window.Vue = __webpack_require__(6);
 Vue.component('citizenship-value-fields', __webpack_require__(14));
 Vue.component('dual-list', __webpack_require__(17));
 Vue.component('registration-auth-fields', __webpack_require__(20));
+Vue.component('registration-form', __webpack_require__(27));
 
 // Instantiate root Vue
 app = new Vue({
@@ -2133,14 +2134,1081 @@ if (false) {
 }
 
 /***/ }),
-/* 27 */,
-/* 28 */,
-/* 29 */,
-/* 30 */,
-/* 31 */,
-/* 32 */,
-/* 33 */,
-/* 34 */,
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(28)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(33)
+/* template */
+var __vue_template__ = __webpack_require__(34)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-706c1571"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/Registration/RegistrationForm.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-706c1571", Component.options)
+  } else {
+    hotAPI.reload("data-v-706c1571", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(29);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(31)("53ac0e7c", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-706c1571\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./RegistrationForm.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-706c1571\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./RegistrationForm.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(30)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.stepper[data-v-706c1571] {\n  margin-left: 12.5%;\n}\n.question[data-v-706c1571] {\n  font-weight: 600;\n  border: solid 1px #757575;\n  padding: 25px 30px;\n  width: 90%;\n  margin: auto;\n}\n.action[data-v-706c1571] {\n  margin-top: 40px;\n  margin-bottom: 100px;\n}\n.role[data-v-706c1571] {\n  padding: 10px;\n}\n.panel[data-v-706c1571] {\n  padding: 15px 5px;\n}\n.select-pannel-body[data-v-706c1571] {\n  min-height: 130px;\n  margin-bottom: 10px;\n}\n.registration-btn[data-v-706c1571] {\n  margin: 20px 10px 0px;\n  padding: 10px 40px;\n  margin-bottom: 20px;\n}\n.issue[data-v-706c1571] {\n  width: -webkit-max-content;\n  width: -moz-max-content;\n  width: max-content;\n  font-size: 1.2em;\n  padding: 3px 15px;\n}\n#stepper-step-3 .action[data-v-706c1571] {\n  padding: 25px 30px;\n}\n#site_facilitator[data-v-706c1571] {\n  margin-bottom: 15px;\n}\n.stepper .nav-tabs [data-toggle='tab'][data-v-706c1571] {\n  width: 25px;\n  height: 25px;\n  margin: 20px auto;\n  border: none;\n  padding: 0px;\n}\n.stepper .nav-tabs[data-v-706c1571] {\n  margin-bottom: 40px;\n  border: none;\n}\n.stepper .round-tab[data-v-706c1571] {\n  border-radius: 50%;\n  width: 60px;\n  height: 60px;\n  line-height: 60px;\n  display: inline-block;\n  z-index: 2;\n  position: absolute;\n  left: 0;\n  text-align: center;\n  font-size: 16px;\n  font-weight: bold;\n  cursor: pointer;\n}\n.stepper .nav-tabs > li[data-v-706c1571] {\n  width: 33%;\n  position: relative;\n}\n.wizard-progress-with-circle[data-v-706c1571] {\n  position: relative;\n  top: 50px;\n  height: 4px;\n  margin: auto;\n  width: 70%;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+  Modified by Evan You @yyx990803
+*/
+
+var hasDocument = typeof document !== 'undefined'
+
+if (typeof DEBUG !== 'undefined' && DEBUG) {
+  if (!hasDocument) {
+    throw new Error(
+    'vue-style-loader cannot be used in a non-browser environment. ' +
+    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
+  ) }
+}
+
+var listToStyles = __webpack_require__(32)
+
+/*
+type StyleObject = {
+  id: number;
+  parts: Array<StyleObjectPart>
+}
+
+type StyleObjectPart = {
+  css: string;
+  media: string;
+  sourceMap: ?string
+}
+*/
+
+var stylesInDom = {/*
+  [id: number]: {
+    id: number,
+    refs: number,
+    parts: Array<(obj?: StyleObjectPart) => void>
+  }
+*/}
+
+var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
+var singletonElement = null
+var singletonCounter = 0
+var isProduction = false
+var noop = function () {}
+var options = null
+var ssrIdKey = 'data-vue-ssr-id'
+
+// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+// tags it will allow on a page
+var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
+
+module.exports = function (parentId, list, _isProduction, _options) {
+  isProduction = _isProduction
+
+  options = _options || {}
+
+  var styles = listToStyles(parentId, list)
+  addStylesToDom(styles)
+
+  return function update (newList) {
+    var mayRemove = []
+    for (var i = 0; i < styles.length; i++) {
+      var item = styles[i]
+      var domStyle = stylesInDom[item.id]
+      domStyle.refs--
+      mayRemove.push(domStyle)
+    }
+    if (newList) {
+      styles = listToStyles(parentId, newList)
+      addStylesToDom(styles)
+    } else {
+      styles = []
+    }
+    for (var i = 0; i < mayRemove.length; i++) {
+      var domStyle = mayRemove[i]
+      if (domStyle.refs === 0) {
+        for (var j = 0; j < domStyle.parts.length; j++) {
+          domStyle.parts[j]()
+        }
+        delete stylesInDom[domStyle.id]
+      }
+    }
+  }
+}
+
+function addStylesToDom (styles /* Array<StyleObject> */) {
+  for (var i = 0; i < styles.length; i++) {
+    var item = styles[i]
+    var domStyle = stylesInDom[item.id]
+    if (domStyle) {
+      domStyle.refs++
+      for (var j = 0; j < domStyle.parts.length; j++) {
+        domStyle.parts[j](item.parts[j])
+      }
+      for (; j < item.parts.length; j++) {
+        domStyle.parts.push(addStyle(item.parts[j]))
+      }
+      if (domStyle.parts.length > item.parts.length) {
+        domStyle.parts.length = item.parts.length
+      }
+    } else {
+      var parts = []
+      for (var j = 0; j < item.parts.length; j++) {
+        parts.push(addStyle(item.parts[j]))
+      }
+      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
+    }
+  }
+}
+
+function createStyleElement () {
+  var styleElement = document.createElement('style')
+  styleElement.type = 'text/css'
+  head.appendChild(styleElement)
+  return styleElement
+}
+
+function addStyle (obj /* StyleObjectPart */) {
+  var update, remove
+  var styleElement = document.querySelector('style[' + ssrIdKey + '~="' + obj.id + '"]')
+
+  if (styleElement) {
+    if (isProduction) {
+      // has SSR styles and in production mode.
+      // simply do nothing.
+      return noop
+    } else {
+      // has SSR styles but in dev mode.
+      // for some reason Chrome can't handle source map in server-rendered
+      // style tags - source maps in <style> only works if the style tag is
+      // created and inserted dynamically. So we remove the server rendered
+      // styles and inject new ones.
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  if (isOldIE) {
+    // use singleton mode for IE9.
+    var styleIndex = singletonCounter++
+    styleElement = singletonElement || (singletonElement = createStyleElement())
+    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
+    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
+  } else {
+    // use multi-style-tag mode in all other cases
+    styleElement = createStyleElement()
+    update = applyToTag.bind(null, styleElement)
+    remove = function () {
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  update(obj)
+
+  return function updateStyle (newObj /* StyleObjectPart */) {
+    if (newObj) {
+      if (newObj.css === obj.css &&
+          newObj.media === obj.media &&
+          newObj.sourceMap === obj.sourceMap) {
+        return
+      }
+      update(obj = newObj)
+    } else {
+      remove()
+    }
+  }
+}
+
+var replaceText = (function () {
+  var textStore = []
+
+  return function (index, replacement) {
+    textStore[index] = replacement
+    return textStore.filter(Boolean).join('\n')
+  }
+})()
+
+function applyToSingletonTag (styleElement, index, remove, obj) {
+  var css = remove ? '' : obj.css
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = replaceText(index, css)
+  } else {
+    var cssNode = document.createTextNode(css)
+    var childNodes = styleElement.childNodes
+    if (childNodes[index]) styleElement.removeChild(childNodes[index])
+    if (childNodes.length) {
+      styleElement.insertBefore(cssNode, childNodes[index])
+    } else {
+      styleElement.appendChild(cssNode)
+    }
+  }
+}
+
+function applyToTag (styleElement, obj) {
+  var css = obj.css
+  var media = obj.media
+  var sourceMap = obj.sourceMap
+
+  if (media) {
+    styleElement.setAttribute('media', media)
+  }
+  if (options.ssrId) {
+    styleElement.setAttribute(ssrIdKey, obj.id)
+  }
+
+  if (sourceMap) {
+    // https://developer.chrome.com/devtools/docs/javascript-debugging
+    // this makes source maps inside style tags work properly in Chrome
+    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
+    // http://stackoverflow.com/a/26603875
+    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
+  }
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css
+  } else {
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild)
+    }
+    styleElement.appendChild(document.createTextNode(css))
+  }
+}
+
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports) {
+
+/**
+ * Translates the list format produced by css-loader into something
+ * easier to manipulate.
+ */
+module.exports = function listToStyles (parentId, list) {
+  var styles = []
+  var newStyles = {}
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i]
+    var id = item[0]
+    var css = item[1]
+    var media = item[2]
+    var sourceMap = item[3]
+    var part = {
+      id: parentId + ':' + i,
+      css: css,
+      media: media,
+      sourceMap: sourceMap
+    }
+    if (!newStyles[id]) {
+      styles.push(newStyles[id] = { id: id, parts: [part] })
+    } else {
+      newStyles[id].parts.push(part)
+    }
+  }
+  return styles
+}
+
+
+/***/ }),
+/* 33 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({});
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "container" }, [
+      _c("div", { staticClass: "row text-center" }, [
+        _c("div", { staticClass: "col-md-9 stepper" }, [
+          _c("form", { attrs: { action: "POST" } }, [
+            _c("div", { staticClass: "wizard-progress-with-circle" }, [
+              _c("div", {
+                staticClass: "wizard-progress-bar",
+                staticStyle: {
+                  "background-color": "rgb(231, 76, 60)",
+                  color: "rgb(231, 76, 60)",
+                  width: "16.6667%"
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c(
+              "ul",
+              { staticClass: "nav nav-tabs", attrs: { role: "tablist" } },
+              [
+                _c(
+                  "li",
+                  { staticClass: "active", attrs: { role: "presentation" } },
+                  [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "persistant-disabled",
+                        attrs: {
+                          href: "#stepper-step-1",
+                          "data-toggle": "tab",
+                          "aria-controls": "stepper-step-1",
+                          role: "tab",
+                          title: "Step 1"
+                        }
+                      },
+                      [
+                        _c(
+                          "span",
+                          {
+                            staticClass:
+                              "round-tab glyphicon glyphicon-book gray-border"
+                          },
+                          [_vm._v("1")]
+                        )
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  { staticClass: "disabled", attrs: { role: "presentation" } },
+                  [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "persistant-disabled",
+                        attrs: {
+                          href: "#stepper-step-2",
+                          "data-toggle": "tab",
+                          "aria-controls": "stepper-step-2",
+                          role: "tab",
+                          title: "Step 2"
+                        }
+                      },
+                      [
+                        _c(
+                          "span",
+                          {
+                            staticClass:
+                              "round-tab glyphicon glyphicon-pencil gray-border"
+                          },
+                          [_vm._v("2")]
+                        )
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  { staticClass: "disabled", attrs: { role: "presentation" } },
+                  [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "persistant-disabled",
+                        attrs: {
+                          href: "#stepper-step-3",
+                          "data-toggle": "tab",
+                          "aria-controls": "stepper-step-3",
+                          role: "tab",
+                          title: "Step 3"
+                        }
+                      },
+                      [
+                        _c(
+                          "span",
+                          {
+                            staticClass:
+                              "round-tab glyphicon glyphicon-list-alt gray-border"
+                          },
+                          [_vm._v("3")]
+                        )
+                      ]
+                    )
+                  ]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "tab-content" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "tab-pane fade in active",
+                  attrs: { role: "tabpanel", id: "stepper-step-1" }
+                },
+                [
+                  _c("h2", { staticClass: "question" }, [
+                    _vm._v("Are you a School District Employee?")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "action" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-default btn-cta",
+                        attrs: { type: "button" }
+                      },
+                      [_vm._v("YES")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-default btn-cta red",
+                        attrs: { type: "button" }
+                      },
+                      [_vm._v("NO")]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-info btn-lg",
+                      attrs: { href: "#" }
+                    },
+                    [
+                      _c("span", {
+                        staticClass: "glyphicon glyphicon-arrow-right"
+                      }),
+                      _vm._v(" Step 2/3\n                        ")
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "tab-pane fade",
+                  attrs: { role: "tabpanel", id: "stepper-step-2" }
+                },
+                [
+                  _c("div", { staticClass: "action" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-4 role" }, [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "panel panel-default select-pannel gray-border"
+                          },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "pannel-body select-pannel-body gray-border"
+                              },
+                              [
+                                _c("h3", [_vm._v("FACLILTATOR")]),
+                                _vm._v(" "),
+                                _c("p", [
+                                  _vm._v(
+                                    "I will be mananging several Schools, Teachers/Mentors,\n                                                and Studnents in my district.\n                                            "
+                                  )
+                                ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-default btn-cta",
+                                attrs: { type: "button" }
+                              },
+                              [_vm._v("Select")]
+                            )
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-4 role" }, [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "panel panel-default select-pannel gray-border"
+                          },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "pannel-body select-pannel-body gray-border"
+                              },
+                              [
+                                _c("h3", [_vm._v("SITE FACLILTATOR")]),
+                                _vm._v(" "),
+                                _c("p", [
+                                  _vm._v(
+                                    "I will be mananging several Teachers/Mentors,\n                                                and Studnents in my school.\n                                            "
+                                  )
+                                ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-default btn-cta",
+                                attrs: { type: "button" }
+                              },
+                              [_vm._v("Select")]
+                            )
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-4 role" }, [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "panel panel-default select-pannel gray-border"
+                          },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "pannel-body select-pannel-body gray-border"
+                              },
+                              [
+                                _c("h3", [_vm._v("SCHOOL MENTOR")]),
+                                _vm._v(" "),
+                                _c("p", [
+                                  _vm._v(
+                                    "I will be mananging several Studnents in my school.\n                                            "
+                                  )
+                                ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-default btn-cta",
+                                attrs: { type: "button" }
+                              },
+                              [_vm._v("Select")]
+                            )
+                          ]
+                        )
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-info btn-lg",
+                      attrs: { href: "#" }
+                    },
+                    [
+                      _c("span", {
+                        staticClass: "glyphicon glyphicon-arrow-right"
+                      }),
+                      _vm._v(" Step 3/3\n                        ")
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "tab-pane fade",
+                  attrs: { role: "tabpanel", id: "stepper-step-3" }
+                },
+                [
+                  _c("div", { staticClass: "action gray-border" }, [
+                    _c("div", { staticClass: "personal-info form-group row" }, [
+                      _c("div", { staticClass: "col-xs-3" }, [
+                        _c("input", {
+                          staticClass: "form-control",
+                          attrs: {
+                            id: "first_name",
+                            type: "text",
+                            name: "first_name",
+                            placeholder: "First Name"
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-xs-3" }, [
+                        _c("input", {
+                          staticClass: "form-control",
+                          attrs: {
+                            id: "last_name",
+                            type: "text",
+                            name: "last_name",
+                            placeholder: "Last Name"
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-xs-6" }, [
+                        _c("input", {
+                          staticClass: "form-control",
+                          attrs: {
+                            id: "email",
+                            type: "email",
+                            name: "email",
+                            placeholder: "School Email Address",
+                            required: ""
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "location form-group row" }, [
+                      _c("div", { staticClass: "col-xs-3" }, [
+                        _c(
+                          "select",
+                          {
+                            staticClass: "form-control",
+                            attrs: { name: "state", id: "state" }
+                          },
+                          [
+                            _c("option", { attrs: { value: "state" } }, [
+                              _vm._v("State")
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-xs-3" }, [
+                        _c(
+                          "select",
+                          {
+                            staticClass: "form-control",
+                            attrs: { name: "county", id: "county" }
+                          },
+                          [
+                            _c("option", { attrs: { value: "county" } }, [
+                              _vm._v("County")
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-xs-3" }, [
+                        _c(
+                          "select",
+                          {
+                            staticClass: "form-control",
+                            attrs: { name: "district", id: "district" }
+                          },
+                          [
+                            _c("option", { attrs: { value: "district" } }, [
+                              _vm._v("District")
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-xs-3" }, [
+                        _c(
+                          "select",
+                          {
+                            staticClass: "form-control",
+                            attrs: { name: "school", id: "school" }
+                          },
+                          [
+                            _c("option", { attrs: { value: "school" } }, [
+                              _vm._v("School")
+                            ])
+                          ]
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "query form-group row" }, [
+                      _c("div", { staticClass: "col-xs-10 col-xs-offset-1" }, [
+                        _c(
+                          "select",
+                          {
+                            staticClass: "form-control",
+                            attrs: {
+                              name: "site_facilitator",
+                              id: "site_facilitator"
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "" } }, [
+                              _vm._v("Select Site Facilitator")
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-xs-10 col-xs-offset-1" }, [
+                        _c(
+                          "select",
+                          {
+                            staticClass: "form-control",
+                            attrs: {
+                              name: "site_facilitator",
+                              id: "site_facilitator"
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "" } }, [
+                              _vm._v("How did you hear about I-Connect")
+                            ])
+                          ]
+                        )
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-lg btn-cta registration-btn",
+                      attrs: { href: "#" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                            Finish Registration!\n                        "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-lg issue red",
+                        attrs: { type: "button" }
+                      },
+                      [
+                        _vm._v(
+                          "\n                                Registration Issue\n                            "
+                        )
+                      ]
+                    )
+                  ])
+                ]
+              )
+            ])
+          ])
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-706c1571", module.exports)
+  }
+}
+
+/***/ }),
 /* 35 */
 /***/ (function(module, exports) {
 
