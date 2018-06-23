@@ -53,3 +53,8 @@ Route::post('login/stakeholder', 'Auth\LoginStakeholderController@login');
 
 // Stakeholder home
 Route::get('stakeholder-home', 'Stakeholders\HomeController@index');
+
+// Multistep Registration
+
+Route::get('registration', 'RegistrationController@registration');
+// Route::post('registration', 'RegistrationController@create');

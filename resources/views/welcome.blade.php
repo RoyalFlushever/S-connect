@@ -13,7 +13,7 @@
                     social/behavioral growth of a student ages 5-25. For additional
                     information please go to iConnect.Ku.edu.
                 </div>
-                <form class="form-horizontal">
+                <form class="form-horizontal" action="/registration" method="GET">
                     <div class="form-group">
                         <div class="col-sm-offset-1  col-sm-10">
                             <div class="checkbox">

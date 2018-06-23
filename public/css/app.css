@@ -9077,8 +9077,7 @@ select > option:first-child[disabled] {
 .btn-cta {
   background-color: #5cb85c;
   color: white;
-  width: 100px;
-  padding: 3px;
+  padding: 3px 35px;
   font-size: 1.4em;
 }
 
@@ -9101,7 +9100,7 @@ select > option:first-child[disabled] {
 
 .description {
   width: 100%;
-  border: solid 1px #dddddd;
+  border: solid 1px #757575;
   padding: 10px;
   text-align: center;
   font-weight: 500;
@@ -9116,5 +9115,28 @@ div.checkbox {
   -ms-flex-align: center;
   -webkit-box-align: center;
   align-items: center;
+}
+
+button.red {
+  background-color: #f44336;
+  color: white;
+  width: 100px;
+  padding: 3px;
+  font-size: 1.4em;
+}
+
+button.red:hover {
+  color: #f44336;
+  background-color: white;
+  border-color: #f44336;
+}
+
+.tab-content {
+  border: 1px solid #757575;
+  padding: 40px;
+}
+
+.gray-border {
+  border: 1px solid #757575;
 }
 
