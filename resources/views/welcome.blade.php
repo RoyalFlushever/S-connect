@@ -4,7 +4,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-8 col-md-offset-2 tos-form">
             <div class="panel panel-default form-wrapper">
                 <div id="heading-description" class="description heading">
                     i-Connect is a Self-Management Application for a smart phone or 

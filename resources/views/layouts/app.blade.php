@@ -47,7 +47,11 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
+                        @if (Auth::guest())
+                            &nbsp;
+                        @else
+                            <h2>Welcome, {{ Auth::user()->full_name }} !</h2>
+                        @endif
                     </ul>
                     @if ($_SERVER['REQUEST_URI'] =="/login")
                         <ul class="nav navbar-nav navbar-right">
@@ -90,11 +94,15 @@
                                     </a>
                                 </div>
                             @else
+                                
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    <!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                         {{ Auth::user()->full_name }} <span class="caret"></span>
                                     </a>
-                                    
+                                     -->
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                        My Account <span class="caret">
+                                    </a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li>
                                             <a href="{{ url('/logout') }}"

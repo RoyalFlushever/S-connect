@@ -32,7 +32,9 @@ html, body {
     font-family: 'Circular Bold', Helvetica, sans-serif;
 }
 
-// color
+.navbar-nav {
+    margin-left: 200px!important;
+}
 
 // "Top" nav items in a panel
 .panel-body nav:first-child {
@@ -154,6 +156,11 @@ div.checkbox {
 
 .gray-border {
     border: 1px solid $iconnect-lightgray;
+}
+
+// User Agreement
+.tos-form {
+    margin-top: 80px;
 }
 
 // Login 
