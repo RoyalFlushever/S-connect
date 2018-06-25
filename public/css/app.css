@@ -9117,7 +9117,7 @@ div.checkbox {
   align-items: center;
 }
 
-button.red {
+.btn-red {
   background-color: #f44336;
   color: white;
   width: 100px;
@@ -9125,10 +9125,24 @@ button.red {
   font-size: 1.4em;
 }
 
-button.red:hover {
+.btn-red:hover {
   color: #f44336;
   background-color: white;
   border-color: #f44336;
+}
+
+.btn-blue {
+  background-color: #0275d8;
+  color: white;
+  width: 100px;
+  padding: 3px;
+  font-size: 1.4em;
+}
+
+.btn-blue:hover {
+  color: #0275d8;
+  background-color: white;
+  border-color: #0275d8;
 }
 
 .tab-content {
