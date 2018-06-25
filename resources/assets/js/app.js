@@ -17,6 +17,9 @@ Vue.component('citizenship-value-fields', require('./components/CitizenshipValue
 Vue.component('dual-list', require('./components/DualList.vue'));
 Vue.component('registration-auth-fields', require('./components/RegistrationAuthFields.vue'));
 Vue.component('registration-form', require('./Registration/RegistrationForm.vue'));
+Vue.component('v-modal', require('./components/VModal.vue'));
+
+
 
 // Instantiate root Vue
 app = new Vue({

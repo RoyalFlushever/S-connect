@@ -32,6 +32,8 @@ html, body {
     font-family: 'Circular Bold', Helvetica, sans-serif;
 }
 
+// color
+
 // "Top" nav items in a panel
 .panel-body nav:first-child {
     margin-bottom: 1em;
@@ -94,7 +96,7 @@ div.checkbox {
     align-items: center;
 }
 
-button.red {
+.btn-red {
     background-color: $iconnect-red;
     color: white;
     width: 100px;
@@ -107,6 +109,20 @@ button.red {
         border-color: $iconnect-red;
     }
 }
+
+.btn-blue {
+    background-color: $iconnect-blue;
+    color: white;
+    width: 100px;
+    padding: 3px;
+    font-size: 1.4em;
+    &:hover {
+        color: $iconnect-blue;
+        background-color: white;
+        border-color: $iconnect-blue;
+    }
+}
+
 
 .tab-content {
     border: 1px solid $iconnect-lightgray;
