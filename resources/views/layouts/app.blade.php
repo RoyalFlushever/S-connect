@@ -60,8 +60,8 @@
                                 {{ csrf_field() }}
 
                                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                    <input id="email" type="email" class="form-control" name="email" placeholder="Email" value="{{ old('email') }}" required autofocus>
-                                    <input id="password" type="password" class="form-control" name="password" placeholder="Password" required>
+                                    <input id="email" type="email" class="form-control" name="email" placeholder="Email" value="{{ old('email') }}"  autocomplete="email" required autofocus>
+                                    <input id="password" type="password" class="form-control" name="password" placeholder="Password" required autocomplete="current-password">
                                     @if ($errors->has('email'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('email') }}</strong>

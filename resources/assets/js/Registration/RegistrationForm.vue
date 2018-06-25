@@ -30,7 +30,7 @@
                             <h2 class="question">Are you a School District Employee?</h2>
                             <div class="action">
                                 <button type="button" class="btn btn-default btn-cta">YES</button>
-                                <button type="button" class="btn btn-default btn-cta red">NO</button>
+                                <button type="button" class="btn btn-default btn-cta btn-red">NO</button>
                             </div>
                             <a href="#" class="btn btn-info btn-lg">
                                 <span class="glyphicon glyphicon-arrow-right"></span> Step 2/3
@@ -81,19 +81,19 @@
                             <div class="action gray-border">
                                 <div class="personal-info form-group row">
                                     <div class="col-xs-3">
-                                        <input id="first_name" type="text" class="form-control" name="first_name" placeholder="First Name">
+                                        <input id="first_name" type="text" class="form-control" name="first_name" placeholder="First Name" autocomplete="given-name">
                                     </div>
                                     <div class="col-xs-3">
-                                        <input id="last_name" type="text" class="form-control" name="last_name" placeholder="Last Name">
+                                        <input id="last_name" type="text" class="form-control" name="last_name" placeholder="Last Name" autocomplete="family-name">
                                     </div>
                                     <div class="col-xs-6">
-                                        <input id="email" type="email" class="form-control" name="email" placeholder="School Email Address" required>
+                                        <input id="school_email" type="email" class="form-control" name="email" placeholder="School Email Address" autocomplete="email" required>
                                     </div>
                                 </div>
                                 <div class="location form-group row">
-                                    <div class="col-xs-3"><select name="state" id="state" class="form-control"><option value="state">State</option></select></div>
-                                    <div class="col-xs-3"><select name="county" id="county" class="form-control"><option value="county">County</option></select></div>
-                                    <div class="col-xs-3"><select name="district" id="district" class="form-control"><option value="district">District</option></select></div>
+                                    <div class="col-xs-3"><select name="state" id="state" class="form-control" autocomplete="address-level1" ><option value="state">State</option></select></div>
+                                    <div class="col-xs-3"><select name="county" id="county" class="form-control" autocomplete="address-level1"><option value="county">County</option></select></div>
+                                    <div class="col-xs-3"><select name="district" id="district" class="form-control" autocomplete="address-level2" ><option value="district">District</option></select></div>
                                     <div class="col-xs-3"><select name="school" id="school" class="form-control"><option value="school">School</option></select></div>
                                 </div>
                                 <div class="query form-group row">
@@ -103,31 +103,98 @@
                                         </select>
                                     </div>
                                     <div class="col-xs-10 col-xs-offset-1">
-                                        <select name="site_facilitator" id="site_facilitator" class="form-control">
+                                        <select name="referral_source" id="referral_source" class="form-control">
                                             <option value="">How did you hear about I-Connect</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
-                            <a href="#" class="btn btn-lg btn-cta registration-btn">
+                            <button href="#" class="btn btn-lg btn-cta registration-btn"  id="show-modal" @click="showModal = true">
                                 Finish Registration!
-                            </a>
+                            </button>
                             <div>
-                                <button type="button" class="btn btn-lg issue red">
+                                <button id="issue-modal" type="button" class="btn btn-lg issue btn-red" @click="issueModal = true">
                                     Registration Issue
                                 </button>
                             </div>
+                            <!-- use the modal component, pass in the prop -->
+                            <v-modal v-if="showModal" @close="showModal = false">
+                                <!--
+                                you can use custom content here to overwrite
+                                default content
+                                -->
+                                <div slot="body">
+                                    Account Submitted An email has been sent to the email provided. 
+                                    Please log in to your email and verify your account to begin using I-Connect. Your email will be
+                                    your default username and you will be provided a temporary one-time use password. Once you log in to the 
+                                    I-Connect Web page, click on "My Account" to set a new password.
+                                </div>
+                                <h3 slot="header">Account Submitted!</h3>
+                            </v-modal>
+
+                            
                         </div>
                     </div>
                 </form>
+
+                <v-modal v-if="issueModal" @close="issueModal = false" actionurl="/login">
+                    <div slot="body">
+                            <div class="personal-info form-group row">
+                                <div class="col-xs-3">
+                                    <input id="first_name_issue" type="text" class="form-control" name="first_name_issue" placeholder="First Name" autocomplete="given-name">
+                                </div>
+                                <div class="col-xs-3">
+                                    <input id="last_name_issue" type="text" class="form-control" name="last_name_issue" placeholder="Last Name"  autocomplete="family-name">
+                                </div>
+                                <div class="col-xs-6">
+                                    <input id="school_email" type="email" class="form-control" name="email" placeholder="School Email Address" autocomplete="email" required>
+                                </div>
+                            </div>
+                            <div class="location form-group row">
+                                <div class="col-xs-3"><select name="state" id="state_issue" class="form-control" autocomplete="address-level1" ><option value="state">State</option></select></div>
+                                <div class="col-xs-3"><select name="county" id="county_issue" class="form-control" autocomplete="address-level1"><option value="county">County</option></select></div>
+                                <div class="col-xs-3"><select name="district" id="district_issue" class="form-control" autocomplete="address-level2" ><option value="district">District</option></select></div>
+                                <div class="col-xs-3"><select name="school" id="school_issue" class="form-control"><option value="school">School</option></select></div>
+                            </div>
+                            <div class="location form-group row">
+                                <div class="col-xs-4">
+                                    <div class="checkbox issue">
+                                        <label><input type="checkbox" name="remember"> District not displayed</label>
+                                    </div>
+                                    <div class="checkbox issue">
+                                        <label><input type="checkbox" name="remember"> School not displayed</label>
+                                    </div>
+                                    <div class="checkbox issue">
+                                        <label><input type="checkbox" name="remember"> Outside of United States</label>
+                                    </div>
+                                    <div class="checkbox issue">
+                                        <label><input type="checkbox" name="remember"> Other reason</label>
+                                    </div>
+                                </div>
+                                <div class="col-xs-8">
+                                    <textarea name="issue_text" id="issue_text"  class="form-control" cols="30" rows="6" placeholder="Please explain issue here..."></textarea>
+                                </div>
+                            </div>
+                    </div>
+                    <h3 slot="header">Having difficulties registering?</h3>
+                    <span slot="close">Cancel</span>
+                </v-modal>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+
+import VModal from '../components/VModal.vue';
+
 export default {
-    
+    data: function() {
+        return {
+            showModal: false,
+            issueModal: false
+        }
+    }
 }
 </script>
 <style lang="scss" scoped>
@@ -233,5 +300,10 @@ export default {
         height: 4px;
         margin: auto;
         width: 70%;
+    }
+
+    // Registration Issue
+    div.issue.checkbox {
+        font-size: 12px;
     }
 </style>
