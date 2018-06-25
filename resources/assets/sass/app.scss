@@ -123,6 +123,29 @@ div.checkbox {
     }
 }
 
+.btn-yellow {
+    background-color: $iconnect-yellow;
+    color: white;
+    width: 100px;
+    padding: 3px;
+    font-size: 1.4em;
+    &:hover {
+        color: $iconnect-blue;
+        background-color: white;
+        border-color: $iconnect-yellow;
+    }
+}
+
+.input-green {
+    background-color: $iconnect-green;
+    color: white;
+}
+
+.input-blue {
+    background-color: $iconnect-blue;
+    color: white;
+}
+
 
 .tab-content {
     border: 1px solid $iconnect-lightgray;
@@ -131,4 +154,33 @@ div.checkbox {
 
 .gray-border {
     border: 1px solid $iconnect-lightgray;
+}
+
+// Login 
+
+.login-forgot {
+    margin: 20px;
+}
+
+.full-width {
+    width: 100%;
+    height: 60px;
+    font-size: 2em;
+}
+
+.login-form {
+    margin-top: 100px;
+}
+
+.login-form input{
+    width: 100%;
+    padding: 25px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    font-size: 20px;
+
+    &::placeholder {
+        color: white;
+        text-align: center;
+    }
 }
