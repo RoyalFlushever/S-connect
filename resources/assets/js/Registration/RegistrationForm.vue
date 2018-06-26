@@ -124,10 +124,19 @@
                                 default content
                                 -->
                                 <div slot="body">
-                                    Account Submitted An email has been sent to the email provided. 
-                                    Please log in to your email and verify your account to begin using I-Connect. Your email will be
-                                    your default username and you will be provided a temporary one-time use password. Once you log in to the 
-                                    I-Connect Web page, click on "My Account" to set a new password.
+                                    <div class="gray-border">
+                                        Account Submitted An email has been sent to the email provided. 
+                                        Please log in to your email and verify your account to begin using I-Connect. Your email will be
+                                        your default username and you will be provided a temporary one-time use password. Once you log in to the 
+                                        I-Connect Web page, click on "My Account" to set a new password.
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <div>
+                                        If there are any issues, please email:
+                                        <br>
+                                        iConnect@ku.edu
+                                    </div>
                                 </div>
                                 <h3 slot="header">Account Submitted!</h3>
                             </v-modal>

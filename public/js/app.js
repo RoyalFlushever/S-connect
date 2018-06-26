@@ -2813,6 +2813,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3132,9 +3141,25 @@ var render = function() {
                         },
                         [
                           _c("div", { attrs: { slot: "body" }, slot: "body" }, [
-                            _vm._v(
-                              '\n                                Account Submitted An email has been sent to the email provided. \n                                Please log in to your email and verify your account to begin using I-Connect. Your email will be\n                                your default username and you will be provided a temporary one-time use password. Once you log in to the \n                                I-Connect Web page, click on "My Account" to set a new password.\n                            '
-                            )
+                            _c("div", { staticClass: "gray-border" }, [
+                              _vm._v(
+                                '\n                                    Account Submitted An email has been sent to the email provided. \n                                    Please log in to your email and verify your account to begin using I-Connect. Your email will be\n                                    your default username and you will be provided a temporary one-time use password. Once you log in to the \n                                    I-Connect Web page, click on "My Account" to set a new password.\n                                '
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("br"),
+                            _vm._v(" "),
+                            _c("br"),
+                            _vm._v(" "),
+                            _c("div", [
+                              _vm._v(
+                                "\n                                    If there are any issues, please email:\n                                    "
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                                    iConnect@ku.edu\n                                "
+                              )
+                            ])
                           ]),
                           _vm._v(" "),
                           _c(

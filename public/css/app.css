@@ -9200,6 +9200,14 @@ div.checkbox {
   margin-top: 100px;
 }
 
+.welcome {
+  font-size: 1.1em !important;
+}
+
+a.register {
+  font-size: 1.2em !important;
+}
+
 .login-form input {
   width: 100%;
   padding: 25px 20px;
