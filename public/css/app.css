@@ -9060,7 +9060,8 @@ body {
 }
 
 .navbar-nav {
-  margin-left: 200px !important;
+  margin-left: 100px !important;
+  margin-top: 20px;
 }
 
 .panel-body nav:first-child {
@@ -9235,5 +9236,20 @@ a.register {
 .login-form input::placeholder {
   color: white;
   text-align: center;
+}
+
+.logout {
+  color: white !important;
+  padding: 10px !important;
+  margin: 0px 10px !important;
+}
+
+.logout:hover {
+  color: #f44336 !important;
+}
+
+.dropdown-toggle {
+  padding: 0px 10px !important;
+  margin: 10px !important;
 }
 

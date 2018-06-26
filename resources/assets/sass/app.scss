@@ -33,7 +33,8 @@ html, body {
 }
 
 .navbar-nav {
-    margin-left: 200px!important;
+    margin-left: 100px!important;
+    margin-top: 20px;
 }
 
 // "Top" nav items in a panel
@@ -199,4 +200,18 @@ a.register {
         color: white;
         text-align: center;
     }
+}
+
+.logout {
+    color: white!important;
+    padding: 10px !important;
+    margin: 0px 10px !important;
+    &:hover {
+        color: $iconnect-red!important;
+    }
+}
+
+.dropdown-toggle {
+    padding: 0px 10px !important;
+    margin: 10px !important;
 }

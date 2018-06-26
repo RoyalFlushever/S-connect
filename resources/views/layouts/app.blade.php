@@ -94,8 +94,18 @@
                                     </a>
                                 </div>
                             @else
-                                
-                                <li class="dropdown">
+                                <li>
+                                    <a href="{{ url('/logout') }}" class="btn btn-red logout nav-link"
+                                    onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                                    Logout
+                                    </a>
+                                    
+                                    <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                        {{ csrf_field() }}
+                                    </form>
+                                </li>
+                                <li class="dropdown gray-border">
                                     <!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                         {{ Auth::user()->full_name }} <span class="caret"></span>
                                     </a>
