@@ -9,6 +9,8 @@
         </div>
     @endif
 
+    @include('layouts.homeheading')
+
     <div class="panel panel-default">
         <div class="panel-heading">
             <h1 class="panel-title">Dashboard</h1>
@@ -27,5 +29,7 @@
             </div>
         </div>
     </div>
+
+    
 </div>
 @endsection
