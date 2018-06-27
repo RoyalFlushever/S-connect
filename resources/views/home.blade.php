@@ -76,11 +76,21 @@
             <div class='dashboard-icon'>
                 <img src="/images/resource icon.png" alt="Additional Resources">
             </div>
-            <div style="margin: 60px 70px;">
+            <div style="margin: 25px 65px;">
                 <h3 class="module-title">Additional Resources</h3>
+                <button class="btn btn-cta btn-green">Link to iConnect.Ku.edu</button>
             </div>
         </div>
     </div>
 
 </div>
+
+<!-- <v-modal v-if={{$issueModal}} @close="{{$issueModal}} == false"  actionurl="https://iconnect.ku.edu">
+    <p slot="body" style="font-size: 18px;">
+        For additional information, Instructional Materials, Videos <br>
+        Readiness Assessment go to iconnect.ku.edu. This link will 
+    </p>
+    <span slot="action">Link to iConnect.Ku.edu</span>
+    <h3 slot="header" class="text-center">Additional Resources</h3>
+</v-modal> -->
 @endsection

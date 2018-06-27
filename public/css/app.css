@@ -13355,6 +13355,11 @@ button.close {
   border: none;
 }
 
+.dashboard button {
+  font-size: 1em;
+  font-weight: 400;
+}
+
 @media (min-width: 992px) {
   .col-md-4,
   .col-md-12 {

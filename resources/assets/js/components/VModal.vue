@@ -25,12 +25,12 @@
 
                         <div class="modal-footer">
                             <slot name="footer">
-                            <a class="modal-default-button btn btn-red" href="/login" @click="close">
+                            <!-- <a class="modal-default-button btn btn-red" href="/login" @click="close">
                                 <slot name="close">
                                     OK
                                 </slot>    
-                            </a>
-                            <a v-if="actionurl" :href="actionurl" class="modal-default-button btn btn-cta btn-blue" @click="submit">
+                            </a> -->
+                            <a v-if="actionurl" :href="actionurl" class="modal-default-button btn btn-cta btn-blue" style="width: max-content;" @click="submit">
                                 <slot name="action">
                                     Submit
                                 </slot>
@@ -52,7 +52,6 @@ export default {
         actionurl: {
             type: String,
         },
-       
     },
     methods: {
         close: function() {

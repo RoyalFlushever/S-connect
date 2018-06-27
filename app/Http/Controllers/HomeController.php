@@ -58,7 +58,7 @@ class HomeController extends Controller
             $dashboardItems = [];
         }
 
-        return view('home', ['dashboardItems' => $dashboardItems]);
+        return view('home', ['dashboardItems' => $dashboardItems, 'issueModal' => true]);
     }
 
     public function welcome() {
