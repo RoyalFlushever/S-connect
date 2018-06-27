@@ -44,7 +44,7 @@
                 <td>{{ $index+1 }}</td>
                 <td>{{ $student->first_name }}</td>
                 <td>{{ $student->last_name }}</td>
-                <td>{{ $student->birthdate->toFormattedDateString() }}</td>
+                <td>{{ date("Y") - $student->birthdate->format("Y") }}</td>
                 <td class="actions text-center">
                     <a href="#" class="btn btn-large btn-cta">Edit</a>
                     <a href="#" class="btn btn-large btn-blue">View Chart</a>
