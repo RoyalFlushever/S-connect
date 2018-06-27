@@ -1,2 +1,38 @@
 // Dashboard Styles
 
+.dashboard {
+    height: 148px;
+    text-align: center;
+    padding: 0px;
+    margin-bottom: 20px;
+
+    div {
+        float: left;
+    }
+
+    div:last-child {
+       margin:0px auto;
+       width: max-content; 
+    }
+
+    ul {
+        list-style: none;
+        display: inline-flex;
+
+        li {
+            margin: 5px 10px;
+            padding-right: 10px;
+            font-size: 1.2em;
+            border-right: 1px solid $iconnect-gray;
+            
+            a {
+                color: $iconnect-gray;
+                cursor: pointer;
+            }
+        }
+        
+        li:last-child {
+            border: none;
+        }
+    }
+}

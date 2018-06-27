@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" style="margin-bottom: 100px;">
     @if ($_SERVER['REQUEST_URI'] !="/home")
         <div class="pull-left home-icon">
             <i class="fa fa-home fa-3x" aria-hidden="true"></i>

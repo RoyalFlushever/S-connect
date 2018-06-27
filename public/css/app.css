@@ -13314,6 +13314,47 @@ button.close {
   margin: 10px !important;
 }
 
+.dashboard {
+  height: 148px;
+  text-align: center;
+  padding: 0px;
+  margin-bottom: 20px;
+}
+
+.dashboard div {
+  float: left;
+}
+
+.dashboard div:last-child {
+  margin: 0px auto;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.dashboard ul {
+  list-style: none;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+
+.dashboard ul li {
+  margin: 5px 10px;
+  padding-right: 10px;
+  font-size: 1.2em;
+  border-right: 1px solid #616161;
+}
+
+.dashboard ul li a {
+  color: #616161;
+  cursor: pointer;
+}
+
+.dashboard ul li:last-child {
+  border: none;
+}
+
 @media (min-width: 992px) {
   .col-md-4,
   .col-md-12 {
