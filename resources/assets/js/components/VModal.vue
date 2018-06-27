@@ -30,6 +30,11 @@
                                     OK
                                 </slot>    
                             </a> -->
+                            <a class="modal-default-button btn btn-red" href="/login" @click="close">
+                                <slot name="close">
+                                    OK
+                                </slot>    
+                            </a>
                             <a v-if="actionurl" :href="actionurl" class="modal-default-button btn btn-cta btn-blue" style="width: max-content;" @click="submit">
                                 <slot name="action">
                                     Submit

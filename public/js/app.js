@@ -3611,6 +3611,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4572,6 +4577,23 @@ var render = function() {
             { staticClass: "modal-footer" },
             [
               _vm._t("footer", [
+                _c(
+                  "a",
+                  {
+                    staticClass: "modal-default-button btn btn-red",
+                    attrs: { href: "/login" },
+                    on: { click: _vm.close }
+                  },
+                  [
+                    _vm._t("close", [
+                      _vm._v(
+                        "\n                            OK\n                        "
+                      )
+                    ])
+                  ],
+                  2
+                ),
+                _vm._v(" "),
                 _vm.actionurl
                   ? _c(
                       "a",

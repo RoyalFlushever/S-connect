@@ -41,3 +41,57 @@
         font-weight: 400;
     }
 }
+
+.filter {
+
+    margin-top: 40px;
+    margin-bottom: 70px;
+
+    form {
+
+        div.form-group:first-child {
+            margin-left: 30px;
+        }
+
+        div.form-group:last-child {
+            margin-top: 20px;
+            margin-left: 50px;
+
+            a {
+                padding: 10px;
+            }
+        }
+    }
+
+    label {
+        font-size: 20px;
+    }
+
+    select {
+        height: 35px;
+        line-height: 35px;
+        font-size: 18px;
+        border-radius: 0px;
+        outline: 1px inset black;
+        outline-offset:-1px;
+        // -webkit-appearance: none;
+    }
+}
+
+table.my-students {
+
+    margin-bottom: 50px;
+
+    thead {
+        background: $iconnect-lightgray;
+    }
+
+    a {
+        font-size: 14px;
+        margin: 0px 10px;
+    }
+
+    a.btn-yellow {
+        color: $iconnect-gray;
+    }
+}

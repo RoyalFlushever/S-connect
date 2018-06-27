@@ -136,11 +136,11 @@
 
         @yield('content')
 
-        <footer class="footer">
+        <!-- <footer class="footer">
             <div class="container">
                 <p class="text-muted small">{{ $applicationVersion }}</p>
             </div>
-        </footer>
+        </footer> -->
     </div>
 
     <script src="{{ mix('/js/app.js') }}"></script>

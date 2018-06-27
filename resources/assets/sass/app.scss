@@ -119,7 +119,7 @@ div.checkbox {
 .btn-blue {
     background-color: $iconnect-blue;
     color: white;
-    width: 100px;
+    width: max-content;
     padding: 3px;
     font-size: 1.4em;
     &:hover {

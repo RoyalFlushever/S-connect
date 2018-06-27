@@ -37,7 +37,7 @@
                 <img src="/images/students.png" alt="Manage Students">
             </div>
             <div style="margin: 20px 25px;">
-                <h3 class="module-title">Manage Students</h3>
+                <h3 class="module-title"><a href="/my-students">Manage Students</a></h3>
                 <ul>
                     <li><a>Add</a></li>
                     <li><a>Edit</a></li>

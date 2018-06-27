@@ -1,7 +1,11 @@
 <div class="row" style="margin-bottom: 100px;">
     @if ($_SERVER['REQUEST_URI'] !="/home")
         <div class="pull-left home-icon">
-            <i class="fa fa-home fa-3x" aria-hidden="true"></i>
+            <span class="round-tab">
+                <i class="fa fa-home fa-2x" aria-hidden="true"></i>
+                <br>
+                Home
+            </span>
         </div>
     @endif
     <div class="pull-right help">

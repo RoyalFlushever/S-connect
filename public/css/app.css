@@ -13360,6 +13360,54 @@ button.close {
   font-weight: 400;
 }
 
+.filter {
+  margin-top: 40px;
+  margin-bottom: 70px;
+}
+
+.filter form div.form-group:first-child {
+  margin-left: 30px;
+}
+
+.filter form div.form-group:last-child {
+  margin-top: 20px;
+  margin-left: 50px;
+}
+
+.filter form div.form-group:last-child a {
+  padding: 10px;
+}
+
+.filter label {
+  font-size: 20px;
+}
+
+.filter select {
+  height: 35px;
+  line-height: 35px;
+  font-size: 18px;
+  border-radius: 0px;
+  outline: 1px inset black;
+  outline-offset: -1px;
+}
+
+table.my-students {
+  margin-bottom: 50px;
+}
+
+table.my-students thead {
+  background: #757575;
+}
+
+table.my-students a {
+  font-size: 14px;
+  margin: 0px 10px;
+}
+
+table.my-students a.btn-yellow {
+  color: #616161;
+}
+
 .reports-type .reports-img {
   background: url("/images/reports type.png") no-repeat center;
   height: 150px !important;
@@ -13486,7 +13534,9 @@ div.checkbox {
 .btn-blue {
   background-color: #0275d8;
   color: white;
-  width: 100px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
   padding: 3px;
   font-size: 1.4em;
 }
