@@ -58,3 +58,6 @@ Route::get('stakeholder-home', 'Stakeholders\HomeController@index');
 
 Route::get('registration', 'RegistrationController@registration');
 // Route::post('registration', 'RegistrationController@create');
+
+// Reports
+Route::get('report', 'ReportController@index');

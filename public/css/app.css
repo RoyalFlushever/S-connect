@@ -13360,6 +13360,44 @@ button.close {
   font-weight: 400;
 }
 
+.reports-type .reports-img {
+  background: url("/images/reports type.png") no-repeat center;
+  height: 150px !important;
+}
+
+.reports-type h4 {
+  margin-bottom: 150px;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .reports-type {
+    /*safari and chrome*/
+  }
+
+  .reports-type select {
+    height: 50px;
+    line-height: 50px;
+    background: #f4f4f4;
+    font-size: 25px;
+  }
+}
+
+.reports-type select::-moz-focus-inner {
+  /*Remove button padding in FF*/
+  border: 0;
+  padding: 0;
+}
+
+@-moz-document url-prefix()  {
+  .reports-type {
+    /* targets Firefox only */
+  }
+
+  .reports-type select {
+    padding: 15px 0 !important;
+  }
+}
+
 @media (min-width: 992px) {
   .col-md-4,
   .col-md-12 {

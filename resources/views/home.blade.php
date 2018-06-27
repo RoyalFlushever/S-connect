@@ -52,7 +52,7 @@
             <div style="margin: 20px 17px;">
                 <h3 class="module-title">Reports</h3>
                 <ul>
-                    <li><a>Create</a></li>
+                    <li><a href="/reports">Create</a></li>
                     <li><a>View Summary Reports</a></li>
                 </ul>
             </div>

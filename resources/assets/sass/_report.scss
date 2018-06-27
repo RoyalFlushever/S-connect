@@ -1,0 +1,35 @@
+.reports-type {
+
+    .reports-img {
+        background: url('/images/reports type.png') no-repeat center;
+        height: 150px!important;
+    }
+
+    h4 {
+        margin-bottom: 150px;
+    }
+    
+    @media screen and (-webkit-min-device-pixel-ratio:0) {
+        /*safari and chrome*/
+        select {
+            height: 50px;
+            line-height: 50px;
+            background: #f4f4f4;
+            font-size: 25px;
+        }
+    }
+    
+    select::-moz-focus-inner {
+        /*Remove button padding in FF*/
+        border: 0;
+        padding: 0;
+    }
+    
+    @-moz-document url-prefix() {
+        /* targets Firefox only */
+        select {
+            padding: 15px 0 !important;
+        }
+    }
+
+}
