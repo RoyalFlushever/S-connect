@@ -13373,7 +13373,7 @@ button.close {
 }
 
 .admin-dashboard img {
-  height: 130px;
+  height: 120px;
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -13386,6 +13386,10 @@ button.close {
 
 .admin-dashboard .gray-border .text-center {
   height: 200px;
+}
+
+.admin-dashboard .gray-border .text-center > p {
+  font-size: 16px;
 }
 
 .admin-dashboard .gray-border .text-center .updated_at {
