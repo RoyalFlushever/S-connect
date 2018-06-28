@@ -42,6 +42,41 @@
     }
 }
 
+.admin-dashboard {
+    margin-top: 10px;
+    padding: 0px 10px;
+    position: relative;
+
+    h3 {
+        font-weight: 600;
+        font-size: 24px;
+        height: 50px;
+    }
+
+    img {
+        height: 130px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+    }
+
+    .gray-border {
+        padding: 0px 10px;
+
+        .text-center {
+            height: 200px;
+
+            .updated_at {
+                position: absolute;
+                left: 25px;
+                bottom: 10px;
+                color: $iconnect-lightgray;
+            }
+        }
+    }
+}
+
 .filter {
 
     margin-top: 40px;
@@ -49,9 +84,9 @@
 
     form {
 
-        div.form-group:first-child {
-            margin-left: 30px;
-        }
+        // div.form-group:first-child {
+        //     // margin-left: 30px;
+        // }
 
         div.form-group:last-child {
             margin-top: 20px;
@@ -76,6 +111,16 @@
         outline-offset:-1px;
         // -webkit-appearance: none;
     }
+
+    input[type=text] {
+        font-size: 20px;
+        margin-left: 20px;
+        padding-right: 80px
+    }
+
+    .search-table {
+        margin-top: 20px;
+    }
 }
 
 table.my-students {
@@ -94,4 +139,17 @@ table.my-students {
     a.btn-yellow {
         color: $iconnect-gray;
     }
+
+    select {
+        height: 25px;
+        line-height: 25px;
+        font-size: 14px;
+        border-radius: 0px;
+        outline: 1px inset black;
+        outline-offset:-1px;
+    }
+}
+
+.filter.no-margin {
+    margin: 10px;
 }

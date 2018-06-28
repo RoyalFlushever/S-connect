@@ -13360,13 +13360,44 @@ button.close {
   font-weight: 400;
 }
 
+.admin-dashboard {
+  margin-top: 10px;
+  padding: 0px 10px;
+  position: relative;
+}
+
+.admin-dashboard h3 {
+  font-weight: 600;
+  font-size: 24px;
+  height: 50px;
+}
+
+.admin-dashboard img {
+  height: 130px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.admin-dashboard .gray-border {
+  padding: 0px 10px;
+}
+
+.admin-dashboard .gray-border .text-center {
+  height: 200px;
+}
+
+.admin-dashboard .gray-border .text-center .updated_at {
+  position: absolute;
+  left: 25px;
+  bottom: 10px;
+  color: #757575;
+}
+
 .filter {
   margin-top: 40px;
   margin-bottom: 70px;
-}
-
-.filter form div.form-group:first-child {
-  margin-left: 30px;
 }
 
 .filter form div.form-group:last-child {
@@ -13391,6 +13422,16 @@ button.close {
   outline-offset: -1px;
 }
 
+.filter input[type=text] {
+  font-size: 20px;
+  margin-left: 20px;
+  padding-right: 80px;
+}
+
+.filter .search-table {
+  margin-top: 20px;
+}
+
 table.my-students {
   margin-bottom: 50px;
 }
@@ -13406,6 +13447,19 @@ table.my-students a {
 
 table.my-students a.btn-yellow {
   color: #616161;
+}
+
+table.my-students select {
+  height: 25px;
+  line-height: 25px;
+  font-size: 14px;
+  border-radius: 0px;
+  outline: 1px inset black;
+  outline-offset: -1px;
+}
+
+.filter.no-margin {
+  margin: 10px;
 }
 
 .reports-type .reports-img {

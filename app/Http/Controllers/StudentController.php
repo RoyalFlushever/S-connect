@@ -52,8 +52,44 @@ class StudentController extends Controller
         $students = Student::query()->orderBy('last_name', 'asc')->orderBy('first_name', 'asc')
             ->orderBy('middle_name', 'asc')->orderBy('id', 'asc')->where('mentor_id', '=', Auth::user()->id)->get();
 
-        return view('students.my-students', ['students' => $students]);
+        // Administrator : 1
+        // Facilitator : 2
+        // Site Facilitator : 3
+        // Mentor : 4
+        $user_role = (int)Auth::user()->user_role_id;
+        return view('students.my-students', ['students' => $students, 'role' => $user_role]);
     }
+
+    /**
+     * Display a list of students being directly mentored by the authenticated user
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function transfer() {
+        $students = Student::query()->orderBy('last_name', 'asc')->orderBy('first_name', 'asc')
+            ->orderBy('middle_name', 'asc')->orderBy('id', 'asc')->where('mentor_id', '=', Auth::user()->id)->get();
+
+        $schools = [
+            'West Middle School',
+            'Left High School',
+            'Right High School',
+            'East Middle School'
+        ];
+        $mentors = [
+            'Dr. Dre',
+            'Dr. Who',
+            'Dr. Lee',
+            'Dr. Young'
+        ];
+
+        // Administrator : 1
+        // Facilitator : 2
+        // Site Facilitator : 3
+        // Mentor : 4
+        $user_role = (int)Auth::user()->user_role_id;
+        return view('students.transfer-students', ['students' => $students, 'role' => $user_role, 'schools' => $schools, 'mentors' => $mentors]);
+    }
+
 
     /**
      * Show the form for creating a new resource.

@@ -35,6 +35,8 @@ Route::resource('students', 'StudentController', ['only' => [
     'index', 'create', 'store'
 ]]);
 Route::get('my-students', 'StudentController@myStudents');
+Route::get('transfer', 'StudentController@transfer');
+
 Route::resource('users', 'UserController', ['only' => [
     'index', 'create', 'store'
 ]]);

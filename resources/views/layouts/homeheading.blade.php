@@ -1,4 +1,4 @@
-<div class="row" style="margin-bottom: 100px;">
+<div class="row" style="margin-bottom: 80px;">
     @if ($_SERVER['REQUEST_URI'] !="/home")
         <div class="pull-left home-icon">
             <span class="round-tab">
