@@ -1,18 +1,34 @@
 // Dashboard Styles
 
 .dashboard {
-    height: 148px;
+    
     text-align: center;
-    padding: 0px;
+    padding: 20px;
     margin-bottom: 20px;
 
     div {
         float: left;
     }
 
-    div:last-child {
-       margin:0px auto;
-       width: max-content; 
+    .dashboard-icon {
+        width: 40%;
+    }
+
+    div.gray-border {
+        width: 100%;
+
+        .dashboard-content {
+            width: 59%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 148px;
+        }
+    }
+
+    img {
+        height: auto;
+        min-height: 148px;
     }
 
     ul {
@@ -20,7 +36,7 @@
         display: inline-flex;
 
         li {
-            margin: 5px 10px;
+            margin: 5px 0px 5px 10px;
             padding-right: 10px;
             font-size: 1.2em;
             border-right: 1px solid $iconnect-gray;
@@ -54,7 +70,7 @@
     }
 
     img {
-        height: 120px;
+        // height: 120px;
         display: block;
         margin-left: auto;
         margin-right: auto;

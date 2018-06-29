@@ -13315,9 +13315,8 @@ button.close {
 }
 
 .dashboard {
-  height: 148px;
   text-align: center;
-  padding: 0px;
+  padding: 20px;
   margin-bottom: 20px;
 }
 
@@ -13325,11 +13324,31 @@ button.close {
   float: left;
 }
 
-.dashboard div:last-child {
-  margin: 0px auto;
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+.dashboard .dashboard-icon {
+  width: 40%;
+}
+
+.dashboard div.gray-border {
+  width: 100%;
+}
+
+.dashboard div.gray-border .dashboard-content {
+  width: 59%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 148px;
+}
+
+.dashboard img {
+  height: auto;
+  min-height: 148px;
 }
 
 .dashboard ul {
@@ -13340,7 +13359,7 @@ button.close {
 }
 
 .dashboard ul li {
-  margin: 5px 10px;
+  margin: 5px 0px 5px 10px;
   padding-right: 10px;
   font-size: 1.2em;
   border-right: 1px solid #616161;
@@ -13373,7 +13392,6 @@ button.close {
 }
 
 .admin-dashboard img {
-  height: 120px;
   display: block;
   margin-left: auto;
   margin-right: auto;
