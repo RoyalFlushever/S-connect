@@ -10,8 +10,8 @@
     @endif
 
     @include('layouts.homeheading')
-
-    <!-- <div class="panel panel-default">
+<!-- 
+    <div class="panel panel-default">
         <div class="panel-heading">
             <h1 class="panel-title">Dashboard</h1>
         </div>
@@ -28,8 +28,8 @@
             @endforelse
             </div>
         </div>
-    </div> -->
-
+    </div>
+ -->
     @if ($role == 1)
     <div class="row">
         <div class="col-md-3 col-xs-12 admin-dashboard">

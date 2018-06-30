@@ -2,9 +2,11 @@
     @if ($_SERVER['REQUEST_URI'] !="/home")
         <div class="pull-left home-icon">
             <span class="round-tab">
-                <i class="fa fa-home fa-2x" aria-hidden="true"></i>
-                <br>
-                Home
+                <a href="/home">
+                    <i class="fa fa-home fa-2x" aria-hidden="true"></i>
+                    <br>
+                    Home
+                </a>
             </span>
         </div>
     @endif
