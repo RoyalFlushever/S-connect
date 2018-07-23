@@ -28,6 +28,7 @@ class CreateMonitoringSessionsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('monitoring_session_responses');
         Schema::dropIfExists('monitoring_sessions');
     }
 }
