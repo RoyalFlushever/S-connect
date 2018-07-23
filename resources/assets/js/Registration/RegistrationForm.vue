@@ -29,16 +29,16 @@
 						<div class="tab-pane fade in active" role="tabpanel" id="stepper-step-1">
 							<h2 class="question">Are you a School District Employee?</h2>
 							<div class="action">
-								<button type="button" class="btn btn-default btn-cta" @click="selSDE(true)">YES</button>
-								<button type="button" class="btn btn-default btn-cta btn-red" @click="selSDE(false)">NO</button>
+								<button type="button" class="btn btn-default btn-cta" @click="selIsEmployee(1)">YES</button>
+								<button type="button" class="btn btn-default btn-cta btn-red" @click="selIsEmployee(0)">NO</button>
 							</div>
-							<a href="#" class="btn btn-info btn-lg">
+							<a href="#" class="btn btn-info btn-lg" @click="alertYN()">
 								<span class="glyphicon glyphicon-arrow-right"></span> Step 2/3
 							</a>
 						</div>
 						<div class="tab-pane fade" role="tabpanel" id="stepper-step-2">
 							<div class="action">
-								<div v-if="userInfo.isSDE" class="row">
+								<div v-if="userInfo.isEmployee" class="row">
 									<div class="col-md-4 role">
 										<div class="panel panel-default select-pannel gray-border">
 											<div class="pannel-body select-pannel-body gray-border">
@@ -76,7 +76,7 @@
 									<h2 class="question">I am going to register as a Stakeholder.</h2>
 								</div>
 							</div>
-							<a href="#" class="btn btn-info btn-lg">
+							<a href="#" class="btn btn-info btn-lg" @click="goto('stepper-step-3')">
 								<span class="glyphicon glyphicon-arrow-right"></span> Step 3/3
 							</a>
 						</div>
@@ -106,13 +106,13 @@
 											<option v-for="county in counties" :key="county.id" :value="county.id">{{county.name}}</option>
 										</select>
 									</div>
-									<div v-if="userInfo.isSDE" class="col-xs-3">
+									<div v-if="userInfo.isEmployee" class="col-xs-3">
 										<select v-model="userInfo.districtId" :disabled="userInfo.countyId==0" class="form-control" autocomplete="address-level2" @change="selDistrict()">
 											<option value="0">District</option>
 											<option v-for="district in districts" :key="district.id" :value="district.id">{{district.name}}</option>
 										</select>
 									</div>
-									<div v-if="userInfo.roleId > 2 && userInfo.isSDE" class="col-xs-3">
+									<div v-if="userInfo.roleId > 2 && userInfo.isEmployee" class="col-xs-3">
 										<select v-model="userInfo.schoolId" :disabled="userInfo.districtId==0" name="school" id="school" class="form-control" @change="selSchool()">
 											<option value="0">School</option>
 											<option v-for="school in schools" :key="school.id" :value="school.id">{{school.name}}</option>
@@ -120,14 +120,15 @@
 									</div>
 								</div>
 								<div class="query form-group row">
-									<div v-if="userInfo.isSDE && userInfo.roleId == 4" class="col-xs-10 col-xs-offset-1">
+									<div v-if="userInfo.isEmployee && userInfo.roleId == 4" class="col-xs-10 col-xs-offset-1">
 										<select name="site_facilitator" id="site_facilitator" class="form-control">
 											<option value="">Select Site Facilitator</option>
 										</select>
 									</div>
 									<div class="col-xs-10 col-xs-offset-1">
 										<select name="referral_source" id="referral_source" class="form-control">
-											<option value="">How did you hear about I-Connect</option>
+											<option value="0">How did you hear about I-Connect</option>
+											<option v-for="item in referalSource" v-if="item.is_employee==userInfo.isEmployee" :value="item.id" :key="item.id">{{item.contents}}</option>
 										</select>
 									</div>
 								</div>
@@ -246,7 +247,7 @@ export default {
       showModal: false,
       issueModal: false,
       userInfo: {
-        isSDE: false,
+        isEmployee: 0,
 				roleId: null,
 				firstName: "",
 				lastName: "",
@@ -256,18 +257,26 @@ export default {
         districtId: 0,
         schoolId: 0
       },
+			referalSource: [],
       states: [],
       counties: [],
       districts: [],
-      schools: []
+      schools: [],
     };
   },
   methods: {
+    alertYN: function() {
+			this.$toasted.show("Please select your answer.", {
+					theme: "outline",
+					position: "top-center",
+					duration: 3000,
+			});
+    },
     goto: function(tabName) {
       $('.nav-tabs a[href="#' + tabName + '"]').tab("show");
     },
-    selSDE: function(employee) {
-      this.userInfo.isSDE = employee;
+    selIsEmployee: function(employee) {
+      this.userInfo.isEmployee = employee;
       this.goto("stepper-step-2");
     },
     selUserRole(roleId) {
@@ -312,6 +321,9 @@ export default {
   mounted() {
     Axios.get("/states").then(result => {
       this.states = result.data;
+    });
+    Axios.get("/referralSource").then(result => {
+      this.referalSource = result.data;
     });
   },
 };

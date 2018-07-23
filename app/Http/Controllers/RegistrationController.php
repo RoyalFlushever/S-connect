@@ -83,4 +83,10 @@ class RegistrationController extends Controller
         $districtId = $request->input("districtId");
         return json_encode(DB::select("select * from us_schools where district_id={$districtId} order by name"));
     }
+    /**
+     * get referralSource list
+     */
+    public function referralSource() {
+        return json_encode(DB::select("select * from referral_source order by id"));
+    }
 }

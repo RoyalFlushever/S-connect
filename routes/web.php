@@ -69,3 +69,5 @@ Route::get('states', 'RegistrationController@states');
 Route::post('counties', 'RegistrationController@counties');
 Route::post('districts', 'RegistrationController@districts');
 Route::post('schools', 'RegistrationController@schools');
+
+Route::get('referralSource', 'RegistrationController@referralSource');
