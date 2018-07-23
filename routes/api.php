@@ -16,3 +16,4 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/students/{username}', 'Api\StudentController@show');
 
 Route::middleware('auth:api')->post('/monitoring_sessions', 'Api\MonitoringSessionController@store');
+

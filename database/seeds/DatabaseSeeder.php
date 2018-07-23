@@ -48,7 +48,11 @@ class DatabaseSeeder extends Seeder
         $this->call('MonitoringResponseSeeder');
         $this->callSeederForEnvironment('Student');  // May also assign monitoring locations and citizenship values
         $this->callSeederForEnvironment('Stakeholder');
-
+        
         $this->callSeederForEnvironment('OauthClient');
+        $this->call('UsStatesSeeder');
+        $this->call('UsCountiesSeeder');
+        $this->call('UsDistrictsSeeder');
+        $this->call('UsSchoolsSeeder');
     }
 }

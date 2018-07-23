@@ -18,10 +18,15 @@ Vue.component('dual-list', require('./components/DualList.vue'));
 Vue.component('registration-auth-fields', require('./components/RegistrationAuthFields.vue'));
 Vue.component('registration-form', require('./Registration/RegistrationForm.vue'));
 Vue.component('v-modal', require('./components/VModal.vue'));
+Vue.component('welcome-form', require('./welcome/WelcomeForm.vue'));
 
 
+
+import Toasted from 'vue-toasted';
+
+Vue.use(Toasted);
 
 // Instantiate root Vue
-app = new Vue({
-    el: '#app'
+var app = new Vue({
+    el: '#app',
 });

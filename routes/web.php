@@ -63,3 +63,9 @@ Route::get('registration', 'RegistrationController@registration');
 
 // Reports
 Route::get('report', 'ReportController@index');
+
+
+Route::get('states', 'RegistrationController@states');
+Route::post('counties', 'RegistrationController@counties');
+Route::post('districts', 'RegistrationController@districts');
+Route::post('schools', 'RegistrationController@schools');
