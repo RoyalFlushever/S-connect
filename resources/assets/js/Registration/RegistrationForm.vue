@@ -126,9 +126,9 @@
 										</select>
 									</div>
 									<div class="col-xs-10 col-xs-offset-1">
-										<select name="referral_source" id="referral_source" class="form-control">
+										<select v-model="userInfo.selReferralSource" class="form-control">
 											<option value="0">How did you hear about I-Connect</option>
-											<option v-for="item in referalSource" v-if="item.is_employee==userInfo.isEmployee" :value="item.id" :key="item.id">{{item.contents}}</option>
+											<option v-for="item in referralSource" v-if="item.is_employee==userInfo.isEmployee" :value="item.id" :key="item.id">{{item.contents}}</option>
 										</select>
 									</div>
 								</div>
@@ -255,9 +255,10 @@ export default {
         stateId: 0,
         countyId: 0,
         districtId: 0,
-        schoolId: 0
+				schoolId: 0,
+				selReferralSource: 0,
       },
-			referalSource: [],
+			referralSource: [],
       states: [],
       counties: [],
       districts: [],
@@ -273,6 +274,14 @@ export default {
 			});
     },
     goto: function(tabName) {
+			if(tabName == "stepper-step-3" && this.userInfo.isEmployee == 1) {
+				this.$toasted.show("Please select your role!", {
+						theme: "outline",
+						position: "top-center",
+						duration: 3000,
+				});
+				return;
+			}
       $('.nav-tabs a[href="#' + tabName + '"]').tab("show");
     },
     selIsEmployee: function(employee) {
@@ -281,7 +290,7 @@ export default {
     },
     selUserRole(roleId) {
       this.userInfo.roleId = roleId;
-      this.goto("stepper-step-3");
+      $('.nav-tabs a[href="#stepper-step-3"]').tab("show");
     },
 
     selState: function() {
@@ -323,7 +332,7 @@ export default {
       this.states = result.data;
     });
     Axios.get("/referralSource").then(result => {
-      this.referalSource = result.data;
+      this.referralSource = result.data;
     });
   },
 };

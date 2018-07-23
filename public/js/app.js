@@ -3583,9 +3583,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         stateId: 0,
         countyId: 0,
         districtId: 0,
-        schoolId: 0
+        schoolId: 0,
+        selReferralSource: 0
       },
-      referalSource: [],
+      referralSource: [],
       states: [],
       counties: [],
       districts: [],
@@ -3601,6 +3602,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
     goto: function goto(tabName) {
+      if (tabName == "stepper-step-3" && this.userInfo.isEmployee == 1) {
+        this.$toasted.show("Please select your role!", {
+          theme: "outline",
+          position: "top-center",
+          duration: 3000
+        });
+        return;
+      }
       $('.nav-tabs a[href="#' + tabName + '"]').tab("show");
     },
     selIsEmployee: function selIsEmployee(employee) {
@@ -3609,7 +3618,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     selUserRole: function selUserRole(roleId) {
       this.userInfo.roleId = roleId;
-      this.goto("stepper-step-3");
+      $('.nav-tabs a[href="#stepper-step-3"]').tab("show");
     },
 
 
@@ -3654,7 +3663,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       _this4.states = result.data;
     });
     __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get("/referralSource").then(function (result) {
-      _this4.referalSource = result.data;
+      _this4.referralSource = result.data;
     });
   }
 });
@@ -5354,10 +5363,33 @@ var render = function() {
                         _c(
                           "select",
                           {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.userInfo.selReferralSource,
+                                expression: "userInfo.selReferralSource"
+                              }
+                            ],
                             staticClass: "form-control",
-                            attrs: {
-                              name: "referral_source",
-                              id: "referral_source"
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.userInfo,
+                                  "selReferralSource",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
                             }
                           },
                           [
@@ -5365,7 +5397,7 @@ var render = function() {
                               _vm._v("How did you hear about I-Connect")
                             ]),
                             _vm._v(" "),
-                            _vm._l(_vm.referalSource, function(item) {
+                            _vm._l(_vm.referralSource, function(item) {
                               return item.is_employee == _vm.userInfo.isEmployee
                                 ? _c(
                                     "option",
