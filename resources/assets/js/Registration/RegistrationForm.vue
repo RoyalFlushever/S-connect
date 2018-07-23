@@ -29,8 +29,8 @@
 						<div class="tab-pane fade in active" role="tabpanel" id="stepper-step-1">
 							<h2 class="question">Are you a School District Employee?</h2>
 							<div class="action">
-								<button type="button" class="btn btn-default btn-cta" @click="selSDE()">YES</button>
-								<button type="button" class="btn btn-default btn-cta btn-red">NO</button>
+								<button type="button" class="btn btn-default btn-cta" @click="selSDE(true)">YES</button>
+								<button type="button" class="btn btn-default btn-cta btn-red" @click="selSDE(false)">NO</button>
 							</div>
 							<a href="#" class="btn btn-info btn-lg">
 								<span class="glyphicon glyphicon-arrow-right"></span> Step 2/3
@@ -38,7 +38,7 @@
 						</div>
 						<div class="tab-pane fade" role="tabpanel" id="stepper-step-2">
 							<div class="action">
-								<div class="row">
+								<div v-if="userInfo.isSDE" class="row">
 									<div class="col-md-4 role">
 										<div class="panel panel-default select-pannel gray-border">
 											<div class="pannel-body select-pannel-body gray-border">
@@ -72,6 +72,9 @@
 										</div>
 									</div>
 								</div>
+								<div v-else>
+									<h2 class="question">I am going to register as a Stakeholder.</h2>
+								</div>
 							</div>
 							<a href="#" class="btn btn-info btn-lg">
 								<span class="glyphicon glyphicon-arrow-right"></span> Step 3/3
@@ -103,13 +106,13 @@
 											<option v-for="county in counties" :key="county.id" :value="county.id">{{county.name}}</option>
 										</select>
 									</div>
-									<div class="col-xs-3">
+									<div v-if="userInfo.isSDE" class="col-xs-3">
 										<select v-model="userInfo.districtId" :disabled="userInfo.countyId==0" class="form-control" autocomplete="address-level2" @change="selDistrict()">
 											<option value="0">District</option>
 											<option v-for="district in districts" :key="district.id" :value="district.id">{{district.name}}</option>
 										</select>
 									</div>
-									<div v-if="userInfo.roleId > 2" class="col-xs-3">
+									<div v-if="userInfo.roleId > 2 && userInfo.isSDE" class="col-xs-3">
 										<select v-model="userInfo.schoolId" :disabled="userInfo.districtId==0" name="school" id="school" class="form-control" @change="selSchool()">
 											<option value="0">School</option>
 											<option v-for="school in schools" :key="school.id" :value="school.id">{{school.name}}</option>
@@ -117,7 +120,7 @@
 									</div>
 								</div>
 								<div class="query form-group row">
-									<div class="col-xs-10 col-xs-offset-1">
+									<div v-if="userInfo.isSDE && userInfo.roleId == 4" class="col-xs-10 col-xs-offset-1">
 										<select name="site_facilitator" id="site_facilitator" class="form-control">
 											<option value="">Select Site Facilitator</option>
 										</select>
@@ -263,8 +266,8 @@ export default {
     goto: function(tabName) {
       $('.nav-tabs a[href="#' + tabName + '"]').tab("show");
     },
-    selSDE: function() {
-      this.userInfo.isSDE = true;
+    selSDE: function(employee) {
+      this.userInfo.isSDE = employee;
       this.goto("stepper-step-2");
     },
     selUserRole(roleId) {

@@ -3561,6 +3561,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -3591,8 +3594,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     goto: function goto(tabName) {
       $('.nav-tabs a[href="#' + tabName + '"]').tab("show");
     },
-    selSDE: function selSDE() {
-      this.userInfo.isSDE = true;
+    selSDE: function selSDE(employee) {
+      this.userInfo.isSDE = employee;
       this.goto("stepper-step-2");
     },
     selUserRole: function selUserRole(roleId) {
@@ -4794,7 +4797,7 @@ var render = function() {
                         attrs: { type: "button" },
                         on: {
                           click: function($event) {
-                            _vm.selSDE()
+                            _vm.selSDE(true)
                           }
                         }
                       },
@@ -4805,7 +4808,12 @@ var render = function() {
                       "button",
                       {
                         staticClass: "btn btn-default btn-cta btn-red",
-                        attrs: { type: "button" }
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            _vm.selSDE(false)
+                          }
+                        }
                       },
                       [_vm._v("NO")]
                     )
@@ -4823,88 +4831,94 @@ var render = function() {
                 },
                 [
                   _c("div", { staticClass: "action" }, [
-                    _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-md-4 role" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "panel panel-default select-pannel gray-border"
-                          },
-                          [
-                            _vm._m(3),
-                            _vm._v(" "),
+                    _vm.userInfo.isSDE
+                      ? _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-md-4 role" }, [
                             _c(
-                              "button",
+                              "div",
                               {
-                                staticClass: "btn btn-default btn-cta",
-                                attrs: { type: "button" },
-                                on: {
-                                  click: function($event) {
-                                    _vm.selUserRole(2)
-                                  }
-                                }
+                                staticClass:
+                                  "panel panel-default select-pannel gray-border"
                               },
-                              [_vm._v("Select")]
+                              [
+                                _vm._m(3),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-default btn-cta",
+                                    attrs: { type: "button" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.selUserRole(2)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Select")]
+                                )
+                              ]
                             )
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-4 role" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "panel panel-default select-pannel gray-border"
-                          },
-                          [
-                            _vm._m(4),
-                            _vm._v(" "),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-4 role" }, [
                             _c(
-                              "button",
+                              "div",
                               {
-                                staticClass: "btn btn-default btn-cta",
-                                attrs: { type: "button" },
-                                on: {
-                                  click: function($event) {
-                                    _vm.selUserRole(3)
-                                  }
-                                }
+                                staticClass:
+                                  "panel panel-default select-pannel gray-border"
                               },
-                              [_vm._v("Select")]
+                              [
+                                _vm._m(4),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-default btn-cta",
+                                    attrs: { type: "button" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.selUserRole(3)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Select")]
+                                )
+                              ]
                             )
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-4 role" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "panel panel-default select-pannel gray-border"
-                          },
-                          [
-                            _vm._m(5),
-                            _vm._v(" "),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-4 role" }, [
                             _c(
-                              "button",
+                              "div",
                               {
-                                staticClass: "btn btn-default btn-cta",
-                                attrs: { type: "button" },
-                                on: {
-                                  click: function($event) {
-                                    _vm.selUserRole(4)
-                                  }
-                                }
+                                staticClass:
+                                  "panel panel-default select-pannel gray-border"
                               },
-                              [_vm._v("Select")]
+                              [
+                                _vm._m(5),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-default btn-cta",
+                                    attrs: { type: "button" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.selUserRole(4)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Select")]
+                                )
+                              ]
                             )
-                          ]
-                        )
-                      ])
-                    ])
+                          ])
+                        ])
+                      : _c("div", [
+                          _c("h2", { staticClass: "question" }, [
+                            _vm._v("I am going to register as a Stakeholder.")
+                          ])
+                        ])
                   ]),
                   _vm._v(" "),
                   _vm._m(6)
@@ -5145,70 +5159,74 @@ var render = function() {
                         )
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-xs-3" }, [
-                        _c(
-                          "select",
-                          {
-                            directives: [
+                      _vm.userInfo.isSDE
+                        ? _c("div", { staticClass: "col-xs-3" }, [
+                            _c(
+                              "select",
                               {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.userInfo.districtId,
-                                expression: "userInfo.districtId"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: {
-                              disabled: _vm.userInfo.countyId == 0,
-                              autocomplete: "address-level2"
-                            },
-                            on: {
-                              change: [
-                                function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.$set(
-                                    _vm.userInfo,
-                                    "districtId",
-                                    $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  )
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.userInfo.districtId,
+                                    expression: "userInfo.districtId"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  disabled: _vm.userInfo.countyId == 0,
+                                  autocomplete: "address-level2"
                                 },
-                                function($event) {
-                                  _vm.selDistrict()
+                                on: {
+                                  change: [
+                                    function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        _vm.userInfo,
+                                        "districtId",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    },
+                                    function($event) {
+                                      _vm.selDistrict()
+                                    }
+                                  ]
                                 }
-                              ]
-                            }
-                          },
-                          [
-                            _c("option", { attrs: { value: "0" } }, [
-                              _vm._v("District")
-                            ]),
-                            _vm._v(" "),
-                            _vm._l(_vm.districts, function(district) {
-                              return _c(
-                                "option",
-                                {
-                                  key: district.id,
-                                  domProps: { value: district.id }
-                                },
-                                [_vm._v(_vm._s(district.name))]
-                              )
-                            })
-                          ],
-                          2
-                        )
-                      ]),
+                              },
+                              [
+                                _c("option", { attrs: { value: "0" } }, [
+                                  _vm._v("District")
+                                ]),
+                                _vm._v(" "),
+                                _vm._l(_vm.districts, function(district) {
+                                  return _c(
+                                    "option",
+                                    {
+                                      key: district.id,
+                                      domProps: { value: district.id }
+                                    },
+                                    [_vm._v(_vm._s(district.name))]
+                                  )
+                                })
+                              ],
+                              2
+                            )
+                          ])
+                        : _vm._e(),
                       _vm._v(" "),
-                      _vm.userInfo.roleId > 2
+                      _vm.userInfo.roleId > 2 && _vm.userInfo.isSDE
                         ? _c("div", { staticClass: "col-xs-3" }, [
                             _c(
                               "select",
@@ -5277,7 +5295,17 @@ var render = function() {
                         : _vm._e()
                     ]),
                     _vm._v(" "),
-                    _vm._m(7)
+                    _c("div", { staticClass: "query form-group row" }, [
+                      _vm.userInfo.isSDE && _vm.userInfo.roleId == 4
+                        ? _c(
+                            "div",
+                            { staticClass: "col-xs-10 col-xs-offset-1" },
+                            [_vm._m(7)]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm._m(8)
+                    ])
                   ]),
                   _vm._v(" "),
                   _c(
@@ -5933,36 +5961,36 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "query form-group row" }, [
-      _c("div", { staticClass: "col-xs-10 col-xs-offset-1" }, [
-        _c(
-          "select",
-          {
-            staticClass: "form-control",
-            attrs: { name: "site_facilitator", id: "site_facilitator" }
-          },
-          [
-            _c("option", { attrs: { value: "" } }, [
-              _vm._v("Select Site Facilitator")
-            ])
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-xs-10 col-xs-offset-1" }, [
-        _c(
-          "select",
-          {
-            staticClass: "form-control",
-            attrs: { name: "referral_source", id: "referral_source" }
-          },
-          [
-            _c("option", { attrs: { value: "" } }, [
-              _vm._v("How did you hear about I-Connect")
-            ])
-          ]
-        )
-      ])
+    return _c(
+      "select",
+      {
+        staticClass: "form-control",
+        attrs: { name: "site_facilitator", id: "site_facilitator" }
+      },
+      [
+        _c("option", { attrs: { value: "" } }, [
+          _vm._v("Select Site Facilitator")
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-xs-10 col-xs-offset-1" }, [
+      _c(
+        "select",
+        {
+          staticClass: "form-control",
+          attrs: { name: "referral_source", id: "referral_source" }
+        },
+        [
+          _c("option", { attrs: { value: "" } }, [
+            _vm._v("How did you hear about I-Connect")
+          ])
+        ]
+      )
     ])
   }
 ]
