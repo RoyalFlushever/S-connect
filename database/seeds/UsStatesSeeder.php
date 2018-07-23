@@ -1,7 +1,5 @@
 <?php
 
-ini_set('memory_limit', '1024M');
-
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
@@ -19,7 +17,6 @@ class UsStatesSeeder extends Seeder
 
 
         $lines = file($inputFileName);
-        // var_dump($lines);
 
         $stateCount = 0;
 

@@ -1,7 +1,5 @@
 <?php
 
-ini_set('memory_limit', '1024M');
-
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
@@ -17,13 +15,7 @@ class UsCountiesSeeder extends Seeder
     {
         $inputFileName = 'school.txt';
 
-        $target = "state";
-        // $target = "county";
-        // $target = "district";
-        // $target = "school";
-
         $lines = file($inputFileName);
-        // var_dump($lines);
 
         $counties = [];
         $stateCount = 0;

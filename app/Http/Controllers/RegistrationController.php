@@ -25,6 +25,16 @@ class RegistrationController extends Controller
     {
         return view('welcome');
     }
+
+    /**
+     * Show the iConnect Terms of Service page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function tos()
+    {
+        return view('tos');
+    }
     
     /**
      * Show Multistep registration form
