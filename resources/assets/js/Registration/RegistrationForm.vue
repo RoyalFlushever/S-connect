@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="row text-center">
 			<div class="col-md-9 stepper">
-				<form action="POST">
+				<form action="#">
 					<div class="wizard-progress-with-circle">
 						<div class="wizard-progress-bar" style="background-color: rgb(231, 76, 60); color: rgb(231, 76, 60); width: 16.6667%;">
 						</div>
@@ -84,13 +84,13 @@
 							<div class="action gray-border">
 								<div class="personal-info form-group row">
 									<div class="col-xs-3">
-										<input id="first_name" type="text" class="form-control" v-model="userInfo.firstName" placeholder="First Name" autocomplete="given-name">
+										<input id="first_name" type="text" class="form-control" v-model="userInfo.first_name" placeholder="First Name" autocomplete="given-name">
 									</div>
 									<div class="col-xs-3">
-										<input id="last_name" type="text" class="form-control" v-model="userInfo.lastName" placeholder="Last Name" autocomplete="family-name">
+										<input id="last_name" type="text" class="form-control" v-model="userInfo.last_name" placeholder="Last Name" autocomplete="family-name">
 									</div>
 									<div class="col-xs-6">
-										<input id="school_email" type="email" class="form-control" v-model="userInfo.schoolEmail" placeholder="School Email Address" autocomplete="email" required>
+										<input id="school_email" type="email" class="form-control" v-model="userInfo.email" placeholder="School Email Address" autocomplete="email" required>
 									</div>
 								</div>
 								<div class="location form-group row-box">
@@ -112,7 +112,7 @@
 											<option v-for="district in districts" :key="district.id" :value="district.id">{{district.name}}</option>
 										</select>
 									</div>
-									<div v-if="userInfo.roleId > 2 && userInfo.isEmployee" class="col-xs-3">
+									<div v-if="userInfo.user_role > 2 && userInfo.isEmployee" class="col-xs-3">
 										<select v-model="userInfo.schoolId" :disabled="userInfo.districtId==0" name="school" id="school" class="form-control" @change="selSchool()">
 											<option value="0">School</option>
 											<option v-for="school in schools" :key="school.id" :value="school.id">{{school.name}}</option>
@@ -120,7 +120,7 @@
 									</div>
 								</div>
 								<div class="query form-group row">
-									<div v-if="userInfo.isEmployee && userInfo.roleId == 4" class="col-xs-10 col-xs-offset-1">
+									<div v-if="userInfo.isEmployee && userInfo.user_role == 4" class="col-xs-10 col-xs-offset-1">
 										<select name="site_facilitator" id="site_facilitator" class="form-control">
 											<option value="">Select Site Facilitator</option>
 										</select>
@@ -133,9 +133,7 @@
 									</div>
 								</div>
 							</div>
-							<button href="#" class="btn btn-lg btn-cta registration-btn"  id="show-modal" @click="regUser()">
-								Finish Registration!
-							</button>
+							<button class="btn btn-lg btn-cta registration-btn"  id="show-modal" @click="regUser()">Finish Registration!</button>
 							<div>
 								<button id="issue-modal" type="button" class="btn btn-lg issue btn-red" @click="issueModal = true">
 									Registration Issue
@@ -202,7 +200,7 @@
 											<option v-for="district in districts" :key="district.id" :value="district.id">{{district.name}}</option>
 										</select>
 									</div>
-									<div v-if="userInfo.roleId > 2" class="col-xs-3">
+									<div v-if="userInfo.user_role > 2" class="col-xs-3">
 										<select v-model="userInfo.schoolId" :disabled="userInfo.districtId==0" name="school" id="school" class="form-control" @change="selSchool()">
 											<option value="0">School</option>
 											<option v-for="school in schools" :key="school.id" :value="school.id">{{school.name}}</option>
@@ -248,10 +246,11 @@ export default {
       issueModal: false,
       userInfo: {
         isEmployee: 0,
-				roleId: null,
-				firstName: "",
-				lastName: "",
-				schoolEmail: "",
+				user_role: null,
+				first_name: "",
+				last_name: "",
+				email: "",
+				password: "",
         stateId: 0,
         countyId: 0,
         districtId: 0,
@@ -288,8 +287,8 @@ export default {
       this.userInfo.isEmployee = employee;
       this.goto("stepper-step-2");
     },
-    selUserRole(roleId) {
-      this.userInfo.roleId = roleId;
+    selUserRole(user_role) {
+      this.userInfo.user_role = user_role;
       $('.nav-tabs a[href="#stepper-step-3"]').tab("show");
     },
 
@@ -323,9 +322,35 @@ export default {
 		selSchool: function () {},
 
 		regUser: function () {
-			this.showModal = true;
+			
+			this.userInfo.password = this.userInfo.email;
+
+			Axios.post("/registerUser", this.userInfo)
+				.then(
+					result => {
+						console.log(result);
+						this.showModal = true;
+					},
+					error => {
+						console.log(error.response.data);
+						for (const key in error.response.data) {
+							// console.log(key);
+							this.$toasted.show(error.response.data[key], {
+									theme: "outline",
+									position: "top-center",
+									duration: 3000,
+							});
+						}
+						// error.response.data.forEach(element => {
+						// 	this.$toasted.show(element, {
+						// 			theme: "outline",
+						// 			position: "top-center",
+						// 			duration: 3000,
+						// 	});
+						// });
+					}
+				);
 		},
-		
   },
   mounted() {
     Axios.get("/states").then(result => {

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Hash;
+use App\User;
+use function GuzzleHttp\json_encode;
 class RegistrationController extends Controller
 {
     /**
@@ -51,8 +54,47 @@ class RegistrationController extends Controller
      * @param
      * @return
      */
-    public function create() {
+    public function registerUser(Request $request) {
 
+        $validate_arr = [
+            'first_name' => 'required',
+            'last_name'  => 'required',
+            'email'      => 'required|email|unique:users,email',
+            // 'password'   => 'required',
+            'stateId'  => 'required|integer|min:1',
+            'countyId'  => 'required|integer|min:1',
+        ];
+        
+        if($request->input('isEmployee') == 1) {
+            $validate_arr += [
+                'districtId' => 'required|integer|min:1',
+            ];
+        }
+        if($request->input('user_role') > 2) {
+            $validate_arr += ['schoolId' => 'required|integer|min:1'];
+        }
+
+        $this->validate($request, $validate_arr);
+
+        // Password needs to be hashed before storing
+        $attributes = $request->only(['first_name', 'middle_name', 'last_name', 'email']);
+        $attributes['password'] = Hash::make($request->input('password'));
+
+        // Wrap this in a transaction saving separate relationships
+        $newUser = new User($attributes);
+        $newUser->user_role()->associate($request->input('user_role'));
+
+        DB::beginTransaction();
+
+        if ($newUser->save()) {
+            DB::commit();
+            return json_encode(["result" => "success"]);
+        }
+        else {
+            // Generic failure handling. TODO: Determine if we need to use more detailed troubleshooting messages
+            DB::rollBack();
+            return json_encode(["result" => "failure"]);
+        }
     }
 
     /**

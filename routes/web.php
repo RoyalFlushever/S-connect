@@ -65,9 +65,11 @@ Route::get('registration', 'RegistrationController@registration');
 Route::get('report', 'ReportController@index');
 
 
-Route::get('states', 'RegistrationController@states');
-Route::post('counties', 'RegistrationController@counties');
-Route::post('districts', 'RegistrationController@districts');
-Route::post('schools', 'RegistrationController@schools');
+Route::get('states',            'RegistrationController@states');
+Route::post('counties',         'RegistrationController@counties');
+Route::post('districts',        'RegistrationController@districts');
+Route::post('schools',          'RegistrationController@schools');
 
-Route::get('referralSource', 'RegistrationController@referralSource');
+Route::get('referralSource',    'RegistrationController@referralSource');
+
+Route::post('registerUser',     'RegistrationController@registerUser');

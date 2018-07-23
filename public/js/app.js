@@ -3563,8 +3563,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 
 
@@ -3576,10 +3574,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       issueModal: false,
       userInfo: {
         isEmployee: 0,
-        roleId: null,
-        firstName: "",
-        lastName: "",
-        schoolEmail: "",
+        user_role: null,
+        first_name: "",
+        last_name: "",
+        email: "",
+        password: "",
         stateId: 0,
         countyId: 0,
         districtId: 0,
@@ -3616,8 +3615,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.userInfo.isEmployee = employee;
       this.goto("stepper-step-2");
     },
-    selUserRole: function selUserRole(roleId) {
-      this.userInfo.roleId = roleId;
+    selUserRole: function selUserRole(user_role) {
+      this.userInfo.user_role = user_role;
       $('.nav-tabs a[href="#stepper-step-3"]').tab("show");
     },
 
@@ -3652,18 +3651,41 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     selSchool: function selSchool() {},
 
     regUser: function regUser() {
-      this.showModal = true;
-    }
+      var _this4 = this;
 
+      this.userInfo.password = this.userInfo.email;
+
+      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/registerUser", this.userInfo).then(function (result) {
+        console.log(result);
+        _this4.showModal = true;
+      }, function (error) {
+        console.log(error.response.data);
+        for (var key in error.response.data) {
+          // console.log(key);
+          _this4.$toasted.show(error.response.data[key], {
+            theme: "outline",
+            position: "top-center",
+            duration: 3000
+          });
+        }
+        // error.response.data.forEach(element => {
+        // 	this.$toasted.show(element, {
+        // 			theme: "outline",
+        // 			position: "top-center",
+        // 			duration: 3000,
+        // 	});
+        // });
+      });
+    }
   },
   mounted: function mounted() {
-    var _this4 = this;
+    var _this5 = this;
 
     __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get("/states").then(function (result) {
-      _this4.states = result.data;
+      _this5.states = result.data;
     });
     __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get("/referralSource").then(function (result) {
-      _this4.referralSource = result.data;
+      _this5.referralSource = result.data;
     });
   }
 });
@@ -4793,7 +4815,7 @@ var render = function() {
         "div",
         { staticClass: "col-md-9 stepper" },
         [
-          _c("form", { attrs: { action: "POST" } }, [
+          _c("form", { attrs: { action: "#" } }, [
             _vm._m(0),
             _vm._v(" "),
             _vm._m(1),
@@ -4995,8 +5017,8 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.userInfo.firstName,
-                              expression: "userInfo.firstName"
+                              value: _vm.userInfo.first_name,
+                              expression: "userInfo.first_name"
                             }
                           ],
                           staticClass: "form-control",
@@ -5006,7 +5028,7 @@ var render = function() {
                             placeholder: "First Name",
                             autocomplete: "given-name"
                           },
-                          domProps: { value: _vm.userInfo.firstName },
+                          domProps: { value: _vm.userInfo.first_name },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
@@ -5014,7 +5036,7 @@ var render = function() {
                               }
                               _vm.$set(
                                 _vm.userInfo,
-                                "firstName",
+                                "first_name",
                                 $event.target.value
                               )
                             }
@@ -5028,8 +5050,8 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.userInfo.lastName,
-                              expression: "userInfo.lastName"
+                              value: _vm.userInfo.last_name,
+                              expression: "userInfo.last_name"
                             }
                           ],
                           staticClass: "form-control",
@@ -5039,7 +5061,7 @@ var render = function() {
                             placeholder: "Last Name",
                             autocomplete: "family-name"
                           },
-                          domProps: { value: _vm.userInfo.lastName },
+                          domProps: { value: _vm.userInfo.last_name },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
@@ -5047,7 +5069,7 @@ var render = function() {
                               }
                               _vm.$set(
                                 _vm.userInfo,
-                                "lastName",
+                                "last_name",
                                 $event.target.value
                               )
                             }
@@ -5061,8 +5083,8 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.userInfo.schoolEmail,
-                              expression: "userInfo.schoolEmail"
+                              value: _vm.userInfo.email,
+                              expression: "userInfo.email"
                             }
                           ],
                           staticClass: "form-control",
@@ -5073,7 +5095,7 @@ var render = function() {
                             autocomplete: "email",
                             required: ""
                           },
-                          domProps: { value: _vm.userInfo.schoolEmail },
+                          domProps: { value: _vm.userInfo.email },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
@@ -5081,7 +5103,7 @@ var render = function() {
                               }
                               _vm.$set(
                                 _vm.userInfo,
-                                "schoolEmail",
+                                "email",
                                 $event.target.value
                               )
                             }
@@ -5281,7 +5303,7 @@ var render = function() {
                           ])
                         : _vm._e(),
                       _vm._v(" "),
-                      _vm.userInfo.roleId > 2 && _vm.userInfo.isEmployee
+                      _vm.userInfo.user_role > 2 && _vm.userInfo.isEmployee
                         ? _c("div", { staticClass: "col-xs-3" }, [
                             _c(
                               "select",
@@ -5351,7 +5373,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "query form-group row" }, [
-                      _vm.userInfo.isEmployee && _vm.userInfo.roleId == 4
+                      _vm.userInfo.isEmployee && _vm.userInfo.user_role == 4
                         ? _c(
                             "div",
                             { staticClass: "col-xs-10 col-xs-offset-1" },
@@ -5420,18 +5442,14 @@ var render = function() {
                     "button",
                     {
                       staticClass: "btn btn-lg btn-cta registration-btn",
-                      attrs: { href: "#", id: "show-modal" },
+                      attrs: { id: "show-modal" },
                       on: {
                         click: function($event) {
                           _vm.regUser()
                         }
                       }
                     },
-                    [
-                      _vm._v(
-                        "\n\t\t\t\t\t\t\tFinish Registration!\n\t\t\t\t\t\t"
-                      )
-                    ]
+                    [_vm._v("Finish Registration!")]
                   ),
                   _vm._v(" "),
                   _c("div", [
@@ -5743,7 +5761,7 @@ var render = function() {
                         )
                       ]),
                       _vm._v(" "),
-                      _vm.userInfo.roleId > 2
+                      _vm.userInfo.user_role > 2
                         ? _c("div", { staticClass: "col-xs-3" }, [
                             _c(
                               "select",
