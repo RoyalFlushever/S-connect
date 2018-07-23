@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHowknow extends Migration
+class CreateReferralSource extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateHowknow extends Migration
      */
     public function up()
     {
-		Schema::create('howknow', function (Blueprint $table) {
+		Schema::create('referral_source', function (Blueprint $table) {
 			$table->engine = 'InnoDB';
 			$table->increments('id');
-			$table->integer('kind')->unsigned();
+			$table->boolean('is_employee')->unsigned();
 			$table->string('contents', 125);
 			$table->timestamps();
 		});
@@ -29,6 +29,6 @@ class CreateHowknow extends Migration
      */
     public function down()
     {
-		Schema::drop('howknow');
+		Schema::drop('referral_source');
     }
 }

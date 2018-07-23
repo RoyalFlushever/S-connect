@@ -54,6 +54,6 @@ class DatabaseSeeder extends Seeder
         $this->call('UsCountiesSeeder');
         $this->call('UsDistrictsSeeder');
         $this->call('UsSchoolsSeeder');
-        $this->call('HowknowSeeder::class');
+        $this->call('ReferralSourceSeeder');
     }
 }
