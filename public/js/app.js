@@ -3579,11 +3579,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         last_name: "",
         email: "",
         password: "",
-        stateId: 0,
-        countyId: 0,
-        districtId: 0,
-        schoolId: 0,
-        selReferralSource: 0
+        state_id: 0,
+        county_id: 0,
+        district_id: 0,
+        school_id: 0,
+        referral_source_id: 0
       },
       referralSource: [],
       states: [],
@@ -3624,27 +3624,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     selState: function selState() {
       var _this = this;
 
-      this.userInfo.countyId = 0;
-      this.userInfo.districtId = 0;
-      this.userInfo.schoolId = 0;
-      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/counties", { stateId: this.userInfo.stateId }).then(function (result) {
+      this.userInfo.county_id = 0;
+      this.userInfo.district_id = 0;
+      this.userInfo.school_id = 0;
+      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/counties", { state_id: this.userInfo.state_id }).then(function (result) {
         _this.counties = result.data;
       });
     },
     selCounty: function selCounty() {
       var _this2 = this;
 
-      this.userInfo.districtId = 0;
-      this.userInfo.schoolId = 0;
-      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/districts", { countyId: this.userInfo.countyId }).then(function (result) {
+      this.userInfo.district_id = 0;
+      this.userInfo.school_id = 0;
+      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/districts", { county_id: this.userInfo.county_id }).then(function (result) {
         _this2.districts = result.data;
       });
     },
     selDistrict: function selDistrict() {
       var _this3 = this;
 
-      this.userInfo.schoolId = 0;
-      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/schools", { districtId: this.userInfo.districtId }).then(function (result) {
+      this.userInfo.school_id = 0;
+      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/schools", { district_id: this.userInfo.district_id }).then(function (result) {
         _this3.schools = result.data;
       });
     },
@@ -3668,13 +3668,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             duration: 3000
           });
         }
-        // error.response.data.forEach(element => {
-        // 	this.$toasted.show(element, {
-        // 			theme: "outline",
-        // 			position: "top-center",
-        // 			duration: 3000,
-        // 	});
-        // });
       });
     }
   },
@@ -5121,8 +5114,8 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.userInfo.stateId,
-                                expression: "userInfo.stateId"
+                                value: _vm.userInfo.state_id,
+                                expression: "userInfo.state_id"
                               }
                             ],
                             staticClass: "form-control",
@@ -5141,7 +5134,7 @@ var render = function() {
                                     })
                                   _vm.$set(
                                     _vm.userInfo,
-                                    "stateId",
+                                    "state_id",
                                     $event.target.multiple
                                       ? $$selectedVal
                                       : $$selectedVal[0]
@@ -5181,13 +5174,13 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.userInfo.countyId,
-                                expression: "userInfo.countyId"
+                                value: _vm.userInfo.county_id,
+                                expression: "userInfo.county_id"
                               }
                             ],
                             staticClass: "form-control",
                             attrs: {
-                              disabled: _vm.userInfo.stateId == 0,
+                              disabled: _vm.userInfo.state_id == 0,
                               autocomplete: "address-level1"
                             },
                             on: {
@@ -5204,7 +5197,7 @@ var render = function() {
                                     })
                                   _vm.$set(
                                     _vm.userInfo,
-                                    "countyId",
+                                    "county_id",
                                     $event.target.multiple
                                       ? $$selectedVal
                                       : $$selectedVal[0]
@@ -5245,13 +5238,13 @@ var render = function() {
                                   {
                                     name: "model",
                                     rawName: "v-model",
-                                    value: _vm.userInfo.districtId,
-                                    expression: "userInfo.districtId"
+                                    value: _vm.userInfo.district_id,
+                                    expression: "userInfo.district_id"
                                   }
                                 ],
                                 staticClass: "form-control",
                                 attrs: {
-                                  disabled: _vm.userInfo.countyId == 0,
+                                  disabled: _vm.userInfo.county_id == 0,
                                   autocomplete: "address-level2"
                                 },
                                 on: {
@@ -5270,7 +5263,7 @@ var render = function() {
                                         })
                                       _vm.$set(
                                         _vm.userInfo,
-                                        "districtId",
+                                        "district_id",
                                         $event.target.multiple
                                           ? $$selectedVal
                                           : $$selectedVal[0]
@@ -5312,13 +5305,13 @@ var render = function() {
                                   {
                                     name: "model",
                                     rawName: "v-model",
-                                    value: _vm.userInfo.schoolId,
-                                    expression: "userInfo.schoolId"
+                                    value: _vm.userInfo.school_id,
+                                    expression: "userInfo.school_id"
                                   }
                                 ],
                                 staticClass: "form-control",
                                 attrs: {
-                                  disabled: _vm.userInfo.districtId == 0,
+                                  disabled: _vm.userInfo.district_id == 0,
                                   name: "school",
                                   id: "school"
                                 },
@@ -5338,7 +5331,7 @@ var render = function() {
                                         })
                                       _vm.$set(
                                         _vm.userInfo,
-                                        "schoolId",
+                                        "school_id",
                                         $event.target.multiple
                                           ? $$selectedVal
                                           : $$selectedVal[0]
@@ -5389,8 +5382,8 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.userInfo.selReferralSource,
-                                expression: "userInfo.selReferralSource"
+                                value: _vm.userInfo.referral_source_id,
+                                expression: "userInfo.referral_source_id"
                               }
                             ],
                             staticClass: "form-control",
@@ -5406,7 +5399,7 @@ var render = function() {
                                   })
                                 _vm.$set(
                                   _vm.userInfo,
-                                  "selReferralSource",
+                                  "referral_source_id",
                                   $event.target.multiple
                                     ? $$selectedVal
                                     : $$selectedVal[0]
@@ -5445,6 +5438,7 @@ var render = function() {
                       attrs: { id: "show-modal" },
                       on: {
                         click: function($event) {
+                          $event.preventDefault()
                           _vm.regUser()
                         }
                       }
@@ -5583,8 +5577,8 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.userInfo.stateId,
-                                expression: "userInfo.stateId"
+                                value: _vm.userInfo.state_id,
+                                expression: "userInfo.state_id"
                               }
                             ],
                             staticClass: "form-control",
@@ -5603,7 +5597,7 @@ var render = function() {
                                     })
                                   _vm.$set(
                                     _vm.userInfo,
-                                    "stateId",
+                                    "state_id",
                                     $event.target.multiple
                                       ? $$selectedVal
                                       : $$selectedVal[0]
@@ -5643,13 +5637,13 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.userInfo.countyId,
-                                expression: "userInfo.countyId"
+                                value: _vm.userInfo.county_id,
+                                expression: "userInfo.county_id"
                               }
                             ],
                             staticClass: "form-control",
                             attrs: {
-                              disabled: _vm.userInfo.stateId == 0,
+                              disabled: _vm.userInfo.state_id == 0,
                               autocomplete: "address-level1"
                             },
                             on: {
@@ -5666,7 +5660,7 @@ var render = function() {
                                     })
                                   _vm.$set(
                                     _vm.userInfo,
-                                    "countyId",
+                                    "county_id",
                                     $event.target.multiple
                                       ? $$selectedVal
                                       : $$selectedVal[0]
@@ -5706,13 +5700,13 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.userInfo.districtId,
-                                expression: "userInfo.districtId"
+                                value: _vm.userInfo.district_id,
+                                expression: "userInfo.district_id"
                               }
                             ],
                             staticClass: "form-control",
                             attrs: {
-                              disabled: _vm.userInfo.countyId == 0,
+                              disabled: _vm.userInfo.county_id == 0,
                               autocomplete: "address-level2"
                             },
                             on: {
@@ -5729,7 +5723,7 @@ var render = function() {
                                     })
                                   _vm.$set(
                                     _vm.userInfo,
-                                    "districtId",
+                                    "district_id",
                                     $event.target.multiple
                                       ? $$selectedVal
                                       : $$selectedVal[0]
@@ -5770,13 +5764,13 @@ var render = function() {
                                   {
                                     name: "model",
                                     rawName: "v-model",
-                                    value: _vm.userInfo.schoolId,
-                                    expression: "userInfo.schoolId"
+                                    value: _vm.userInfo.school_id,
+                                    expression: "userInfo.school_id"
                                   }
                                 ],
                                 staticClass: "form-control",
                                 attrs: {
-                                  disabled: _vm.userInfo.districtId == 0,
+                                  disabled: _vm.userInfo.district_id == 0,
                                   name: "school",
                                   id: "school"
                                 },
@@ -5796,7 +5790,7 @@ var render = function() {
                                         })
                                       _vm.$set(
                                         _vm.userInfo,
-                                        "schoolId",
+                                        "school_id",
                                         $event.target.multiple
                                           ? $$selectedVal
                                           : $$selectedVal[0]

@@ -61,23 +61,23 @@ class RegistrationController extends Controller
             'last_name'  => 'required',
             'email'      => 'required|email|unique:users,email',
             // 'password'   => 'required',
-            'stateId'  => 'required|integer|min:1',
-            'countyId'  => 'required|integer|min:1',
+            'state_id'  => 'required|integer|min:1',
+            'county_id'  => 'required|integer|min:1',
         ];
         
         if($request->input('isEmployee') == 1) {
             $validate_arr += [
-                'districtId' => 'required|integer|min:1',
+                'district_id' => 'required|integer|min:1',
             ];
         }
         if($request->input('user_role') > 2) {
-            $validate_arr += ['schoolId' => 'required|integer|min:1'];
+            $validate_arr += ['school_id' => 'required|integer|min:1'];
         }
 
         $this->validate($request, $validate_arr);
 
         // Password needs to be hashed before storing
-        $attributes = $request->only(['first_name', 'middle_name', 'last_name', 'email']);
+        $attributes = $request->only(['first_name', 'middle_name', 'last_name', 'email', 'district_id', 'school_id', 'referral_source_id']);
         $attributes['password'] = Hash::make($request->input('password'));
 
         // Wrap this in a transaction saving separate relationships
@@ -107,23 +107,23 @@ class RegistrationController extends Controller
      * get county list
      */
     public function counties(Request $request) {
-        $stateId = $request->input("stateId");
-        return json_encode(DB::select("select * from us_counties where state_id={$stateId} order by name"));
+        $state_id = $request->input("state_id");
+        return json_encode(DB::select("select * from us_counties where state_id={$state_id} order by name"));
     }
     // }
     /**
      * get district list
      */
     public function districts(Request $request) {
-        $countyId = $request->input("countyId");
-        return json_encode(DB::select("select * from us_districts where county_id={$countyId} order by name"));
+        $county_id = $request->input("county_id");
+        return json_encode(DB::select("select * from us_districts where county_id={$county_id} order by name"));
     }
     /**
      * get class list
      */
     public function schools(Request $request) {
-        $districtId = $request->input("districtId");
-        return json_encode(DB::select("select * from us_schools where district_id={$districtId} order by name"));
+        $district_id = $request->input("district_id");
+        return json_encode(DB::select("select * from us_schools where district_id={$district_id} order by name"));
     }
     /**
      * get referralSource list

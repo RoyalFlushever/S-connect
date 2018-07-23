@@ -21,10 +21,10 @@ class UserTestingSeeder extends Seeder
                         'created_at' => $now, 'updated_at' => $now ];
                 },
                 [
-                    ['id' => 1, 'email' => 'administrator@example.org'   , 'user_role_id' => 1],
-                    ['id' => 2, 'email' => 'facilitator@example.org'     , 'user_role_id' => 2],
-                    ['id' => 3, 'email' => 'sitefacilitator@example.org' , 'user_role_id' => 3],
-                    ['id' => 4, 'email' => 'mentor@example.org'          , 'user_role_id' => 4]
+                    ['id' => 1, 'email' => 'administrator@example.org'   , 'user_role_id' => 1, 'district_id' => 0, 'school_id' => 0],
+                    ['id' => 2, 'email' => 'facilitator@example.org'     , 'user_role_id' => 2, 'district_id' => 1, 'school_id' => 0],
+                    ['id' => 3, 'email' => 'sitefacilitator@example.org' , 'user_role_id' => 3, 'district_id' => 1, 'school_id' => 1],
+                    ['id' => 4, 'email' => 'mentor@example.org'          , 'user_role_id' => 4, 'district_id' => 1, 'school_id' => 2]
                 ]
             )
         );

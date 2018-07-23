@@ -95,25 +95,25 @@
 								</div>
 								<div class="location form-group row-box">
 									<div class="col-xs-3">
-										<select v-model="userInfo.stateId" class="form-control" autocomplete="address-level1" @change="selState()">
+										<select v-model="userInfo.state_id" class="form-control" autocomplete="address-level1" @change="selState()">
 											<option value="0">State</option>
 											<option v-for="state in states" :key="state.id" :value="state.id">{{state.name}}</option>
 										</select>
 									</div>
 									<div class="col-xs-3">
-										<select v-model="userInfo.countyId" :disabled="userInfo.stateId==0" class="form-control" autocomplete="address-level1" @change="selCounty()">
+										<select v-model="userInfo.county_id" :disabled="userInfo.state_id==0" class="form-control" autocomplete="address-level1" @change="selCounty()">
 											<option value="0">County</option>
 											<option v-for="county in counties" :key="county.id" :value="county.id">{{county.name}}</option>
 										</select>
 									</div>
 									<div v-if="userInfo.isEmployee" class="col-xs-3">
-										<select v-model="userInfo.districtId" :disabled="userInfo.countyId==0" class="form-control" autocomplete="address-level2" @change="selDistrict()">
+										<select v-model="userInfo.district_id" :disabled="userInfo.county_id==0" class="form-control" autocomplete="address-level2" @change="selDistrict()">
 											<option value="0">District</option>
 											<option v-for="district in districts" :key="district.id" :value="district.id">{{district.name}}</option>
 										</select>
 									</div>
 									<div v-if="userInfo.user_role > 2 && userInfo.isEmployee" class="col-xs-3">
-										<select v-model="userInfo.schoolId" :disabled="userInfo.districtId==0" name="school" id="school" class="form-control" @change="selSchool()">
+										<select v-model="userInfo.school_id" :disabled="userInfo.district_id==0" name="school" id="school" class="form-control" @change="selSchool()">
 											<option value="0">School</option>
 											<option v-for="school in schools" :key="school.id" :value="school.id">{{school.name}}</option>
 										</select>
@@ -126,14 +126,14 @@
 										</select>
 									</div>
 									<div class="col-xs-10 col-xs-offset-1">
-										<select v-model="userInfo.selReferralSource" class="form-control">
+										<select v-model="userInfo.referral_source_id" class="form-control">
 											<option value="0">How did you hear about I-Connect</option>
 											<option v-for="item in referralSource" v-if="item.is_employee==userInfo.isEmployee" :value="item.id" :key="item.id">{{item.contents}}</option>
 										</select>
 									</div>
 								</div>
 							</div>
-							<button class="btn btn-lg btn-cta registration-btn"  id="show-modal" @click="regUser()">Finish Registration!</button>
+							<button class="btn btn-lg btn-cta registration-btn"  id="show-modal" @click.prevent="regUser()">Finish Registration!</button>
 							<div>
 								<button id="issue-modal" type="button" class="btn btn-lg issue btn-red" @click="issueModal = true">
 									Registration Issue
@@ -183,25 +183,25 @@
 							</div>
 							<div class="location form-group row">
 									<div class="col-xs-3">
-										<select v-model="userInfo.stateId" class="form-control" autocomplete="address-level1" @change="selState()">
+										<select v-model="userInfo.state_id" class="form-control" autocomplete="address-level1" @change="selState()">
 											<option value="0">State</option>
 											<option v-for="state in states" :key="state.id" :value="state.id">{{state.name}}</option>
 										</select>
 									</div>
 									<div class="col-xs-3">
-										<select v-model="userInfo.countyId" :disabled="userInfo.stateId==0" class="form-control" autocomplete="address-level1" @change="selCounty()">
+										<select v-model="userInfo.county_id" :disabled="userInfo.state_id==0" class="form-control" autocomplete="address-level1" @change="selCounty()">
 											<option value="0">County</option>
 											<option v-for="county in counties" :key="county.id" :value="county.id">{{county.name}}</option>
 										</select>
 									</div>
 									<div class="col-xs-3">
-										<select v-model="userInfo.districtId" :disabled="userInfo.countyId==0" class="form-control" autocomplete="address-level2" @change="selDistrict()">
+										<select v-model="userInfo.district_id" :disabled="userInfo.county_id==0" class="form-control" autocomplete="address-level2" @change="selDistrict()">
 											<option value="0">District</option>
 											<option v-for="district in districts" :key="district.id" :value="district.id">{{district.name}}</option>
 										</select>
 									</div>
 									<div v-if="userInfo.user_role > 2" class="col-xs-3">
-										<select v-model="userInfo.schoolId" :disabled="userInfo.districtId==0" name="school" id="school" class="form-control" @change="selSchool()">
+										<select v-model="userInfo.school_id" :disabled="userInfo.district_id==0" name="school" id="school" class="form-control" @change="selSchool()">
 											<option value="0">School</option>
 											<option v-for="school in schools" :key="school.id" :value="school.id">{{school.name}}</option>
 										</select>
@@ -251,11 +251,11 @@ export default {
 				last_name: "",
 				email: "",
 				password: "",
-        stateId: 0,
-        countyId: 0,
-        districtId: 0,
-				schoolId: 0,
-				selReferralSource: 0,
+        state_id: 0,
+        county_id: 0,
+        district_id: 0,
+				school_id: 0,
+				referral_source_id: 0,
       },
 			referralSource: [],
       states: [],
@@ -293,27 +293,27 @@ export default {
     },
 
     selState: function() {
-			this.userInfo.countyId = 0;
-			this.userInfo.districtId = 0;
-			this.userInfo.schoolId = 0;
-      Axios.post("/counties", { stateId: this.userInfo.stateId }).then(
+			this.userInfo.county_id = 0;
+			this.userInfo.district_id = 0;
+			this.userInfo.school_id = 0;
+      Axios.post("/counties", { state_id: this.userInfo.state_id }).then(
         result => {
           this.counties = result.data;
         }
       );
     },
     selCounty: function() {
-			this.userInfo.districtId = 0;
-			this.userInfo.schoolId = 0;
-      Axios.post("/districts", { countyId: this.userInfo.countyId }).then(
+			this.userInfo.district_id = 0;
+			this.userInfo.school_id = 0;
+      Axios.post("/districts", { county_id: this.userInfo.county_id }).then(
         result => {
           this.districts = result.data;
         }
       );
     },
     selDistrict: function() {
-			this.userInfo.schoolId = 0;
-      Axios.post("/schools", { districtId: this.userInfo.districtId }).then(
+			this.userInfo.school_id = 0;
+      Axios.post("/schools", { district_id: this.userInfo.district_id }).then(
         result => {
           this.schools = result.data;
         }
@@ -341,13 +341,6 @@ export default {
 									duration: 3000,
 							});
 						}
-						// error.response.data.forEach(element => {
-						// 	this.$toasted.show(element, {
-						// 			theme: "outline",
-						// 			position: "top-center",
-						// 			duration: 3000,
-						// 	});
-						// });
 					}
 				);
 		},
