@@ -30,12 +30,12 @@
                                     OK
                                 </slot>    
                             </a> -->
-                            <a class="modal-default-button btn btn-red" href="/login" @click="close">
+                            <a class="modal-default-button btn btn-red" @click="close">
                                 <slot name="close">
                                     OK
                                 </slot>    
                             </a>
-                            <a v-if="actionurl" :href="actionurl" class="modal-default-button btn btn-cta btn-blue" style="width: max-content;" @click="submit">
+                            <a v-if="actionurl" class="modal-default-button btn btn-cta btn-blue" style="width: max-content;" @click="submit">
                                 <slot name="action">
                                     Submit
                                 </slot>
@@ -63,11 +63,8 @@ export default {
             this.$emit('close');
         },
         submit: function() {
-            axios.get('/')
-            .catch(function (error) {
-                console.log(error);
-            });
-        }
+            this.$emit('submit');
+        },
     }
 }
 </script>

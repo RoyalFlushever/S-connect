@@ -16,6 +16,7 @@
 //     return redirect('/home');
 // })->middleware('auth');
 Route::get('/', 'RegistrationController@welcome');
+Route::get('/tos', 'RegistrationController@tos');
 
 // Manually use authentication routes from Laravel's router, excluding registration routes
 // See \Illuminate\Routing\Router@auth
@@ -57,9 +58,19 @@ Route::post('login/stakeholder', 'Auth\LoginStakeholderController@login');
 Route::get('stakeholder-home', 'Stakeholders\HomeController@index');
 
 // Multistep Registration
-
 Route::get('registration', 'RegistrationController@registration');
 // Route::post('registration', 'RegistrationController@create');
 
 // Reports
 Route::get('report', 'ReportController@index');
+
+
+Route::get('states',            'RegistrationController@states');
+Route::post('counties',         'RegistrationController@counties');
+Route::post('districts',        'RegistrationController@districts');
+Route::post('schools',          'RegistrationController@schools');
+
+Route::get('referralSource',    'RegistrationController@referralSource');
+
+Route::post('registerUser',     'RegistrationController@registerUser');
+Route::post('saveIssue',        'RegistrationController@saveIssue');

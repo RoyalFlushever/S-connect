@@ -98,8 +98,17 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'state_id' => [
+            'min' => 'Please select state.',
+        ],
+        'county_id' => [
+            'min' => 'Please select county.',
+        ],
+        'district_id' => [
+            'min' => 'Please select district.',
+        ],
+        'school_id' => [
+            'min' => 'Please select school.',
         ],
     ],
 

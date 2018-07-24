@@ -22,6 +22,9 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->integer('user_role_id')->unsigned();
+            $table->integer('district_id')->unsigned()->default(0);
+            $table->integer('school_id')->unsigned()->default(0);
+            $table->integer('referral_source_id')->unsigned()->default(0);
             $table->rememberToken();
             $table->timestamp('last_login')->nullable();
             $table->timestamps();
