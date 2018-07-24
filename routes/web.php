@@ -73,3 +73,4 @@ Route::post('schools',          'RegistrationController@schools');
 Route::get('referralSource',    'RegistrationController@referralSource');
 
 Route::post('registerUser',     'RegistrationController@registerUser');
+Route::post('saveIssue',        'RegistrationController@saveIssue');

@@ -8,6 +8,7 @@ use DB;
 use Illuminate\Support\Facades\Hash;
 use App\User;
 use function GuzzleHttp\json_encode;
+use App\RegistrationIssue;
 class RegistrationController extends Controller
 {
     /**
@@ -130,5 +131,23 @@ class RegistrationController extends Controller
      */
     public function referralSource() {
         return json_encode(DB::select("select * from referral_source order by id"));
+    }
+
+    public function saveIssue(Request $request) {
+        
+        $attributes = $request->only(['first_name', 'middle_name', 'last_name', 'email', 'state_id', 'county_id', 'district_id', 'school_id', 'reason', 'description']);
+        
+        $issue = new RegistrationIssue($attributes);
+
+        DB::beginTransaction();
+
+        if ($issue->save()) {
+            DB::commit();
+            return json_encode(["result" => "success"]);
+        }
+        else {
+            DB::rollBack();
+            return json_encode(["result" => "failure"]);
+        }
     }
 }

@@ -168,17 +168,17 @@
 					</div>
 				</form>
 
-				<v-modal v-if="issueModal" @close="issueModal = false" actionurl="/login">
+				<v-modal v-if="issueModal" @close="issueModal = false" @submit="saveIssue()" actionurl="/login">
 					<div slot="body">
 							<div class="personal-info form-group row">
 								<div class="col-xs-3">
-									<input id="first_name_issue" type="text" class="form-control" name="first_name_issue" placeholder="First Name" autocomplete="given-name">
+									<input v-model="userInfo.first_name" type="text" class="form-control" placeholder="First Name" autocomplete="given-name">
 								</div>
 								<div class="col-xs-3">
-									<input id="last_name_issue" type="text" class="form-control" name="last_name_issue" placeholder="Last Name"  autocomplete="family-name">
+									<input v-model="userInfo.last_name" type="text" class="form-control" placeholder="Last Name"  autocomplete="family-name">
 								</div>
 								<div class="col-xs-6">
-									<input id="school_email" type="email" class="form-control" name="email" placeholder="School Email Address" autocomplete="email" required>
+									<input v-model="userInfo.email" type="email" class="form-control" placeholder="School Email Address" autocomplete="email" required>
 								</div>
 							</div>
 							<div class="location form-group row">
@@ -210,25 +210,32 @@
 							<div class="location form-group row">
 								<div class="col-xs-4">
 									<div class="checkbox issue">
-										<label><input type="checkbox" name="remember"> District not displayed</label>
+										<label><input type="radio" v-model="userInfo.reason" value="0"> District not displayed</label>
 									</div>
 									<div class="checkbox issue">
-										<label><input type="checkbox" name="remember"> School not displayed</label>
+										<label><input type="radio" v-model="userInfo.reason" value="1"> School not displayed</label>
 									</div>
 									<div class="checkbox issue">
-										<label><input type="checkbox" name="remember"> Outside of United States</label>
+										<label><input type="radio" v-model="userInfo.reason" value="2"> Outside of United States</label>
 									</div>
 									<div class="checkbox issue">
-										<label><input type="checkbox" name="remember"> Other reason</label>
+										<label><input type="radio" v-model="userInfo.reason" value="3"> Other reason</label>
 									</div>
 								</div>
 								<div class="col-xs-8">
-									<textarea name="issue_text" id="issue_text"  class="form-control" cols="30" rows="6" placeholder="Please explain issue here..."></textarea>
+									<textarea v-model="userInfo.description"  class="form-control" cols="30" rows="6" placeholder="Please explain issue here..."></textarea>
 								</div>
 							</div>
 					</div>
 					<h3 slot="header">Having difficulties registering?</h3>
 					<span slot="close">Cancel</span>
+				</v-modal>
+				<v-modal v-if="issueSaveNotice_modal">
+					<h1 slot="header">Sorry</h1>
+					<div slot="body">
+						<h3>We have received your problem correctly.<br>After considering it carefully, we will set up measures and inform you by email.</h3>
+					</div>
+					<div slot="close" @click="saveIssueConfirmOk()">OK</div>
 				</v-modal>
 			</div>
 		</div>
@@ -243,7 +250,8 @@ export default {
   data: function() {
     return {
       showModal: false,
-      issueModal: false,
+			issueModal: false,
+			issueSaveNotice_modal: false,
       userInfo: {
         isEmployee: 0,
 				user_role: null,
@@ -256,6 +264,9 @@ export default {
         district_id: 0,
 				school_id: 0,
 				referral_source_id: 0,
+
+				reason: 0,
+				description: "",
       },
 			referralSource: [],
       states: [],
@@ -328,13 +339,10 @@ export default {
 			Axios.post("/registerUser", this.userInfo)
 				.then(
 					result => {
-						console.log(result);
 						this.showModal = true;
 					},
 					error => {
-						console.log(error.response.data);
 						for (const key in error.response.data) {
-							// console.log(key);
 							this.$toasted.show(error.response.data[key], {
 									theme: "outline",
 									position: "top-center",
@@ -344,7 +352,24 @@ export default {
 					}
 				);
 		},
-  },
+
+		saveIssue: function () {
+
+			Axios.post("/saveIssue", this.userInfo)
+				.then(
+					result => {
+						this.issueModal = false;
+						this.issueSaveNotice_modal = true;
+					},
+					error => {
+						console.log(error.response);
+					}
+				);
+		},
+		saveIssueConfirmOk: function() {
+			location.href = "/login";
+		},
+	},
   mounted() {
     Axios.get("/states").then(result => {
       this.states = result.data;

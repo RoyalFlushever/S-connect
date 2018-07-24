@@ -98,16 +98,16 @@ return [
     */
 
     'custom' => [
-        'stateId' => [
+        'state_id' => [
             'min' => 'Please select state.',
         ],
-        'countyId' => [
+        'county_id' => [
             'min' => 'Please select county.',
         ],
-        'districtId' => [
+        'district_id' => [
             'min' => 'Please select district.',
         ],
-        'schoolId' => [
+        'school_id' => [
             'min' => 'Please select school.',
         ],
     ],

@@ -3563,124 +3563,146 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      showModal: false,
-      issueModal: false,
-      userInfo: {
-        isEmployee: 0,
-        user_role: null,
-        first_name: "",
-        last_name: "",
-        email: "",
-        password: "",
-        state_id: 0,
-        county_id: 0,
-        district_id: 0,
-        school_id: 0,
-        referral_source_id: 0
-      },
-      referralSource: [],
-      states: [],
-      counties: [],
-      districts: [],
-      schools: []
-    };
-  },
-  methods: {
-    alertYN: function alertYN() {
-      this.$toasted.show("Please select your answer.", {
-        theme: "outline",
-        position: "top-center",
-        duration: 3000
-      });
-    },
-    goto: function goto(tabName) {
-      if (tabName == "stepper-step-3" && this.userInfo.isEmployee == 1) {
-        this.$toasted.show("Please select your role!", {
-          theme: "outline",
-          position: "top-center",
-          duration: 3000
-        });
-        return;
-      }
-      $('.nav-tabs a[href="#' + tabName + '"]').tab("show");
-    },
-    selIsEmployee: function selIsEmployee(employee) {
-      this.userInfo.isEmployee = employee;
-      this.goto("stepper-step-2");
-    },
-    selUserRole: function selUserRole(user_role) {
-      this.userInfo.user_role = user_role;
-      $('.nav-tabs a[href="#stepper-step-3"]').tab("show");
-    },
+		data: function data() {
+				return {
+						showModal: false,
+						issueModal: false,
+						issueSaveNotice_modal: false,
+						userInfo: {
+								isEmployee: 0,
+								user_role: null,
+								first_name: "",
+								last_name: "",
+								email: "",
+								password: "",
+								state_id: 0,
+								county_id: 0,
+								district_id: 0,
+								school_id: 0,
+								referral_source_id: 0,
+
+								reason: 0,
+								description: ""
+						},
+						referralSource: [],
+						states: [],
+						counties: [],
+						districts: [],
+						schools: []
+				};
+		},
+		methods: {
+				alertYN: function alertYN() {
+						this.$toasted.show("Please select your answer.", {
+								theme: "outline",
+								position: "top-center",
+								duration: 3000
+						});
+				},
+				goto: function goto(tabName) {
+						if (tabName == "stepper-step-3" && this.userInfo.isEmployee == 1) {
+								this.$toasted.show("Please select your role!", {
+										theme: "outline",
+										position: "top-center",
+										duration: 3000
+								});
+								return;
+						}
+						$('.nav-tabs a[href="#' + tabName + '"]').tab("show");
+				},
+				selIsEmployee: function selIsEmployee(employee) {
+						this.userInfo.isEmployee = employee;
+						this.goto("stepper-step-2");
+				},
+				selUserRole: function selUserRole(user_role) {
+						this.userInfo.user_role = user_role;
+						$('.nav-tabs a[href="#stepper-step-3"]').tab("show");
+				},
 
 
-    selState: function selState() {
-      var _this = this;
+				selState: function selState() {
+						var _this = this;
 
-      this.userInfo.county_id = 0;
-      this.userInfo.district_id = 0;
-      this.userInfo.school_id = 0;
-      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/counties", { state_id: this.userInfo.state_id }).then(function (result) {
-        _this.counties = result.data;
-      });
-    },
-    selCounty: function selCounty() {
-      var _this2 = this;
+						this.userInfo.county_id = 0;
+						this.userInfo.district_id = 0;
+						this.userInfo.school_id = 0;
+						__WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/counties", { state_id: this.userInfo.state_id }).then(function (result) {
+								_this.counties = result.data;
+						});
+				},
+				selCounty: function selCounty() {
+						var _this2 = this;
 
-      this.userInfo.district_id = 0;
-      this.userInfo.school_id = 0;
-      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/districts", { county_id: this.userInfo.county_id }).then(function (result) {
-        _this2.districts = result.data;
-      });
-    },
-    selDistrict: function selDistrict() {
-      var _this3 = this;
+						this.userInfo.district_id = 0;
+						this.userInfo.school_id = 0;
+						__WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/districts", { county_id: this.userInfo.county_id }).then(function (result) {
+								_this2.districts = result.data;
+						});
+				},
+				selDistrict: function selDistrict() {
+						var _this3 = this;
 
-      this.userInfo.school_id = 0;
-      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/schools", { district_id: this.userInfo.district_id }).then(function (result) {
-        _this3.schools = result.data;
-      });
-    },
-    selSchool: function selSchool() {},
+						this.userInfo.school_id = 0;
+						__WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/schools", { district_id: this.userInfo.district_id }).then(function (result) {
+								_this3.schools = result.data;
+						});
+				},
+				selSchool: function selSchool() {},
 
-    regUser: function regUser() {
-      var _this4 = this;
+				regUser: function regUser() {
+						var _this4 = this;
 
-      this.userInfo.password = this.userInfo.email;
+						this.userInfo.password = this.userInfo.email;
 
-      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/registerUser", this.userInfo).then(function (result) {
-        console.log(result);
-        _this4.showModal = true;
-      }, function (error) {
-        console.log(error.response.data);
-        for (var key in error.response.data) {
-          // console.log(key);
-          _this4.$toasted.show(error.response.data[key], {
-            theme: "outline",
-            position: "top-center",
-            duration: 3000
-          });
-        }
-      });
-    }
-  },
-  mounted: function mounted() {
-    var _this5 = this;
+						__WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/registerUser", this.userInfo).then(function (result) {
+								_this4.showModal = true;
+						}, function (error) {
+								for (var key in error.response.data) {
+										_this4.$toasted.show(error.response.data[key], {
+												theme: "outline",
+												position: "top-center",
+												duration: 3000
+										});
+								}
+						});
+				},
 
-    __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get("/states").then(function (result) {
-      _this5.states = result.data;
-    });
-    __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get("/referralSource").then(function (result) {
-      _this5.referralSource = result.data;
-    });
-  }
+				saveIssue: function saveIssue() {
+						var _this5 = this;
+
+						__WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/saveIssue", this.userInfo).then(function (result) {
+								_this5.issueModal = false;
+								_this5.issueSaveNotice_modal = true;
+						}, function (error) {
+								console.log(error.response);
+						});
+				},
+				saveIssueConfirmOk: function saveIssueConfirmOk() {
+						location.href = "/login";
+				}
+		},
+		mounted: function mounted() {
+				var _this6 = this;
+
+				__WEBPACK_IMPORTED_MODULE_1_axios___default.a.get("/states").then(function (result) {
+						_this6.states = result.data;
+				});
+				__WEBPACK_IMPORTED_MODULE_1_axios___default.a.get("/referralSource").then(function (result) {
+						_this6.referralSource = result.data;
+				});
+		}
 });
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
@@ -3797,9 +3819,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$emit('close');
         },
         submit: function submit() {
-            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/').catch(function (error) {
-                console.log(error);
-            });
+            this.$emit('submit');
         }
     }
 });
@@ -4742,7 +4762,6 @@ var render = function() {
                   "a",
                   {
                     staticClass: "modal-default-button btn btn-red",
-                    attrs: { href: "/login" },
                     on: { click: _vm.close }
                   },
                   [
@@ -4762,7 +4781,6 @@ var render = function() {
                         staticClass:
                           "modal-default-button btn btn-cta btn-blue",
                         staticStyle: { width: "max-content" },
-                        attrs: { href: _vm.actionurl },
                         on: { click: _vm.submit }
                       },
                       [
@@ -5521,6 +5539,9 @@ var render = function() {
                   on: {
                     close: function($event) {
                       _vm.issueModal = false
+                    },
+                    submit: function($event) {
+                      _vm.saveIssue()
                     }
                   }
                 },
@@ -5529,40 +5550,97 @@ var render = function() {
                     _c("div", { staticClass: "personal-info form-group row" }, [
                       _c("div", { staticClass: "col-xs-3" }, [
                         _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.userInfo.first_name,
+                              expression: "userInfo.first_name"
+                            }
+                          ],
                           staticClass: "form-control",
                           attrs: {
-                            id: "first_name_issue",
                             type: "text",
-                            name: "first_name_issue",
                             placeholder: "First Name",
                             autocomplete: "given-name"
+                          },
+                          domProps: { value: _vm.userInfo.first_name },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.userInfo,
+                                "first_name",
+                                $event.target.value
+                              )
+                            }
                           }
                         })
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-xs-3" }, [
                         _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.userInfo.last_name,
+                              expression: "userInfo.last_name"
+                            }
+                          ],
                           staticClass: "form-control",
                           attrs: {
-                            id: "last_name_issue",
                             type: "text",
-                            name: "last_name_issue",
                             placeholder: "Last Name",
                             autocomplete: "family-name"
+                          },
+                          domProps: { value: _vm.userInfo.last_name },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.userInfo,
+                                "last_name",
+                                $event.target.value
+                              )
+                            }
                           }
                         })
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-xs-6" }, [
                         _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.userInfo.email,
+                              expression: "userInfo.email"
+                            }
+                          ],
                           staticClass: "form-control",
                           attrs: {
-                            id: "school_email",
                             type: "email",
-                            name: "email",
                             placeholder: "School Email Address",
                             autocomplete: "email",
                             required: ""
+                          },
+                          domProps: { value: _vm.userInfo.email },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.userInfo,
+                                "email",
+                                $event.target.value
+                              )
+                            }
                           }
                         })
                       ])
@@ -5829,7 +5907,23 @@ var render = function() {
                         _c("div", { staticClass: "checkbox issue" }, [
                           _c("label", [
                             _c("input", {
-                              attrs: { type: "checkbox", name: "remember" }
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.userInfo.reason,
+                                  expression: "userInfo.reason"
+                                }
+                              ],
+                              attrs: { type: "radio", value: "0" },
+                              domProps: {
+                                checked: _vm._q(_vm.userInfo.reason, "0")
+                              },
+                              on: {
+                                change: function($event) {
+                                  _vm.$set(_vm.userInfo, "reason", "0")
+                                }
+                              }
                             }),
                             _vm._v(" District not displayed")
                           ])
@@ -5838,7 +5932,23 @@ var render = function() {
                         _c("div", { staticClass: "checkbox issue" }, [
                           _c("label", [
                             _c("input", {
-                              attrs: { type: "checkbox", name: "remember" }
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.userInfo.reason,
+                                  expression: "userInfo.reason"
+                                }
+                              ],
+                              attrs: { type: "radio", value: "1" },
+                              domProps: {
+                                checked: _vm._q(_vm.userInfo.reason, "1")
+                              },
+                              on: {
+                                change: function($event) {
+                                  _vm.$set(_vm.userInfo, "reason", "1")
+                                }
+                              }
                             }),
                             _vm._v(" School not displayed")
                           ])
@@ -5847,7 +5957,23 @@ var render = function() {
                         _c("div", { staticClass: "checkbox issue" }, [
                           _c("label", [
                             _c("input", {
-                              attrs: { type: "checkbox", name: "remember" }
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.userInfo.reason,
+                                  expression: "userInfo.reason"
+                                }
+                              ],
+                              attrs: { type: "radio", value: "2" },
+                              domProps: {
+                                checked: _vm._q(_vm.userInfo.reason, "2")
+                              },
+                              on: {
+                                change: function($event) {
+                                  _vm.$set(_vm.userInfo, "reason", "2")
+                                }
+                              }
                             }),
                             _vm._v(" Outside of United States")
                           ])
@@ -5856,7 +5982,23 @@ var render = function() {
                         _c("div", { staticClass: "checkbox issue" }, [
                           _c("label", [
                             _c("input", {
-                              attrs: { type: "checkbox", name: "remember" }
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.userInfo.reason,
+                                  expression: "userInfo.reason"
+                                }
+                              ],
+                              attrs: { type: "radio", value: "3" },
+                              domProps: {
+                                checked: _vm._q(_vm.userInfo.reason, "3")
+                              },
+                              on: {
+                                change: function($event) {
+                                  _vm.$set(_vm.userInfo, "reason", "3")
+                                }
+                              }
                             }),
                             _vm._v(" Other reason")
                           ])
@@ -5865,13 +6007,32 @@ var render = function() {
                       _vm._v(" "),
                       _c("div", { staticClass: "col-xs-8" }, [
                         _c("textarea", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.userInfo.description,
+                              expression: "userInfo.description"
+                            }
+                          ],
                           staticClass: "form-control",
                           attrs: {
-                            name: "issue_text",
-                            id: "issue_text",
                             cols: "30",
                             rows: "6",
                             placeholder: "Please explain issue here..."
+                          },
+                          domProps: { value: _vm.userInfo.description },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.userInfo,
+                                "description",
+                                $event.target.value
+                              )
+                            }
                           }
                         })
                       ])
@@ -5887,6 +6048,38 @@ var render = function() {
                   ])
                 ]
               )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.issueSaveNotice_modal
+            ? _c("v-modal", [
+                _c("h1", { attrs: { slot: "header" }, slot: "header" }, [
+                  _vm._v("Sorry")
+                ]),
+                _vm._v(" "),
+                _c("div", { attrs: { slot: "body" }, slot: "body" }, [
+                  _c("h3", [
+                    _vm._v("We have received your problem correctly."),
+                    _c("br"),
+                    _vm._v(
+                      "After considering it carefully, we will set up measures and inform you by email."
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    attrs: { slot: "close" },
+                    on: {
+                      click: function($event) {
+                        _vm.saveIssueConfirmOk()
+                      }
+                    },
+                    slot: "close"
+                  },
+                  [_vm._v("OK")]
+                )
+              ])
             : _vm._e()
         ],
         1
