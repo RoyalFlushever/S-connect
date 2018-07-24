@@ -33,13 +33,9 @@
 							<div class="tab-pane fade in active" role="tabpanel" id="stepper-step-1">
 								1
 							</div>
-						</div>
-						<div class="tab-content">
 							<div class="tab-pane fade" role="tabpanel" id="stepper-step-2">
 								2
 							</div>
-						</div>
-						<div class="tab-content">
 							<div class="tab-pane fade" role="tabpanel" id="stepper-step-3">
 								3
 							</div>
