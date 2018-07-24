@@ -3570,6 +3570,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3577,7 +3601,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
 		data: function data() {
 				return {
-						showModal: false,
+						fSubmited_modal: false,
+						msSubmited_modal: false,
 						issueModal: false,
 						issueSaveNotice_modal: false,
 						userInfo: {
@@ -3667,8 +3692,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 						this.userInfo.password = this.userInfo.email;
 
 						__WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/registerUser", this.userInfo).then(function (result) {
-								_this4.showModal = true;
+								if (_this4.userInfo.isEmployee == 0) {
+										_this4.msSubmited_modal = true;
+										return;
+								}
+								switch (_this4.userInfo.user_role) {
+										case 2:
+										case 3:
+												_this4.fSubmited_modal = true;
+												break;
+										case 4:
+												_this4.msSubmited_modal = true;
+												break;
+								}
 						}, function (error) {
+								console.log(error.response);
 								for (var key in error.response.data) {
 										_this4.$toasted.show(error.response.data[key], {
 												theme: "outline",
@@ -3689,7 +3727,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 								console.log(error.response);
 						});
 				},
-				saveIssueConfirmOk: function saveIssueConfirmOk() {
+				goLoginPage: function goLoginPage() {
 						location.href = "/login";
 				}
 		},
@@ -5484,13 +5522,77 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _vm.showModal
+                  _vm.fSubmited_modal
                     ? _c(
                         "v-modal",
                         {
                           on: {
                             close: function($event) {
-                              _vm.showModal = false
+                              _vm.fSubmited_modal = false
+                            }
+                          }
+                        },
+                        [
+                          _c("div", { attrs: { slot: "body" }, slot: "body" }, [
+                            _c("div", { staticClass: "gray-border" }, [
+                              _vm._v(
+                                "\n\t\t\t\t\t\t\t\t\tAn email has been sent to the provided email. You will"
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n\t\t\t\t\t\t\t\t\tbe notified when you account has been approved."
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n\t\t\t\t\t\t\t\t\tPlease allow 1-2 business days for account approval.\n\t\t\t\t\t\t\t\t"
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("br"),
+                            _vm._v(" "),
+                            _c("br"),
+                            _vm._v(" "),
+                            _c("div", [
+                              _vm._v(
+                                "\n\t\t\t\t\t\t\t\t\tIf there are any issues, please email:\n\t\t\t\t\t\t\t\t\t"
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n\t\t\t\t\t\t\t\t\tiConnect@ku.edu\n\t\t\t\t\t\t\t\t"
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "h3",
+                            { attrs: { slot: "header" }, slot: "header" },
+                            [_vm._v("Account Submitted!")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              attrs: { slot: "close" },
+                              on: {
+                                click: function($event) {
+                                  _vm.goLoginPage()
+                                }
+                              },
+                              slot: "close"
+                            },
+                            [_vm._v("OK")]
+                          )
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.msSubmited_modal
+                    ? _c(
+                        "v-modal",
+                        {
+                          on: {
+                            close: function($event) {
+                              _vm.msSubmited_modal = false
                             }
                           }
                         },
@@ -5521,6 +5623,20 @@ var render = function() {
                             "h3",
                             { attrs: { slot: "header" }, slot: "header" },
                             [_vm._v("Account Submitted!")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              attrs: { slot: "close" },
+                              on: {
+                                click: function($event) {
+                                  _vm.goLoginPage()
+                                }
+                              },
+                              slot: "close"
+                            },
+                            [_vm._v("OK")]
                           )
                         ]
                       )
@@ -6072,7 +6188,7 @@ var render = function() {
                     attrs: { slot: "close" },
                     on: {
                       click: function($event) {
-                        _vm.saveIssueConfirmOk()
+                        _vm.goLoginPage()
                       }
                     },
                     slot: "close"

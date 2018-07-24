@@ -140,7 +140,30 @@
 								</button>
 							</div>
 							<!-- use the modal component, pass in the prop -->
-							<v-modal v-if="showModal" @close="showModal = false">
+							<v-modal v-if="fSubmited_modal" @close="fSubmited_modal = false">
+								<!--
+								you can use custom content here to overwrite
+								default content
+								-->
+								<div slot="body">
+									<div class="gray-border">
+										An email has been sent to the provided email. You will<br>
+										be notified when you account has been approved.<br>
+										Please allow 1-2 business days for account approval.
+									</div>
+									<br>
+									<br>
+									<div>
+										If there are any issues, please email:
+										<br>
+										iConnect@ku.edu
+									</div>
+								</div>
+								<h3 slot="header">Account Submitted!</h3>
+								<div slot="close" @click="goLoginPage()">OK</div>
+							</v-modal>
+							<!-- use the modal component, pass in the prop -->
+							<v-modal v-if="msSubmited_modal" @close="msSubmited_modal = false">
 								<!--
 								you can use custom content here to overwrite
 								default content
@@ -161,6 +184,7 @@
 									</div>
 								</div>
 								<h3 slot="header">Account Submitted!</h3>
+								<div slot="close" @click="goLoginPage()">OK</div>
 							</v-modal>
 
 							
@@ -235,7 +259,7 @@
 					<div slot="body">
 						<h3>We have received your problem correctly.<br>After considering it carefully, we will set up measures and inform you by email.</h3>
 					</div>
-					<div slot="close" @click="saveIssueConfirmOk()">OK</div>
+					<div slot="close" @click="goLoginPage()">OK</div>
 				</v-modal>
 			</div>
 		</div>
@@ -249,7 +273,8 @@ import Axios from "axios";
 export default {
   data: function() {
     return {
-      showModal: false,
+      fSubmited_modal: false,
+      msSubmited_modal: false,
 			issueModal: false,
 			issueSaveNotice_modal: false,
       userInfo: {
@@ -339,9 +364,22 @@ export default {
 			Axios.post("/registerUser", this.userInfo)
 				.then(
 					result => {
-						this.showModal = true;
+						if(this.userInfo.isEmployee == 0) {
+							this.msSubmited_modal = true;
+							return;
+						}
+						switch (this.userInfo.user_role) {
+							case 2:
+							case 3:
+								this.fSubmited_modal = true;
+								break;
+							case 4:
+								this.msSubmited_modal = true;
+								break;
+						}
 					},
 					error => {
+						console.log(error.response);
 						for (const key in error.response.data) {
 							this.$toasted.show(error.response.data[key], {
 									theme: "outline",
@@ -366,7 +404,7 @@ export default {
 					}
 				);
 		},
-		saveIssueConfirmOk: function() {
+		goLoginPage: function() {
 			location.href = "/login";
 		},
 	},
