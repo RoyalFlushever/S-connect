@@ -50,7 +50,7 @@ class StudentController extends Controller
     public function myStudents()
     {
         $students = Student::query()->orderBy('last_name', 'asc')->orderBy('first_name', 'asc')
-            ->orderBy('middle_name', 'asc')->orderBy('id', 'asc')->where('mentor_id', '=', Auth::user()->id)->get();
+            ->orderBy('middle_name', 'asc')->orderBy('id', 'asc')->with('mentor')->get();
 
         // Administrator : 1
         // Facilitator : 2

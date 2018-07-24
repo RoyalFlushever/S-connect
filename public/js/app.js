@@ -1728,7 +1728,10 @@ var render = function() {
                           ) {
                             return _c(
                               "optgroup",
-                              { attrs: { label: categoryName } },
+                              {
+                                key: categoryName,
+                                attrs: { label: categoryName }
+                              },
                               _vm._l(locations, function(location) {
                                 return _c(
                                   "option",
@@ -1816,7 +1819,7 @@ var render = function() {
                               citizenshipValues,
                               typeName
                             ) {
-                              return _c("tr", [
+                              return _c("tr", { key: typeName }, [
                                 _c("td", [
                                   _c("label", {
                                     attrs: {
