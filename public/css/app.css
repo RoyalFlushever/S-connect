@@ -13711,3 +13711,27 @@ a.register {
   text-align: center;
 }
 
+/*
+   User Agreement
+*/
+
+.tos {
+  font-family: "Gotham SSm, Helvetica, Arial, sans-serif";
+}
+
+.tos h1 {
+  font-weight: 700;
+}
+
+.tos h3 {
+  font-weight: 600;
+}
+
+.tos p {
+  font-size: 1.3em;
+}
+
+.toasted-container .action {
+  font-size: 1.4rem;
+}
+

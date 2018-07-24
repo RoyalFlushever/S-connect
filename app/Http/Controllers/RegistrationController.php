@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Http\Request;
+use DB;
+use Illuminate\Support\Facades\Hash;
+use App\User;
+use function GuzzleHttp\json_encode;
+use App\RegistrationIssue;
 class RegistrationController extends Controller
 {
     /**
@@ -24,6 +29,16 @@ class RegistrationController extends Controller
     {
         return view('welcome');
     }
+
+    /**
+     * Show the iConnect Terms of Service page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function tos()
+    {
+        return view('tos');
+    }
     
     /**
      * Show Multistep registration form
@@ -40,7 +55,99 @@ class RegistrationController extends Controller
      * @param
      * @return
      */
-    public function create() {
+    public function registerUser(Request $request) {
 
+        $validate_arr = [
+            'first_name' => 'required',
+            'last_name'  => 'required',
+            'email'      => 'required|email|unique:users,email',
+            // 'password'   => 'required',
+            'state_id'  => 'required|integer|min:1',
+            'county_id'  => 'required|integer|min:1',
+        ];
+        
+        if($request->input('isEmployee') == 1) {
+            $validate_arr += [
+                'district_id' => 'required|integer|min:1',
+            ];
+        }
+        if($request->input('user_role') > 2) {
+            $validate_arr += ['school_id' => 'required|integer|min:1'];
+        }
+
+        $this->validate($request, $validate_arr);
+
+        // Password needs to be hashed before storing
+        $attributes = $request->only(['first_name', 'middle_name', 'last_name', 'email', 'district_id', 'school_id', 'referral_source_id']);
+        $attributes['password'] = Hash::make($request->input('password'));
+
+        // Wrap this in a transaction saving separate relationships
+        $newUser = new User($attributes);
+        $newUser->user_role()->associate($request->input('user_role'));
+
+        DB::beginTransaction();
+
+        if ($newUser->save()) {
+            DB::commit();
+            return json_encode(["result" => "success"]);
+        }
+        else {
+            // Generic failure handling. TODO: Determine if we need to use more detailed troubleshooting messages
+            DB::rollBack();
+            return json_encode(["result" => "failure"]);
+        }
+    }
+
+    /**
+     * get state list
+     */
+    public function states() {
+        return json_encode(DB::select("select * from us_states order by abbreviation"));
+    }
+    /**
+     * get county list
+     */
+    public function counties(Request $request) {
+        $state_id = $request->input("state_id");
+        return json_encode(DB::select("select * from us_counties where state_id={$state_id} order by name"));
+    }
+    // }
+    /**
+     * get district list
+     */
+    public function districts(Request $request) {
+        $county_id = $request->input("county_id");
+        return json_encode(DB::select("select * from us_districts where county_id={$county_id} order by name"));
+    }
+    /**
+     * get class list
+     */
+    public function schools(Request $request) {
+        $district_id = $request->input("district_id");
+        return json_encode(DB::select("select * from us_schools where district_id={$district_id} order by name"));
+    }
+    /**
+     * get referralSource list
+     */
+    public function referralSource() {
+        return json_encode(DB::select("select * from referral_source order by id"));
+    }
+
+    public function saveIssue(Request $request) {
+        
+        $attributes = $request->only(['first_name', 'middle_name', 'last_name', 'email', 'state_id', 'county_id', 'district_id', 'school_id', 'reason', 'description']);
+        
+        $issue = new RegistrationIssue($attributes);
+
+        DB::beginTransaction();
+
+        if ($issue->save()) {
+            DB::commit();
+            return json_encode(["result" => "success"]);
+        }
+        else {
+            DB::rollBack();
+            return json_encode(["result" => "failure"]);
+        }
     }
 }
