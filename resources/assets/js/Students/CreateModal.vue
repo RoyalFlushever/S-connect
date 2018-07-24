@@ -4,42 +4,37 @@
 		<div class="modal-wrapper">
 			<div class="modal-container">
 
-				<div class="modal-header">
-					<slot name="header">
-						default header
-					</slot>
-				</div>
-
 				<div class="modal-body">
 					<slot name="body">
 						<ul class="nav nav-tabs" role="tablist">
 							<li role="presentation" class="active">
 								<a class="persistant-disabled" href="#stepper-step-1" data-toggle="tab" aria-controls="stepper-step-1" role="tab" title="Step 1">
-									<span class="round-tab glyphicon glyphicon-book gray-border">1</span>
+									<span class="round-tab glyphicon glyphicon-book">1</span>
 								</a>
 							</li>
 							<li role="presentation" class="disabled">
 								<a class="persistant-disabled" href="#stepper-step-2" data-toggle="tab" aria-controls="stepper-step-2" role="tab" title="Step 2">
-									<span class="round-tab glyphicon glyphicon-pencil gray-border">2</span>
+									<span class="round-tab glyphicon glyphicon-pencil">2</span>
 								</a>
 							</li>
 							<li role="presentation" class="disabled">
 								<a class="persistant-disabled" href="#stepper-step-3" data-toggle="tab" aria-controls="stepper-step-3" role="tab" title="Step 3">
-									<span class="round-tab glyphicon glyphicon-list-alt gray-border">3</span>
+									<span class="round-tab glyphicon glyphicon-list-alt">3</span>
 								</a>
 							</li>
 						</ul>
-						<div class="tab-content">
-							<div class="tab-pane fade in active" role="tabpanel" id="stepper-step-1">
-								1
-							</div>
+						<div class="modal-header">
+							<slot name="header">
+								default header
+							</slot>
 						</div>
 						<div class="tab-content">
+							<div class="tab-pane fade in active" role="tabpanel" id="stepper-step-1">
+								
+							</div>
 							<div class="tab-pane fade" role="tabpanel" id="stepper-step-2">
 								2
 							</div>
-						</div>
-						<div class="tab-content">
 							<div class="tab-pane fade" role="tabpanel" id="stepper-step-3">
 								3
 							</div>

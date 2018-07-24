@@ -7417,11 +7417,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -7455,17 +7450,6 @@ var render = function() {
         _c("div", { staticClass: "modal-container" }, [
           _c(
             "div",
-            { staticClass: "modal-header" },
-            [
-              _vm._t("header", [
-                _vm._v("\n\t\t\t\t\t\tdefault header\n\t\t\t\t\t")
-              ])
-            ],
-            2
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
             { staticClass: "modal-body" },
             [
               _vm._t("body", [
@@ -7497,7 +7481,7 @@ var render = function() {
                               "span",
                               {
                                 staticClass:
-                                  "round-tab glyphicon glyphicon-book gray-border"
+                                  "round-tab glyphicon glyphicon-book"
                               },
                               [_vm._v("1")]
                             )
@@ -7530,7 +7514,7 @@ var render = function() {
                               "span",
                               {
                                 staticClass:
-                                  "round-tab glyphicon glyphicon-pencil gray-border"
+                                  "round-tab glyphicon glyphicon-pencil"
                               },
                               [_vm._v("2")]
                             )
@@ -7563,7 +7547,7 @@ var render = function() {
                               "span",
                               {
                                 staticClass:
-                                  "round-tab glyphicon glyphicon-list-alt gray-border"
+                                  "round-tab glyphicon glyphicon-list-alt"
                               },
                               [_vm._v("3")]
                             )
@@ -7574,18 +7558,23 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
-                _c("div", { staticClass: "tab-content" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "tab-pane fade in active",
-                      attrs: { role: "tabpanel", id: "stepper-step-1" }
-                    },
-                    [_vm._v("\n\t\t\t\t\t\t\t\t1\n\t\t\t\t\t\t\t")]
-                  )
-                ]),
+                _c(
+                  "div",
+                  { staticClass: "modal-header" },
+                  [
+                    _vm._t("header", [
+                      _vm._v("\n\t\t\t\t\t\t\t\tdefault header\n\t\t\t\t\t\t\t")
+                    ])
+                  ],
+                  2
+                ),
                 _vm._v(" "),
                 _c("div", { staticClass: "tab-content" }, [
+                  _c("div", {
+                    staticClass: "tab-pane fade in active",
+                    attrs: { role: "tabpanel", id: "stepper-step-1" }
+                  }),
+                  _vm._v(" "),
                   _c(
                     "div",
                     {
@@ -7593,10 +7582,8 @@ var render = function() {
                       attrs: { role: "tabpanel", id: "stepper-step-2" }
                     },
                     [_vm._v("\n\t\t\t\t\t\t\t\t2\n\t\t\t\t\t\t\t")]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "tab-content" }, [
+                  ),
+                  _vm._v(" "),
                   _c(
                     "div",
                     {
