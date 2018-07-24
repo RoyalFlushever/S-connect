@@ -25,8 +25,13 @@ Vue.component('create-modal', require('./students/CreateModal.vue'));
 
 
 import Toasted from 'vue-toasted';
+import Vuetify from 'vuetify';
+
+Vue.use(Vuetify);
 
 Vue.use(Toasted);
+
+
 
 // Instantiate root Vue
 var app = new Vue({

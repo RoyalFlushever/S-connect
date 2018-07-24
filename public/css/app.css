@@ -13596,7 +13596,6 @@ div.checkbox {
 .btn-red {
   background-color: #f44336;
   color: white;
-  width: 100px;
   padding: 3px;
   font-size: 1.4em;
 }
@@ -13733,5 +13732,13 @@ a.register {
 
 .toasted-container .action {
   font-size: 1.4rem;
+}
+
+.create-modal .btn-red {
+  padding: 15px 25px;
+}
+
+.create-modal .btn-blue {
+  padding: 15px 80px;
 }
 
