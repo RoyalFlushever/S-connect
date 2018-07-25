@@ -3,7 +3,7 @@
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
-class IepOptionsSeeder extends Seeder
+class IepsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,7 +13,7 @@ class IepOptionsSeeder extends Seeder
     public function run()
     {
         $now = Carbon::now();
-        DB::table('iep_options')->insert([
+        DB::table('ieps')->insert([
             [ 'id' => 1, 'contents' => 'No IEP',                                'created_at' => $now, 'updated_at' => $now ],
             [ 'id' => 2, 'contents' => 'Non-Categorical',                       'created_at' => $now, 'updated_at' => $now ],
             [ 'id' => 3, 'contents' => 'Autism',                                'created_at' => $now, 'updated_at' => $now ],
