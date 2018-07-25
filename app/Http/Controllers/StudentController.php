@@ -8,6 +8,7 @@ use App\MonitoringLocation;
 use App\MonitoringLocationAssignment;
 use App\Student;
 use App\User;
+use App\Ethnicity;
 
 use DB;
 use Illuminate\Http\Request;
@@ -57,8 +58,8 @@ class StudentController extends Controller
         // Site Facilitator : 3
         // Mentor : 4
         $user_role = (int)Auth::user()->user_role_id;
-        // return view('students.my-students', ['students' => $students, 'role' => $user_role]);
-        return view('students.my-students0', ['students' => $students, 'role' => $user_role]);
+        return view('students.my-students', ['students' => $students, 'role' => $user_role]);
+        // return view('students.my-students0', ['students' => $students, 'role' => $user_role]);
     }
 
     /**
@@ -278,6 +279,15 @@ class StudentController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    /**
+     * Get options for student creation
+     */
+    public function getOptions()
+    {
+        $ethnicities = \App\Ethnicity::all();
+        return json_encode(['ethnicities' => $ethnicities]);
     }
 
     /**

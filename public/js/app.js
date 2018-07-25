@@ -6982,17 +6982,10 @@ exports.push([module.i, "\n.modal-mask[data-v-420ae72c] {\n  position: fixed;\n 
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue2_datepicker__ = __webpack_require__(75);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue2_datepicker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue2_datepicker__);
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue2_datepicker__ = __webpack_require__(75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue2_datepicker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue2_datepicker__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
 //
 //
 //
@@ -7104,35 +7097,45 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-		components: { DatePicker: __WEBPACK_IMPORTED_MODULE_1_vue2_datepicker___default.a },
-		name: "create-modal",
-		props: {
-				actionurl: {
-						type: String
-				}
-		},
-		data: function data() {
-				return {
-						birthdate: "",
-						studentInfo: {
-								first_name: '',
-								middle_name: '',
-								last_name: '',
-								birthdate: '',
-								gender_id: 0,
-								mento_id: 0
-
-						}
-				};
-		},
-		methods: {
-				close: function close() {
-						this.$emit("close");
-				},
-				submit: function submit() {
-						this.$emit("submit");
-				}
+	components: { DatePicker: __WEBPACK_IMPORTED_MODULE_0_vue2_datepicker___default.a },
+	name: "create-modal",
+	props: {
+		actionurl: {
+			type: String
 		}
+	},
+	data: function data() {
+		return {
+			birthdate: "",
+			ethnicities: [],
+			studentInfo: {
+				first_name: '',
+				middle_name: '',
+				last_name: '',
+				birthdate: '',
+				gender_id: 0,
+				mento_id: 0
+
+			}
+		};
+	},
+	methods: {
+		close: function close() {
+			this.$emit("close");
+		},
+		submit: function submit() {
+			this.$emit("submit");
+		}
+	},
+	mounted: function mounted() {
+		var _this = this;
+
+		__WEBPACK_IMPORTED_MODULE_1_axios___default.a.get("/create-students/get-options").then(function (result) {
+			// console.log(result.data);
+			// return;
+			_this.ethnicities = result.data.ethnicities;
+		});
+	}
 });
 
 /***/ }),
@@ -7149,10 +7152,10 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("transition", { attrs: { name: "modal create-modal" } }, [
+  return _c("transition", { attrs: { name: "modal" } }, [
     _c("div", { staticClass: "modal-mask" }, [
       _c("div", { staticClass: "modal-wrapper" }, [
-        _c("div", { staticClass: "modal-container" }, [
+        _c("div", { staticClass: "modal-container create-modal" }, [
           _c(
             "div",
             { staticClass: "modal-body" },
@@ -7345,30 +7348,34 @@ var render = function() {
                                   _vm._v("Femalw")
                                 ]),
                                 _vm._v(" "),
-                                _c("label", [
-                                  _vm._v(
-                                    "\n\t\t\t\t\t\t\t\t\t\t\t\tEthnicity(optional)\n\t\t\t\t\t\t\t\t\t\t\t\t"
-                                  ),
-                                  _c(
-                                    "select",
-                                    { attrs: { name: "", id: "" } },
-                                    [_c("option", [_vm._v("Select")])]
-                                  )
+                                _c(
+                                  "select",
+                                  { attrs: { name: "", id: "" } },
+                                  [
+                                    _c("option", [
+                                      _vm._v("Ethnicity(optional)")
+                                    ]),
+                                    _vm._v(" "),
+                                    _vm._l(_vm.ethnicities, function(
+                                      ethnicity
+                                    ) {
+                                      return _c(
+                                        "option",
+                                        {
+                                          key: ethnicity.id,
+                                          domProps: { value: ethnicity.id }
+                                        },
+                                        [_vm._v(_vm._s(ethnicity.name))]
+                                      )
+                                    })
+                                  ],
+                                  2
+                                ),
+                                _vm._v(" "),
+                                _c("select", { attrs: { name: "", id: "" } }, [
+                                  _c("option", [_vm._v("IEP(optional)")])
                                 ]),
                                 _vm._v(" "),
-                                _c("label", [
-                                  _vm._v(
-                                    "\n\t\t\t\t\t\t\t\t\t\t\t\tIEP(optional)\n\t\t\t\t\t\t\t\t\t\t\t\t"
-                                  ),
-                                  _c(
-                                    "select",
-                                    { attrs: { name: "", id: "" } },
-                                    [_c("option", [_vm._v("Select")])]
-                                  )
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("v-flex", { attrs: { xs12: "" } }, [
                                 _c("select", { attrs: { name: "", id: "" } }, [
                                   _c("option", { attrs: { value: "" } }, [
                                     _vm._v("Designate Mentor")

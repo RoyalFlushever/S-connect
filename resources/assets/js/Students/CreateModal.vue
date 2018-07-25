@@ -1,8 +1,8 @@
 <template>
-<transition name="modal create-modal">
+<transition name="modal">
 	<div class="modal-mask">
 		<div class="modal-wrapper">
-			<div class="modal-container">
+			<div class="modal-container create-modal">
 
 				<div class="modal-body">
 					<slot name="body">
@@ -46,24 +46,17 @@
 										<v-layout row wrap>
 											<label><input type="radio">Male</label>
 											<label><input type="radio">Femalw</label>
-											<label>
-												Ethnicity(optional)
-												<select name="" id="">
-													<option>Select</option>
-												</select>
-											</label>
-											<label>
-												IEP(optional)
-												<select name="" id="">
-													<option>Select</option>
-												</select>
-											</label>
-										</v-layout>
-										<v-flex xs12>
+											<select name="" id="">
+												<option>Ethnicity(optional)</option>
+												<option v-for="ethnicity in ethnicities" :value="ethnicity.id" :key="ethnicity.id">{{ethnicity.name}}</option>
+											</select>
+											<select name="" id="">
+												<option>IEP(optional)</option>
+											</select>
 											<select name="" id="">
 												<option value="">Designate Mentor</option>
 											</select>
-										</v-flex>
+										</v-layout>
 										<v-flex xs12>
 											<input type="text" placeholder="iConnect UserName">
 										</v-flex>
@@ -112,8 +105,8 @@
 </template>
 
 <script>
-import axios from "axios";
 import DatePicker from 'vue2-datepicker'
+import Axios from 'axios';
 	
 export default {
   components: { DatePicker },
@@ -126,6 +119,7 @@ export default {
 	data: function () {
 		return {
 			birthdate: "",
+			ethnicities: [],
 			studentInfo: {
 				first_name: '',
 				middle_name: '',
@@ -144,7 +138,17 @@ export default {
     submit: function() {
       this.$emit("submit");
     }
-  }
+	},
+	mounted() {
+		Axios.get("/create-students/get-options")
+			.then(
+				result => {
+					// console.log(result.data);
+					// return;
+					this.ethnicities = result.data.ethnicities;
+				}
+			);
+	},
 };
 </script>
 

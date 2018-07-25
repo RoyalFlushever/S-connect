@@ -57,8 +57,8 @@ class StudentController extends Controller
         // Site Facilitator : 3
         // Mentor : 4
         $user_role = (int)Auth::user()->user_role_id;
-        // return view('students.my-students', ['students' => $students, 'role' => $user_role]);
-        return view('students.my-students0', ['students' => $students, 'role' => $user_role]);
+        return view('students.my-students', ['students' => $students, 'role' => $user_role]);
+        // return view('students.my-students0', ['students' => $students, 'role' => $user_role]);
     }
 
     /**
