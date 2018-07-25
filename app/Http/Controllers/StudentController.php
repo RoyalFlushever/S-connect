@@ -9,11 +9,14 @@ use App\MonitoringLocationAssignment;
 use App\Student;
 use App\User;
 use App\Ethnicity;
+use App\Iep;
 
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+
+use Illuminate\Support\Facades\Log;
 
 class StudentController extends Controller
 {
@@ -116,6 +119,8 @@ class StudentController extends Controller
 
         // Fetch citizenship prompt data
         $monitoringLocations = MonitoringLocation::with('category')->orderBy('category_id', 'asc')->orderBy('name', 'asc')->orderBy('id', 'asc')->get();
+
+        Log::debug(var_export($monitoringLocations, true));
         $monitoringLocationsByCategory = $monitoringLocations->groupBy('category.name');
         $monitoringLocationNamesById = $monitoringLocations->mapWithKeys(function ($location) {
             return [ $location->id => $location->name ];
@@ -283,11 +288,48 @@ class StudentController extends Controller
 
     /**
      * Get options for student creation
+     * @return \JSON
      */
     public function getOptions()
     {
-        $ethnicities = \App\Ethnicity::all();
-        return json_encode(['ethnicities' => $ethnicities]);
+        $ethnicities = Ethnicity::all();
+        $ieps = Iep::all();
+
+        // Fetch a list of possible mentors for this student
+        // Mentors don't see the Mentor field; instead, they are automatically assigned as the Mentor for this Student
+        $autoAssignMentor = Auth::user()->user_role_id > 3;
+        if ($autoAssignMentor) {
+            $availableMentors = [];
+        }
+        else {
+            // Possible mentors include all Facilitators, Site Facilitators, and Mentors
+            // TODO: when we actually have Schools, this will flex based on the selected School on the form
+            $availableMentors = User::query()->whereBetween('user_role_id', [2, 4])->get();
+        }
+
+        // Fetch citizenship prompt data
+        $monitoringLocations = MonitoringLocation::with('category')->orderBy('category_id', 'asc')->orderBy('name', 'asc')->orderBy('id', 'asc')->get();
+        Log::debug(var_export($monitoringLocations, true));
+        $monitoringLocationsByCategory = $monitoringLocations->groupBy('category.name');
+        $monitoringLocationNamesById = $monitoringLocations->mapWithKeys(function ($location) {
+            return [ $location->id => $location->name ];
+        });
+
+        // Sorting by phrasing puts custom entries (see CitizenshipValueSeeder) apart from other entries
+        // TODO: We may want to assign a display_order if we end up not wanting citizenship values to be naturally sorted by name
+        $citizenshipValues = CitizenshipValue::with('type')->orderBy('type_id', 'asc')->orderBy('phrasing', 'desc')->orderBy('id', 'asc')->get();
+        $citizenshipValuesByType = $citizenshipValues->groupBy('type.name');
+
+        return json_encode(
+            [
+                'ethnicities'                   => $ethnicities,
+                'ieps'                          => $ieps,
+                'availableMentors'              => $availableMentors,
+                'monitoringLocationsByCategory' => $monitoringLocationsByCategory,
+                'monitoringLocationNamesById'   => $monitoringLocationNamesById,
+                'citizenshipValuesByType'       => $citizenshipValuesByType,
+            ]
+        );
     }
 
     /**

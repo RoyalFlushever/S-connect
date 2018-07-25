@@ -7092,6 +7092,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -7107,13 +7116,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	data: function data() {
 		return {
 			birthdate: "",
-			ethnicities: [],
+			options: {},
 			studentInfo: {
 				first_name: '',
 				middle_name: '',
 				last_name: '',
 				birthdate: '',
-				gender_id: 0,
+				gender_id: 1,
 				mento_id: 0
 
 			}
@@ -7133,7 +7142,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		__WEBPACK_IMPORTED_MODULE_1_axios___default.a.get("/create-students/get-options").then(function (result) {
 			// console.log(result.data);
 			// return;
-			_this.ethnicities = result.data.ethnicities;
+			_this.options = result.data;
 		});
 	}
 });
@@ -7281,7 +7290,7 @@ var render = function() {
                   _c(
                     "div",
                     {
-                      staticClass: "fade in active",
+                      staticClass: "tab-pane fade in active",
                       attrs: { role: "tabpanel", id: "stepper-step-1" }
                     },
                     [
@@ -7339,12 +7348,64 @@ var render = function() {
                               _vm._v(" "),
                               _c("v-layout", { attrs: { row: "", wrap: "" } }, [
                                 _c("label", [
-                                  _c("input", { attrs: { type: "radio" } }),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.studentInfo.gender_id,
+                                        expression: "studentInfo.gender_id"
+                                      }
+                                    ],
+                                    attrs: { type: "radio" },
+                                    domProps: {
+                                      value: 1,
+                                      checked: _vm._q(
+                                        _vm.studentInfo.gender_id,
+                                        1
+                                      )
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        _vm.$set(
+                                          _vm.studentInfo,
+                                          "gender_id",
+                                          1
+                                        )
+                                      }
+                                    }
+                                  }),
                                   _vm._v("Male")
                                 ]),
                                 _vm._v(" "),
                                 _c("label", [
-                                  _c("input", { attrs: { type: "radio" } }),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.studentInfo.gender_id,
+                                        expression: "studentInfo.gender_id"
+                                      }
+                                    ],
+                                    attrs: { type: "radio" },
+                                    domProps: {
+                                      value: 2,
+                                      checked: _vm._q(
+                                        _vm.studentInfo.gender_id,
+                                        2
+                                      )
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        _vm.$set(
+                                          _vm.studentInfo,
+                                          "gender_id",
+                                          2
+                                        )
+                                      }
+                                    }
+                                  }),
                                   _vm._v("Femalw")
                                 ]),
                                 _vm._v(" "),
@@ -7356,7 +7417,7 @@ var render = function() {
                                       _vm._v("Ethnicity(optional)")
                                     ]),
                                     _vm._v(" "),
-                                    _vm._l(_vm.ethnicities, function(
+                                    _vm._l(_vm.options.ethnicities, function(
                                       ethnicity
                                     ) {
                                       return _c(
@@ -7372,15 +7433,56 @@ var render = function() {
                                   2
                                 ),
                                 _vm._v(" "),
-                                _c("select", { attrs: { name: "", id: "" } }, [
-                                  _c("option", [_vm._v("IEP(optional)")])
-                                ]),
+                                _c(
+                                  "select",
+                                  { attrs: { name: "", id: "" } },
+                                  [
+                                    _c("option", [_vm._v("IEP(optional)")]),
+                                    _vm._v(" "),
+                                    _vm._l(_vm.options.ieps, function(iep) {
+                                      return _c(
+                                        "option",
+                                        {
+                                          key: iep.id,
+                                          domProps: { value: iep.id }
+                                        },
+                                        [_vm._v(_vm._s(iep.contents))]
+                                      )
+                                    })
+                                  ],
+                                  2
+                                ),
                                 _vm._v(" "),
-                                _c("select", { attrs: { name: "", id: "" } }, [
-                                  _c("option", { attrs: { value: "" } }, [
-                                    _vm._v("Designate Mentor")
-                                  ])
-                                ])
+                                _c(
+                                  "select",
+                                  { attrs: { name: "", id: "" } },
+                                  [
+                                    _c("option", { attrs: { value: "" } }, [
+                                      _vm._v("Designate Mentor")
+                                    ]),
+                                    _vm._v(" "),
+                                    _vm._l(
+                                      _vm.options.availableMentors,
+                                      function(mentor) {
+                                        return _c(
+                                          "option",
+                                          {
+                                            key: mentor.id,
+                                            domProps: { value: mentor.id }
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(mentor.last_name) +
+                                                ", " +
+                                                _vm._s(mentor.first_name)
+                                            )
+                                          ]
+                                        )
+                                      }
+                                    )
+                                  ],
+                                  2
+                                )
                               ]),
                               _vm._v(" "),
                               _c("v-flex", { attrs: { xs12: "" } }, [
@@ -7437,7 +7539,21 @@ var render = function() {
                       staticClass: "tab-pane fade",
                       attrs: { role: "tabpanel", id: "stepper-step-2" }
                     },
-                    [_vm._v("\n\t\t\t\t\t\t\t\t2\n\t\t\t\t\t\t\t")]
+                    [
+                      _c("legend", [_vm._v("Monitoring and Citizenship")]),
+                      _vm._v(" "),
+                      _c("citizenship-value-fields", {
+                        attrs: {
+                          "monitoring-location-names-by-id":
+                            _vm.options.monitoringLocationNamesById,
+                          "monitoring-locations-by-category":
+                            _vm.options.monitoringLocationsByCategory,
+                          "citizenship-values-by-type":
+                            _vm.options.citizenshipValuesByType
+                        }
+                      })
+                    ],
+                    1
                   ),
                   _vm._v(" "),
                   _c(

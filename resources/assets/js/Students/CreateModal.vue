@@ -29,7 +29,7 @@
 							</slot>
 						</div>
 						<div class="tab-content">
-							<div class="fade in active" role="tabpanel" id="stepper-step-1">
+							<div class="tab-pane fade in active" role="tabpanel" id="stepper-step-1">
 								<v-container grid-list-md text-xs-center>
 									<v-layout column>
 										<v-layout row>
@@ -44,17 +44,19 @@
 											></date-picker>
 										</v-layout>
 										<v-layout row wrap>
-											<label><input type="radio">Male</label>
-											<label><input type="radio">Femalw</label>
+											<label><input type="radio" v-model="studentInfo.gender_id" :value="1">Male</label>
+											<label><input type="radio" v-model="studentInfo.gender_id" :value="2">Femalw</label>
 											<select name="" id="">
 												<option>Ethnicity(optional)</option>
-												<option v-for="ethnicity in ethnicities" :value="ethnicity.id" :key="ethnicity.id">{{ethnicity.name}}</option>
+												<option v-for="ethnicity in options.ethnicities" :value="ethnicity.id" :key="ethnicity.id">{{ethnicity.name}}</option>
 											</select>
 											<select name="" id="">
 												<option>IEP(optional)</option>
+												<option v-for="iep in options.ieps" :value="iep.id" :key="iep.id">{{iep.contents}}</option>
 											</select>
 											<select name="" id="">
 												<option value="">Designate Mentor</option>
+												<option v-for="mentor in options.availableMentors" :value="mentor.id" :key="mentor.id">{{mentor.last_name}}, {{mentor.first_name}}</option>
 											</select>
 										</v-layout>
 										<v-flex xs12>
@@ -70,7 +72,14 @@
 								</v-container>
 							</div>
 							<div class="tab-pane fade" role="tabpanel" id="stepper-step-2">
-								2
+								<legend>Monitoring and Citizenship</legend>
+
+								<citizenship-value-fields
+										:monitoring-location-names-by-id="options.monitoringLocationNamesById"
+										:monitoring-locations-by-category="options.monitoringLocationsByCategory"
+										:citizenship-values-by-type="options.citizenshipValuesByType"
+								></citizenship-value-fields>
+
 							</div>
 							<div class="tab-pane fade" role="tabpanel" id="stepper-step-3">
 								3
@@ -119,13 +128,13 @@ export default {
 	data: function () {
 		return {
 			birthdate: "",
-			ethnicities: [],
+			options: {},
 			studentInfo: {
 				first_name: '',
 				middle_name: '',
 				last_name: '',
 				birthdate: '',
-				gender_id: 0,
+				gender_id: 1,
 				mento_id: 0,
 
 			},
@@ -145,7 +154,7 @@ export default {
 				result => {
 					// console.log(result.data);
 					// return;
-					this.ethnicities = result.data.ethnicities;
+					this.options = result.data;
 				}
 			);
 	},
