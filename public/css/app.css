@@ -13734,6 +13734,14 @@ a.register {
   font-size: 1.4rem;
 }
 
+.registration-form .btn-red {
+  width: 100px;
+}
+
+.registration-form .btn-blue {
+  padding: 15px 80px;
+}
+
 .create-modal .btn-red {
   padding: 15px 25px;
 }

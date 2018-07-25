@@ -1,8 +1,8 @@
 <template>
-<transition name="modal">
+<transition name="modal create-modal">
 	<div class="modal-mask">
 		<div class="modal-wrapper">
-			<div class="modal-container create-modal">
+			<div class="modal-container">
 
 				<div class="modal-body">
 					<slot name="body">
@@ -126,6 +126,15 @@ export default {
 	data: function () {
 		return {
 			birthdate: "",
+			studentInfo: {
+				first_name: '',
+				middle_name: '',
+				last_name: '',
+				birthdate: '',
+				gender_id: 0,
+				mento_id: 0,
+
+			},
 		};
 	},
   methods: {

@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div class="container registration-form">
 		<div class="row text-center">
 			<div class="col-md-9 stepper">
 				<form action="#">

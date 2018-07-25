@@ -102,6 +102,8 @@ export default {
 			createModal: false,
 
 			role: 2,
+			students: [],
+
 		};
 	}
 };
