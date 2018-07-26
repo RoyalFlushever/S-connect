@@ -145,6 +145,111 @@ class StudentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function saveStudent(Request $request)
+    {
+        Log::debug(var_export($request->all(), true));
+        $this->authorize('create', Student::class);
+
+        // TODO: Validate monitoring locations
+
+        $this->validate($request, [
+            'first_name' => 'required',
+            'last_name'  => 'required',
+            'birthdate'  => 'required|date|before_or_equal:today',
+            'username'   => 'bail|required|min:6|regex:/[0-9]+/|regex:/[a-zA-Z]+/|unique:students,username',
+            'password'   => 'required',
+            'gender'     => "required|integer|between:1,2",
+            'mentor'     => 'nullable|integer'
+        ]);
+
+        // Password needs to be hashed before storing; date needs to be formatted using ISO 8601 for Carbon database storage
+        $attributes = $request->only([ 'first_name', 'middle_name', 'last_name', 'username' ]);
+        $attributes['birthdate'] = date('Y-m-d', strtotime($request->input('birthdate')));
+        $attributes['password'] = Hash::make($request->input('password'));
+
+
+        $student = new Student($attributes);
+
+        // Make the authenticated user the student's mentor (should be set for Mentor users)
+        if ($request->input('auto_assign_mentor')) {
+            $student->mentor()->associate(Auth::user()->id);
+        }
+        elseif ($request->input('mentor')) {
+            $student->mentor()->associate($request->input('mentor'));
+        }
+
+        $student->gender()->associate($request->input('gender'));
+
+        // TODO: Need to save to get student id
+
+        $monitoringLocations = $request->input('monitoringLocations');
+        $citizenshipValues = $request->input('citizenshipValues');
+        DB::transaction(function() use (&$student, &$monitoringLocations, &$citizenshipValues, &$request) {
+            $student->save();
+            // TODO: This check can be handled by validation?
+            if (is_array($monitoringLocations)) {
+                foreach ($monitoringLocations as $locationIndex => $locationId) {
+                    $locationAssignment = new MonitoringLocationAssignment();
+                    $locationAssignment->student()->associate($student); // Need student id after save!
+                    $locationAssignment->monitoring_location()->associate($locationId);
+                    $locationAssignment->label = $request->input('locationLabels')[$locationIndex];  // TODO: Validate index exists
+                    $locationAssignment->save();
+
+                    foreach ($citizenshipValues[$locationIndex] as $cvType => $citizenshipValueId) {
+                        // TODO: Support custom phrasings!
+                        // $request->input('customPrompts')[$locationIndex][Engagement|Appropriateness|Comprehension]
+                        //if (!empty($citizenshipValueId) && $citizenshipValueId !== '_custom') {
+                        if (!empty($citizenshipValueId)) {
+                            // Save citizenship values
+                            $citizenshipValueAssignment = new CitizenshipValueAssignment();
+                            $citizenshipValueAssignment->monitoring_location_assignment()->associate($locationAssignment);
+                            $citizenshipValueAssignment->citizenship_value()->associate($citizenshipValueId);
+
+                            // TODO: Make sure these structures are validated (above)
+                            // TODO: Restructure these as nested elements in the citizenship values array
+                            $isVariableInterval = $request->input('isVariableInterval');
+                            $desiredMeanInSeconds = $request->input('desiredMeanInSeconds');
+                            $intervalHours = $request->input('intervalHours');
+                            $intervalMinutes = $request->input('intervalMinutes');
+                            $intervalSeconds = $request->input('intervalSeconds');
+
+                            // Note that (bool)'false' (string) evaluates to true
+                            // TODO: Handle this in validation/sanization?
+                            $alertIntervalVaries = ($isVariableInterval[$locationIndex][$cvType] == 'true');
+                            if ($alertIntervalVaries) {
+                                $alertIntervalInSeconds = $desiredMeanInSeconds[$locationIndex][$cvType];
+                            }
+                            else {
+                                $alertIntervalInSeconds = 3600*$intervalHours[$locationIndex][$cvType] +
+                                    60*$intervalMinutes[$locationIndex][$cvType] +
+                                    $intervalSeconds[$locationIndex][$cvType];
+                            }
+                            $citizenshipValueAssignment->alert_interval_varies = $alertIntervalVaries;
+                            $citizenshipValueAssignment->alert_interval_in_seconds = $alertIntervalInSeconds;
+
+                            // TODO: Shye - check later when other versions of prompts are added
+                            if ($citizenshipValueId == 4 || $citizenshipValueId == 5 || $citizenshipValueId == 6) {
+                                $customPrompts = $request->input('customPrompts');
+                                $citizenshipValueAssignment->custom_phrasing = $customPrompts[$locationIndex][$cvType];
+                            }
+                            $goalPercent = $request->input('goals');
+                            $citizenshipValueAssignment->goal_percentage = $goalPercent[$locationIndex][$cvType];
+
+                            $citizenshipValueAssignment->save();
+                        }
+                    }
+                }
+            }
+        });
+
+        return json_encode(['result' => 'ok']);
+    }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
         Log::debug(var_export($request->all(), true));

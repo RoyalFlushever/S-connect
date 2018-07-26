@@ -18,7 +18,7 @@
 								</a>
 							</li>
 							<li role="presentation" class="disabled">
-								<a class="persistant-disabled" href="#stepper-step-3" data-toggle="tab" aria-controls="stepper-step-3" role="tab" title="Step 3">
+								<a class="persistant-disabled" href="#stepper-step-3" data-toggle="tab" aria-controls="stepper-step-3" role="tab" title="Step 3" ref="navTab3">
 									<span class="round-tab glyphicon glyphicon-list-alt">3</span>
 								</a>
 							</li>
@@ -51,8 +51,8 @@
 											>
 										</v-layout>
 										<v-layout row wrap>
-											<label><input type="radio" name="gender" id="gender-female" required v-model="studentInfo.gender_id" :value="1">Male</label>
-											<label><input type="radio" name="gender" id="gender-male" required v-model="studentInfo.gender_id" :value="2">Femalw</label>
+											<label><input type="radio" name="gender" id="gender-female" required v-model="studentInfo.gender" :value="1">Male</label>
+											<label><input type="radio" name="gender" id="gender-male" required v-model="studentInfo.gender" :value="2">Femalw</label>
 											<select name="ethnicity" id="ethnicity">
 												<option>Ethnicity(optional)</option>
 												<option v-for="ethnicity in options.ethnicities" :value="ethnicity.id" :key="ethnicity.id">{{ethnicity.name}}</option>
@@ -103,7 +103,7 @@
 										<button class="btn btn-cta btn-green">Enable</button>
 										<button class="btn btn-cta btn-yellow">Desable</button>
 									</v-layout>
-									<a class="btn btn-lg btn-cta btn-blue" @click="goto('stepper-step-3')">Save new student!!</a>
+									<a class="btn btn-lg btn-cta btn-blue" @click="submit()">Save new student!!</a>
 								</v-container>
 							</div>
 						</div>
@@ -154,12 +154,13 @@ export default {
 		return {
 			options: {},
 			studentInfo: {
+				_token: window.Laravel.csrfToken,
 				first_name: '',
-				middle_name: '',
+				middle_name: null,
 				last_name: '',
 				birthdate: '',
-				gender_id: 0,
-				mento_id: 0,
+				gender: 0,
+				mentor: null,
 
 			},
 		};
@@ -169,7 +170,7 @@ export default {
       this.$emit("close");
     },
     submit: function() {
-      this.$emit("submit");
+			Axios.post("/create-students/save-student", this.studentInfo);
 		},
 		gotoStep2: function (e) {
 			if(this.$refs.stepForm1.checkValidity()) {

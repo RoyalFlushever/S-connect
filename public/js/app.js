@@ -7143,12 +7143,13 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_2_vee_validate__["a" /* default */]);
 		return {
 			options: {},
 			studentInfo: {
+				_token: window.Laravel.csrfToken,
 				first_name: '',
-				middle_name: '',
+				middle_name: null,
 				last_name: '',
 				birthdate: '',
-				gender_id: 0,
-				mento_id: 0
+				gender: 0,
+				mentor: null
 
 			}
 		};
@@ -7158,7 +7159,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_2_vee_validate__["a" /* default */]);
 			this.$emit("close");
 		},
 		submit: function submit() {
-			this.$emit("submit");
+			__WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/create-students/save-student", this.studentInfo);
 		},
 		gotoStep2: function gotoStep2(e) {
 			if (this.$refs.stepForm1.checkValidity()) {
@@ -15042,6 +15043,7 @@ var render = function() {
                         _c(
                           "a",
                           {
+                            ref: "navTab3",
                             staticClass: "persistant-disabled",
                             attrs: {
                               href: "#stepper-step-3",
@@ -15226,8 +15228,8 @@ var render = function() {
                                       {
                                         name: "model",
                                         rawName: "v-model",
-                                        value: _vm.studentInfo.gender_id,
-                                        expression: "studentInfo.gender_id"
+                                        value: _vm.studentInfo.gender,
+                                        expression: "studentInfo.gender"
                                       }
                                     ],
                                     attrs: {
@@ -15238,18 +15240,11 @@ var render = function() {
                                     },
                                     domProps: {
                                       value: 1,
-                                      checked: _vm._q(
-                                        _vm.studentInfo.gender_id,
-                                        1
-                                      )
+                                      checked: _vm._q(_vm.studentInfo.gender, 1)
                                     },
                                     on: {
                                       change: function($event) {
-                                        _vm.$set(
-                                          _vm.studentInfo,
-                                          "gender_id",
-                                          1
-                                        )
+                                        _vm.$set(_vm.studentInfo, "gender", 1)
                                       }
                                     }
                                   }),
@@ -15262,8 +15257,8 @@ var render = function() {
                                       {
                                         name: "model",
                                         rawName: "v-model",
-                                        value: _vm.studentInfo.gender_id,
-                                        expression: "studentInfo.gender_id"
+                                        value: _vm.studentInfo.gender,
+                                        expression: "studentInfo.gender"
                                       }
                                     ],
                                     attrs: {
@@ -15274,18 +15269,11 @@ var render = function() {
                                     },
                                     domProps: {
                                       value: 2,
-                                      checked: _vm._q(
-                                        _vm.studentInfo.gender_id,
-                                        2
-                                      )
+                                      checked: _vm._q(_vm.studentInfo.gender, 2)
                                     },
                                     on: {
                                       change: function($event) {
-                                        _vm.$set(
-                                          _vm.studentInfo,
-                                          "gender_id",
-                                          2
-                                        )
+                                        _vm.$set(_vm.studentInfo, "gender", 2)
                                       }
                                     }
                                   }),
@@ -15574,7 +15562,7 @@ var render = function() {
                               staticClass: "btn btn-lg btn-cta btn-blue",
                               on: {
                                 click: function($event) {
-                                  _vm.goto("stepper-step-3")
+                                  _vm.submit()
                                 }
                               }
                             },
