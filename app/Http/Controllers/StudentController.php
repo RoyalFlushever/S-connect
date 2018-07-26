@@ -120,7 +120,6 @@ class StudentController extends Controller
         // Fetch citizenship prompt data
         $monitoringLocations = MonitoringLocation::with('category')->orderBy('category_id', 'asc')->orderBy('name', 'asc')->orderBy('id', 'asc')->get();
 
-        Log::debug(var_export($monitoringLocations, true));
         $monitoringLocationsByCategory = $monitoringLocations->groupBy('category.name');
         $monitoringLocationNamesById = $monitoringLocations->mapWithKeys(function ($location) {
             return [ $location->id => $location->name ];
@@ -148,6 +147,7 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
+        Log::debug(var_export($request->all(), true));
         $this->authorize('create', Student::class);
 
         // TODO: Validate monitoring locations
@@ -309,7 +309,6 @@ class StudentController extends Controller
 
         // Fetch citizenship prompt data
         $monitoringLocations = MonitoringLocation::with('category')->orderBy('category_id', 'asc')->orderBy('name', 'asc')->orderBy('id', 'asc')->get();
-        Log::debug(var_export($monitoringLocations, true));
         $monitoringLocationsByCategory = $monitoringLocations->groupBy('category.name');
         $monitoringLocationNamesById = $monitoringLocations->mapWithKeys(function ($location) {
             return [ $location->id => $location->name ];
