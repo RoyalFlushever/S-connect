@@ -70,11 +70,11 @@
                     <td>{{key + 1}}</td>
                     <td>{{student.first_name}}</td>
                     <td>{{student.last_name}}</td>
-                    <td>{{age}}</td>
+                    <td>{{getAge(student.birthdate)}}</td>
                     <td class="actions text-center">
                         <a href="#" class="btn btn-large btn-cta">Edit</a>
                         <a href="#" class="btn btn-large btn-blue">View Chart</a>
-                        <a href="/transfer" class="btn btn-large btn-yellow">Transfer</a>
+                        <a  class="btn btn-large btn-yellow" @click="goTransfer(student.id)">Transfer</a>
                     </td>
                 </tr>
             </tbody>
@@ -109,18 +109,28 @@ export default {
         });
     },
     computed: {
-        age: function () {
-            console.log(this)
-            let age = '1'
-            // var today = new Date();
-            // var birthDate = new Date(this.birthDate);
-            // var age = today.getFullYear() - birthDate.getFullYear();
-            // var m = today.getMonth() - birthDate.getMonth();
-            // if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-            //     age--;
-            // }
+    },
+    methods: {
+        getAge: function (birthdate) {
+            let today = new Date();
+            let birthDate = new Date(birthdate);
+            let age = today.getFullYear() - birthDate.getFullYear();
+            let m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
             return age;
         },
+        goTransfer: function (studentId) {
+            console.log(studentId);
+            let form = document.createElement("form");
+            form.method = 'post';
+            form.action = '/transfer';
+            $("<input />").attr('type', 'hidden')
+                .attr('name', "something")
+                .attr('value', "something")
+                .appendTo(form);
+        }
     },
 };
 </script>
