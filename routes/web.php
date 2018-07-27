@@ -34,6 +34,7 @@ Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
 Route::get('home', 'HomeController@index')->name('home');
+Route::get('site_admin', 'HomeController@site_admin')->name('site-admin');
 
 Route::resource('students', 'StudentController', ['only' => [
     'index', 'create', 'store'
