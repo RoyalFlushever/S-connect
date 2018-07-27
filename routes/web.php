@@ -16,6 +16,9 @@
 //     return redirect('/home');
 // })->middleware('auth');
 Route::get('/', 'RegistrationController@welcome');
+Route::get('/', function() {
+    return redirect('/home');
+})->middleware('auth');
 Route::get('/tos', 'RegistrationController@tos');
 
 // Manually use authentication routes from Laravel's router, excluding registration routes
