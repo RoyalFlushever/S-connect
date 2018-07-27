@@ -19,9 +19,9 @@ class ScholeLevelSeeder extends Seeder
                     return $data + ['created_at' => $now, 'updated_at' => $now];
                 },
                 [
-                    ['id' => 1, 'name' => 'Administrator'    ],
-                    ['id' => 2, 'name' => 'Facilitator'      ],
-                    ['id' => 3, 'name' => 'Site Facilitator' ]
+                    ['id' => 1, 'name' => 'Elementary'  ],
+                    ['id' => 2, 'name' => 'Secondary'   ],
+                    ['id' => 3, 'name' => 'Combined'    ]
                 ]
             )
         );
