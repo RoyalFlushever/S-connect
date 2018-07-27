@@ -128,6 +128,18 @@ div.checkbox {
         border-color: $iconnect-blue;
     }
 }
+.btn-lightblue {
+    background-color: $iconnect-lightblue;
+    color: white;
+    width: max-content;
+    padding: 3px;
+    font-size: 1.4em;
+    &:hover {
+        color: $iconnect-lightblue;
+        background-color: white;
+        border-color: $iconnect-lightblue;
+    }
+}
 
 .btn-yellow {
     background-color: $iconnect-yellow;
@@ -245,7 +257,7 @@ a.register {
     .btn-red {
         padding: 15px 25px;
     }
-    .btn-blue {
+    .btn-lightblue {
         padding: 15px 80px;
     }
 }

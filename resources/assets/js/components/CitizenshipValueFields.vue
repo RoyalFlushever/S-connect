@@ -326,3 +326,13 @@
         }
     };
 </script>
+
+<style lang="scss" scoped>
+    .panel-group {
+        min-height: 265px;
+        max-height: 265px;
+        overflow-y: scroll;
+        font-size: .5em;        
+    }
+</style>
+
