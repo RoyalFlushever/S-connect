@@ -36,6 +36,7 @@ Route::resource('students', 'StudentController', ['only' => [
     'index', 'create', 'store'
 ]]);
 Route::get('my-students', 'StudentController@myStudents');
+Route::get('my-students/get-list', 'StudentController@getList');
 
 Route::get('create-students/get-options', 'StudentController@getOptions');
 Route::post('create-students/save-student', 'StudentController@saveStudent');

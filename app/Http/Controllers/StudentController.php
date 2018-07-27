@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Support\Facades\Log;
+use function GuzzleHttp\json_encode;
 
 class StudentController extends Controller
 {
@@ -64,6 +65,27 @@ class StudentController extends Controller
         return view('students.my-students', ['students' => $students, 'role' => $user_role]);
         // return view('students.my-students0', ['students' => $students, 'role' => $user_role]);
     }
+
+    /**
+     * Display a list of students being directly mentored by the authenticated user
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getList()
+    {
+        $students = Student::query()->orderBy('last_name', 'asc')->orderBy('first_name', 'asc')
+            ->orderBy('middle_name', 'asc')->orderBy('id', 'asc')->with('mentor')->get();
+
+        // Administrator : 1
+        // Facilitator : 2
+        // Site Facilitator : 3
+        // Mentor : 4
+        $user_role = (int)Auth::user()->user_role_id;
+        return json_encode(['students' => $students, 'role' => $user_role]);
+        // return view('students.my-students0', ['students' => $students, 'role' => $user_role]);
+    }
+
+
 
     /**
      * Display a list of students being directly mentored by the authenticated user

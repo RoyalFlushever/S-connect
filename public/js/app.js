@@ -6917,23 +6917,42 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-	data: function data() {
-		return {
-			createModal: false,
+    data: function data() {
+        return {
+            createModal: false,
 
-			role: 2,
-			students: []
+            role: 2,
+            students: []
 
-		};
-	}
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get("/my-students/get-list").then(function (response) {
+            _this.students = response.data.students;
+        });
+    },
+
+    computed: {
+        age: function age() {
+            console.log(this);
+            var age = '1';
+            // var today = new Date();
+            // var birthDate = new Date(this.birthDate);
+            // var age = today.getFullYear() - birthDate.getFullYear();
+            // var m = today.getMonth() - birthDate.getMonth();
+            // if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            //     age--;
+            // }
+            return age;
+        }
+    }
 });
 
 /***/ }),
@@ -15670,7 +15689,28 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm._m(7),
+      _c("div", { staticClass: "table-responsive" }, [
+        _c("table", { staticClass: "table table-hover my-students" }, [
+          _vm._m(7),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.students, function(student, key) {
+              return _c("tr", { key: student.id }, [
+                _c("td", [_vm._v(_vm._s(key + 1))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(student.first_name))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(student.last_name))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(_vm.age))]),
+                _vm._v(" "),
+                _vm._m(8, true)
+              ])
+            })
+          )
+        ])
+      ]),
       _vm._v(" "),
       _vm.role != 4
         ? _c("div", { staticClass: "text-center" }, [
@@ -15808,6 +15848,7 @@ var staticRenderFns = [
             attrs: { name: "mentor", id: "mentor" }
           },
           [
+            _vm._v("]\n                            "),
             _c("option", { attrs: { value: "", selected: "", disabled: "" } }, [
               _vm._v("Select")
             ])
@@ -15874,90 +15915,41 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "table-responsive" }, [
-      _c("table", { staticClass: "table table-hover my-students" }, [
-        _c("thead", [
-          _c("tr", [
-            _c("th", [_vm._v("#")]),
-            _vm._v(" "),
-            _c("th", [_vm._v("First name")]),
-            _vm._v(" "),
-            _c("th", [_vm._v("Last name")]),
-            _vm._v(" "),
-            _c("th", [_vm._v("Age")]),
-            _vm._v(" "),
-            _c("th")
-          ])
-        ]),
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("#")]),
         _vm._v(" "),
-        _c("tbody", [
-          _c("tr", [
-            _c("td", [_vm._v("1")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("Test")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("Student")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("1")]),
-            _vm._v(" "),
-            _c("td", { staticClass: "actions text-center" }, [
-              _c(
-                "a",
-                { staticClass: "btn btn-large btn-cta", attrs: { href: "#" } },
-                [_vm._v("Edit")]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                { staticClass: "btn btn-large btn-blue", attrs: { href: "#" } },
-                [_vm._v("View Chart")]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-large btn-yellow",
-                  attrs: { href: "/transfer" }
-                },
-                [_vm._v("Transfer")]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("tr", [
-            _c("td", [_vm._v("2")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("Test")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("Student")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("1")]),
-            _vm._v(" "),
-            _c("td", { staticClass: "actions text-center" }, [
-              _c(
-                "a",
-                { staticClass: "btn btn-large btn-cta", attrs: { href: "#" } },
-                [_vm._v("Edit")]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                { staticClass: "btn btn-large btn-blue", attrs: { href: "#" } },
-                [_vm._v("View Chart")]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-large btn-yellow",
-                  attrs: { href: "/transfer" }
-                },
-                [_vm._v("Transfer")]
-              )
-            ])
-          ])
-        ])
+        _c("th", [_vm._v("First name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Last name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Age")]),
+        _vm._v(" "),
+        _c("th")
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "actions text-center" }, [
+      _c("a", { staticClass: "btn btn-large btn-cta", attrs: { href: "#" } }, [
+        _vm._v("Edit")
+      ]),
+      _vm._v(" "),
+      _c("a", { staticClass: "btn btn-large btn-blue", attrs: { href: "#" } }, [
+        _vm._v("View Chart")
+      ]),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-large btn-yellow",
+          attrs: { href: "/transfer" }
+        },
+        [_vm._v("Transfer")]
+      )
     ])
   }
 ]
