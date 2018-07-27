@@ -13596,7 +13596,6 @@ div.checkbox {
 .btn-red {
   background-color: #f44336;
   color: white;
-  width: 100px;
   padding: 3px;
   font-size: 1.4em;
 }
@@ -13621,6 +13620,22 @@ div.checkbox {
   color: #0275d8;
   background-color: white;
   border-color: #0275d8;
+}
+
+.btn-lightblue {
+  background-color: #5bc0de;
+  color: white;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  padding: 3px;
+  font-size: 1.4em;
+}
+
+.btn-lightblue:hover {
+  color: #5bc0de;
+  background-color: white;
+  border-color: #5bc0de;
 }
 
 .btn-yellow {
@@ -13733,5 +13748,21 @@ a.register {
 
 .toasted-container .action {
   font-size: 1.4rem;
+}
+
+.registration-form .btn-red {
+  width: 100px;
+}
+
+.registration-form .btn-blue {
+  padding: 15px 80px;
+}
+
+.create-modal .btn-red {
+  padding: 15px 25px;
+}
+
+.create-modal .btn-lightblue {
+  padding: 15px 80px;
 }
 

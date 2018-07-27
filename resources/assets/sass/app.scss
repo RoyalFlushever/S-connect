@@ -105,7 +105,7 @@ div.checkbox {
 .btn-red {
     background-color: $iconnect-red;
     color: white;
-    width: 100px;
+    // width: 100px;
     padding: 3px;
     font-size: 1.4em;
 
@@ -126,6 +126,18 @@ div.checkbox {
         color: $iconnect-blue;
         background-color: white;
         border-color: $iconnect-blue;
+    }
+}
+.btn-lightblue {
+    background-color: $iconnect-lightblue;
+    color: white;
+    width: max-content;
+    padding: 3px;
+    font-size: 1.4em;
+    &:hover {
+        color: $iconnect-lightblue;
+        background-color: white;
+        border-color: $iconnect-lightblue;
     }
 }
 
@@ -228,5 +240,24 @@ a.register {
 .toasted-container {
     .action {
         font-size: 1.4rem;
+    }
+}
+
+
+.registration-form {
+    .btn-red {
+        width: 100px;
+    }
+    .btn-blue {
+        padding: 15px 80px;
+    }
+}
+
+.create-modal {
+    .btn-red {
+        padding: 15px 25px;
+    }
+    .btn-lightblue {
+        padding: 15px 80px;
     }
 }

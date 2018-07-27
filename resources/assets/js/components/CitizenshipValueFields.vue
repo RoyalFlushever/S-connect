@@ -27,7 +27,7 @@
                                 >
                                     <option :value="null" disabled>Select a location</option>
                                     <optgroup v-for="(locations, categoryName) in monitoringLocationsByCategory" 
-                                        :label="categoryName">
+                                        :label="categoryName" :key="categoryName">
                                         <option 
                                             v-for="location in locations"
                                             :key="location.id"
@@ -53,7 +53,7 @@
                             <fieldset class="col-md-12" :disabled="!locationId">
                                 <table class="table table-bordered">
                                     <tbody>
-                                        <tr v-for="(citizenshipValues, typeName) in citizenshipValuesByType">
+                                        <tr v-for="(citizenshipValues, typeName) in citizenshipValuesByType" :key="typeName">
                                             <td>
                                                 <label :for="formAttributeAsPhpArray('citizenshipValues', locationIndex, typeName)"></label>
                                                 <select
@@ -326,3 +326,13 @@
         }
     };
 </script>
+
+<style lang="scss" scoped>
+    .panel-group {
+        min-height: 265px;
+        max-height: 265px;
+        overflow-y: scroll;
+        font-size: .5em;        
+    }
+</style>
+

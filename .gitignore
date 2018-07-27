@@ -11,13 +11,15 @@
 /storage/*.key
 
 # Dot env files
-.env
+/.env
 
 # OS X Files
-.DS_Store
+/.DS_Store
 
 # Testing files
 /database/testing.sqlite
 
 # JetBrains project files
 /.idea
+/public
+/package-lock.json
