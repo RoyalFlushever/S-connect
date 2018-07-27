@@ -84,7 +84,7 @@
         <a href="#" class="btn btn-lg btn-cta" @click="createModal = true">Add New Student</a>
     </div>
     <create-modal v-if="createModal" @close="createModal = false">
-        <h1 slot="header">Add/Edit Student</h1>
+        <h1 slot="header" class="text-center">Add/Edit Student</h1>
     </create-modal>
 </div>
 </template>

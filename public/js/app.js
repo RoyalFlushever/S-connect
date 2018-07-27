@@ -1278,17 +1278,21 @@ var app = new Vue({
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(108)
+}
 var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(27)
 /* template */
-var __vue_template__ = __webpack_require__(28)
+var __vue_template__ = __webpack_require__(110)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = null
+var __vue_scopeId__ = "data-v-1a8d4186"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -1647,931 +1651,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "panel-group" },
-    _vm._l(_vm.selectedLocationIds, function(locationId, locationIndex) {
-      return _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.locationCanBeSelected(locationIndex),
-              expression: "locationCanBeSelected(locationIndex)"
-            }
-          ],
-          key: locationIndex,
-          staticClass: "panel panel-default"
-        },
-        [
-          _c(
-            "div",
-            {
-              staticClass: "panel-heading",
-              attrs: {
-                role: "tab",
-                id: _vm.formAttributeAsPhpArray("locationTab", locationIndex)
-              }
-            },
-            [
-              _c("h2", { staticClass: "panel-title" }, [
-                _c(
-                  "a",
-                  {
-                    attrs: {
-                      role: "button",
-                      "aria-controls": _vm.formAttributeAsPhpArray(
-                        "locationPanel",
-                        locationIndex
-                      )
-                    },
-                    on: { click: _vm.toggleLocation }
-                  },
-                  [
-                    _vm._v(
-                      "\n                    " +
-                        _vm._s(
-                          _vm.locationDisplayName(locationIndex, locationId)
-                        ) +
-                        "\n                "
-                    )
-                  ]
-                )
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "panel-collapse collapse",
-              attrs: {
-                id: _vm.formAttributeAsPhpArray("locationPanel", locationIndex),
-                role: "tabpanel",
-                "aria-labeledby": _vm.formAttributeAsPhpArray(
-                  "locationTab",
-                  locationIndex
-                )
-              }
-            },
-            [
-              _c("div", { staticClass: "panel-body" }, [
-                _c("fieldset", [
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-md-6" }, [
-                      _c(
-                        "select",
-                        {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.selectedLocationIds[locationIndex],
-                              expression: "selectedLocationIds[locationIndex]"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            name: _vm.formAttributeAsPhpArray(
-                              "monitoringLocations",
-                              locationIndex
-                            ),
-                            id: _vm.formAttributeAsPhpArray(
-                              "monitoringLocations",
-                              locationIndex
-                            )
-                          },
-                          on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.$set(
-                                _vm.selectedLocationIds,
-                                locationIndex,
-                                $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              )
-                            }
-                          }
-                        },
-                        [
-                          _c(
-                            "option",
-                            {
-                              attrs: { disabled: "" },
-                              domProps: { value: null }
-                            },
-                            [_vm._v("Select a location")]
-                          ),
-                          _vm._v(" "),
-                          _vm._l(_vm.monitoringLocationsByCategory, function(
-                            locations,
-                            categoryName
-                          ) {
-                            return _c(
-                              "optgroup",
-                              {
-                                key: categoryName,
-                                attrs: { label: categoryName }
-                              },
-                              _vm._l(locations, function(location) {
-                                return _c(
-                                  "option",
-                                  {
-                                    key: location.id,
-                                    domProps: { value: location.id }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                                        " +
-                                        _vm._s(location.name) +
-                                        "\n                                    "
-                                    )
-                                  ]
-                                )
-                              })
-                            )
-                          })
-                        ],
-                        2
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-6" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model.lazy",
-                            value: _vm.locationLabels[locationIndex],
-                            expression: "locationLabels[locationIndex]",
-                            modifiers: { lazy: true }
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          name: _vm.formAttributeAsPhpArray(
-                            "locationLabels",
-                            locationIndex
-                          ),
-                          disabled: !locationId,
-                          placeholder: "(Optional) Location label"
-                        },
-                        domProps: { value: _vm.locationLabels[locationIndex] },
-                        on: {
-                          change: function($event) {
-                            _vm.$set(
-                              _vm.locationLabels,
-                              locationIndex,
-                              $event.target.value
-                            )
-                          }
-                        }
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c(
-                      "h3",
-                      {
-                        staticClass: "col-md-12",
-                        staticStyle: {
-                          "font-size": "1em",
-                          "margin-bottom": "0",
-                          "padding-bottom": "0",
-                          "padding-top": "0"
-                        }
-                      },
-                      [_vm._v("Citizenship prompts")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "fieldset",
-                      {
-                        staticClass: "col-md-12",
-                        attrs: { disabled: !locationId }
-                      },
-                      [
-                        _c("table", { staticClass: "table table-bordered" }, [
-                          _c(
-                            "tbody",
-                            _vm._l(_vm.citizenshipValuesByType, function(
-                              citizenshipValues,
-                              typeName
-                            ) {
-                              return _c("tr", { key: typeName }, [
-                                _c("td", [
-                                  _c("label", {
-                                    attrs: {
-                                      for: _vm.formAttributeAsPhpArray(
-                                        "citizenshipValues",
-                                        locationIndex,
-                                        typeName
-                                      )
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "select",
-                                    {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value:
-                                            _vm.selectedPromptIds[
-                                              locationIndex
-                                            ][typeName],
-                                          expression:
-                                            "selectedPromptIds[locationIndex][typeName]"
-                                        }
-                                      ],
-                                      staticClass: "form-control",
-                                      attrs: {
-                                        name: _vm.formAttributeAsPhpArray(
-                                          "citizenshipValues",
-                                          locationIndex,
-                                          typeName
-                                        ),
-                                        id: _vm.formAttributeAsPhpArray(
-                                          "citizenshipValues",
-                                          locationIndex,
-                                          typeName
-                                        )
-                                      },
-                                      on: {
-                                        change: function($event) {
-                                          var $$selectedVal = Array.prototype.filter
-                                            .call(
-                                              $event.target.options,
-                                              function(o) {
-                                                return o.selected
-                                              }
-                                            )
-                                            .map(function(o) {
-                                              var val =
-                                                "_value" in o
-                                                  ? o._value
-                                                  : o.value
-                                              return val
-                                            })
-                                          _vm.$set(
-                                            _vm.selectedPromptIds[
-                                              locationIndex
-                                            ],
-                                            typeName,
-                                            $event.target.multiple
-                                              ? $$selectedVal
-                                              : $$selectedVal[0]
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _c(
-                                        "option",
-                                        { domProps: { value: null } },
-                                        [
-                                          _vm._v(
-                                            "Select " +
-                                              _vm._s(typeName) +
-                                              " prompt"
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _vm._l(citizenshipValues, function(
-                                        citizenshipValue
-                                      ) {
-                                        return _c(
-                                          "option",
-                                          {
-                                            key: citizenshipValue.id,
-                                            domProps: {
-                                              value: citizenshipValue.id
-                                            }
-                                          },
-                                          [
-                                            _vm._v(
-                                              "\n                                                    " +
-                                                _vm._s(
-                                                  citizenshipValue.phrasing
-                                                ) +
-                                                "\n                                                "
-                                            )
-                                          ]
-                                        )
-                                      })
-                                    ],
-                                    2
-                                  ),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model.lazy",
-                                        value:
-                                          _vm.customPrompts[locationIndex][
-                                            typeName
-                                          ],
-                                        expression:
-                                          "customPrompts[locationIndex][typeName]",
-                                        modifiers: { lazy: true }
-                                      },
-                                      {
-                                        name: "show",
-                                        rawName: "v-show",
-                                        value: _vm.customPromptSelected(
-                                          locationIndex,
-                                          typeName
-                                        ),
-                                        expression:
-                                          "customPromptSelected(locationIndex, typeName)"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "text",
-                                      name: _vm.formAttributeAsPhpArray(
-                                        "customPrompts",
-                                        locationIndex,
-                                        typeName
-                                      ),
-                                      disabled: !_vm.customPromptSelected(
-                                        locationIndex,
-                                        typeName
-                                      ),
-                                      placeholder:
-                                        "E.g. Are you meeting your citizenship objective?"
-                                    },
-                                    domProps: {
-                                      value:
-                                        _vm.customPrompts[locationIndex][
-                                          typeName
-                                        ]
-                                    },
-                                    on: {
-                                      change: function($event) {
-                                        _vm.$set(
-                                          _vm.customPrompts[locationIndex],
-                                          typeName,
-                                          $event.target.value
-                                        )
-                                      }
-                                    }
-                                  })
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass: "radio",
-                                      attrs: {
-                                        title:
-                                          "Variable intervals do not guarantee a sample mean. Generated intervals may be as low as 33% and as high as 167% of the desired mean."
-                                      }
-                                    },
-                                    [
-                                      _c("label", [
-                                        _c("input", {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value:
-                                                _vm.useVariableInterval[
-                                                  locationIndex
-                                                ][typeName],
-                                              expression:
-                                                "useVariableInterval[locationIndex][typeName]"
-                                            }
-                                          ],
-                                          attrs: {
-                                            type: "radio",
-                                            name: _vm.formAttributeAsPhpArray(
-                                              "isVariableInterval",
-                                              locationIndex,
-                                              typeName
-                                            ),
-                                            disabled: !_vm.selectedPromptIds[
-                                              locationIndex
-                                            ][typeName]
-                                          },
-                                          domProps: {
-                                            value: true,
-                                            checked: _vm._q(
-                                              _vm.useVariableInterval[
-                                                locationIndex
-                                              ][typeName],
-                                              true
-                                            )
-                                          },
-                                          on: {
-                                            change: function($event) {
-                                              _vm.$set(
-                                                _vm.useVariableInterval[
-                                                  locationIndex
-                                                ],
-                                                typeName,
-                                                true
-                                              )
-                                            }
-                                          }
-                                        }),
-                                        _vm._v(
-                                          "\n                                                    Variable interval\n                                                "
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("span", {
-                                        staticClass:
-                                          "glyphicon glyphicon-info-sign",
-                                        attrs: { "aria-hidden": "true" }
-                                      })
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "radio" }, [
-                                    _c("label", [
-                                      _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value:
-                                              _vm.useVariableInterval[
-                                                locationIndex
-                                              ][typeName],
-                                            expression:
-                                              "useVariableInterval[locationIndex][typeName]"
-                                          }
-                                        ],
-                                        attrs: {
-                                          type: "radio",
-                                          name: _vm.formAttributeAsPhpArray(
-                                            "isVariableInterval",
-                                            locationIndex,
-                                            typeName
-                                          ),
-                                          disabled: !_vm.selectedPromptIds[
-                                            locationIndex
-                                          ][typeName]
-                                        },
-                                        domProps: {
-                                          value: false,
-                                          checked: _vm._q(
-                                            _vm.useVariableInterval[
-                                              locationIndex
-                                            ][typeName],
-                                            false
-                                          )
-                                        },
-                                        on: {
-                                          change: function($event) {
-                                            _vm.$set(
-                                              _vm.useVariableInterval[
-                                                locationIndex
-                                              ],
-                                              typeName,
-                                              false
-                                            )
-                                          }
-                                        }
-                                      }),
-                                      _vm._v(
-                                        "\n                                                    Fixed interval\n                                                "
-                                      )
-                                    ])
-                                  ])
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _c(
-                                    "div",
-                                    {
-                                      directives: [
-                                        {
-                                          name: "show",
-                                          rawName: "v-show",
-                                          value:
-                                            _vm.useVariableInterval[
-                                              locationIndex
-                                            ][typeName],
-                                          expression:
-                                            "useVariableInterval[locationIndex][typeName]"
-                                        }
-                                      ]
-                                    },
-                                    [
-                                      _c(
-                                        "label",
-                                        {
-                                          attrs: {
-                                            for: _vm.formAttributeAsPhpArray(
-                                              "desiredMeanInSeconds",
-                                              locationIndex,
-                                              typeName
-                                            )
-                                          }
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                    Desired mean interval\n                                                "
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "select",
-                                        {
-                                          directives: [
-                                            {
-                                              name: "show",
-                                              rawName: "v-show",
-                                              value:
-                                                _vm.useVariableInterval[
-                                                  locationIndex
-                                                ][typeName],
-                                              expression:
-                                                "useVariableInterval[locationIndex][typeName]"
-                                            }
-                                          ],
-                                          staticClass: "form-control",
-                                          attrs: {
-                                            name: _vm.formAttributeAsPhpArray(
-                                              "desiredMeanInSeconds",
-                                              locationIndex,
-                                              typeName
-                                            ),
-                                            id: _vm.formAttributeAsPhpArray(
-                                              "desiredMeanInSeconds",
-                                              locationIndex,
-                                              typeName
-                                            ),
-                                            disabled: !_vm.selectedPromptIds[
-                                              locationIndex
-                                            ][typeName]
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "option",
-                                            {
-                                              attrs: { value: "", selected: "" }
-                                            },
-                                            [_vm._v("Select a desired mean")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "option",
-                                            { attrs: { value: "30" } },
-                                            [_vm._v("30 seconds")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "option",
-                                            { attrs: { value: "60" } },
-                                            [_vm._v("60 seconds")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "option",
-                                            { attrs: { value: "120" } },
-                                            [_vm._v("2 minutes")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "option",
-                                            { attrs: { value: "180" } },
-                                            [_vm._v("3 minutes")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "option",
-                                            { attrs: { value: "300" } },
-                                            [_vm._v("5 minutes")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "option",
-                                            { attrs: { value: "600" } },
-                                            [_vm._v("10 minutes")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "option",
-                                            { attrs: { value: "1800" } },
-                                            [_vm._v("30 minutes")]
-                                          )
-                                        ]
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    {
-                                      directives: [
-                                        {
-                                          name: "show",
-                                          rawName: "v-show",
-                                          value: !_vm.useVariableInterval[
-                                            locationIndex
-                                          ][typeName],
-                                          expression:
-                                            "!useVariableInterval[locationIndex][typeName]"
-                                        }
-                                      ]
-                                    },
-                                    [
-                                      _c("div", { staticClass: "row" }, [
-                                        _c("div", { staticClass: "col-sm-4" }, [
-                                          _c(
-                                            "label",
-                                            {
-                                              attrs: {
-                                                for: _vm.formAttributeAsPhpArray(
-                                                  "intervalHours",
-                                                  locationIndex,
-                                                  typeName
-                                                )
-                                              }
-                                            },
-                                            [_vm._v("Hours")]
-                                          )
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("div", { staticClass: "col-sm-4" }, [
-                                          _c(
-                                            "label",
-                                            {
-                                              attrs: {
-                                                for: _vm.formAttributeAsPhpArray(
-                                                  "intervalMinutes",
-                                                  locationIndex,
-                                                  typeName
-                                                )
-                                              }
-                                            },
-                                            [_vm._v("Minutes")]
-                                          )
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("div", { staticClass: "col-sm-4" }, [
-                                          _c(
-                                            "label",
-                                            {
-                                              attrs: {
-                                                for: _vm.formAttributeAsPhpArray(
-                                                  "intervalSeconds",
-                                                  locationIndex,
-                                                  typeName
-                                                )
-                                              }
-                                            },
-                                            [_vm._v("Seconds")]
-                                          )
-                                        ])
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("div", { staticClass: "row" }, [
-                                        _c("div", { staticClass: "col-sm-4" }, [
-                                          _c(
-                                            "select",
-                                            {
-                                              staticClass: "form-control",
-                                              attrs: {
-                                                name: _vm.formAttributeAsPhpArray(
-                                                  "intervalHours",
-                                                  locationIndex,
-                                                  typeName
-                                                ),
-                                                id: _vm.formAttributeAsPhpArray(
-                                                  "intervalHours",
-                                                  locationIndex,
-                                                  typeName
-                                                ),
-                                                disabled: !_vm
-                                                  .selectedPromptIds[
-                                                  locationIndex
-                                                ][typeName]
-                                              }
-                                            },
-                                            _vm._l(25, function(i) {
-                                              return _c("option", { key: i }, [
-                                                _vm._v(_vm._s(i - 1))
-                                              ])
-                                            })
-                                          )
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("div", { staticClass: "col-sm-4" }, [
-                                          _c(
-                                            "select",
-                                            {
-                                              staticClass: "form-control",
-                                              attrs: {
-                                                name: _vm.formAttributeAsPhpArray(
-                                                  "intervalMinutes",
-                                                  locationIndex,
-                                                  typeName
-                                                ),
-                                                id: _vm.formAttributeAsPhpArray(
-                                                  "intervalMinutes",
-                                                  locationIndex,
-                                                  typeName
-                                                ),
-                                                disabled: !_vm
-                                                  .selectedPromptIds[
-                                                  locationIndex
-                                                ][typeName]
-                                              }
-                                            },
-                                            _vm._l(60, function(i) {
-                                              return _c("option", { key: i }, [
-                                                _vm._v(
-                                                  "\n                                                                " +
-                                                    _vm._s(i - 1) +
-                                                    "\n                                                            "
-                                                )
-                                              ])
-                                            })
-                                          )
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("div", { staticClass: "col-sm-4" }, [
-                                          _c(
-                                            "select",
-                                            {
-                                              staticClass: "form-control",
-                                              attrs: {
-                                                name: _vm.formAttributeAsPhpArray(
-                                                  "intervalSeconds",
-                                                  locationIndex,
-                                                  typeName
-                                                ),
-                                                id: _vm.formAttributeAsPhpArray(
-                                                  "intervalSeconds",
-                                                  locationIndex,
-                                                  typeName
-                                                ),
-                                                disabled: !_vm
-                                                  .selectedPromptIds[
-                                                  locationIndex
-                                                ][typeName]
-                                              }
-                                            },
-                                            _vm._l(60, function(i) {
-                                              return _c("option", { key: i }, [
-                                                _vm._v(_vm._s(i - 1))
-                                              ])
-                                            })
-                                          )
-                                        ])
-                                      ])
-                                    ]
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _c(
-                                    "label",
-                                    {
-                                      attrs: {
-                                        for: _vm.formAttributeAsPhpArray(
-                                          "goals",
-                                          locationIndex,
-                                          typeName
-                                        )
-                                      }
-                                    },
-                                    [_vm._v("Goal %")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "select",
-                                    {
-                                      staticClass: "form-control",
-                                      attrs: {
-                                        name: _vm.formAttributeAsPhpArray(
-                                          "goals",
-                                          locationIndex,
-                                          typeName
-                                        ),
-                                        id: _vm.formAttributeAsPhpArray(
-                                          "goals",
-                                          locationIndex,
-                                          typeName
-                                        ),
-                                        disabled: !_vm.selectedPromptIds[
-                                          locationIndex
-                                        ][typeName]
-                                      }
-                                    },
-                                    [
-                                      _c(
-                                        "option",
-                                        { attrs: { value: "", selected: "" } },
-                                        [_vm._v("No goal")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c("option", { attrs: { value: "50" } }, [
-                                        _vm._v("50%")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("option", { attrs: { value: "55" } }, [
-                                        _vm._v("55%")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("option", { attrs: { value: "60" } }, [
-                                        _vm._v("60%")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("option", { attrs: { value: "65" } }, [
-                                        _vm._v("65%")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("option", { attrs: { value: "70" } }, [
-                                        _vm._v("70%")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("option", { attrs: { value: "75" } }, [
-                                        _vm._v("75%")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("option", { attrs: { value: "80" } }, [
-                                        _vm._v("80%")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("option", { attrs: { value: "85" } }, [
-                                        _vm._v("85%")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("option", { attrs: { value: "90" } }, [
-                                        _vm._v("90%")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("option", { attrs: { value: "95" } }, [
-                                        _vm._v("95%")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c(
-                                        "option",
-                                        { attrs: { value: "100" } },
-                                        [_vm._v("100%")]
-                                      )
-                                    ]
-                                  )
-                                ])
-                              ])
-                            })
-                          )
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "clearfix" })
-                  ])
-                ])
-              ])
-            ]
-          )
-        ]
-      )
-    })
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-1a8d4186", module.exports)
-  }
-}
-
-/***/ }),
+/* 28 */,
 /* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6990,7 +6070,7 @@ exports = module.exports = __webpack_require__(7)(false);
 
 
 // module
-exports.push([module.i, "\n.modal-mask[data-v-420ae72c] {\n  position: fixed;\n  z-index: 9998;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: table;\n  -webkit-transition: opacity 0.3s ease;\n  transition: opacity 0.3s ease;\n}\n.modal-wrapper[data-v-420ae72c] {\n  display: table-cell;\n  vertical-align: middle;\n}\n.modal-container[data-v-420ae72c] {\n  width: 900px;\n  margin: 0px auto;\n  padding: 20px 30px;\n  background-color: #fff;\n  border-radius: 2px;\n  -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  font-family: Helvetica, Arial, sans-serif;\n}\n.modal-header h3[data-v-420ae72c] {\n  margin-top: 0;\n  color: #42b983;\n  font-size: 30px !important;\n}\n.modal-body[data-v-420ae72c] {\n  margin: 20px 0;\n  font-size: 1.4em;\n}\n.modal-default-button[data-v-420ae72c] {\n  margin: auto;\n}\n.modal-enter[data-v-420ae72c] {\n  opacity: 0;\n}\n.modal-leave-active[data-v-420ae72c] {\n  opacity: 0;\n}\n.modal-enter .modal-container[data-v-420ae72c],\n.modal-leave-active .modal-container[data-v-420ae72c] {\n  -webkit-transform: scale(1.1);\n  transform: scale(1.1);\n}\n.modal-footer[data-v-420ae72c] {\n  text-align: center;\n}\n.btn-close[data-v-420ae72c] {\n  border: none;\n  font-size: 20px;\n  padding: 20px;\n  cursor: pointer;\n  font-weight: bold;\n  color: #4aae9b;\n  background: transparent;\n}\n", ""]);
+exports.push([module.i, "\n.modal-mask[data-v-420ae72c] {\n  position: fixed;\n  z-index: 9998;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: table;\n  -webkit-transition: opacity 0.3s ease;\n  transition: opacity 0.3s ease;\n}\n.modal-wrapper[data-v-420ae72c] {\n  display: table-cell;\n  vertical-align: middle;\n}\n.modal-container[data-v-420ae72c] {\n  width: 900px;\n  margin: 0px auto;\n  padding: 20px 30px;\n  background-color: #fff;\n  border-radius: 2px;\n  -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n  -webkit-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n  font-family: Helvetica, Arial, sans-serif;\n}\n.modal-header[data-v-420ae72c] {\n  border-bottom: none !important;\n}\n.modal-header h3[data-v-420ae72c] {\n    margin-top: 0;\n    color: #42b983;\n    font-size: 30px !important;\n}\n.modal-body[data-v-420ae72c] {\n  margin: 20px 0;\n  font-size: 1.4em;\n}\n.modal-default-button[data-v-420ae72c] {\n  margin: auto;\n}\n.modal-enter[data-v-420ae72c] {\n  opacity: 0;\n}\n.modal-leave-active[data-v-420ae72c] {\n  opacity: 0;\n}\n.modal-enter .modal-container[data-v-420ae72c],\n.modal-leave-active .modal-container[data-v-420ae72c] {\n  -webkit-transform: scale(1.1);\n  transform: scale(1.1);\n}\n.modal-footer[data-v-420ae72c] {\n  text-align: center;\n}\n.tab-content[data-v-420ae72c] {\n  padding-top: 0px;\n}\n.btn-close[data-v-420ae72c] {\n  border: none;\n  font-size: 20px;\n  padding: 20px;\n  cursor: pointer;\n  font-weight: bold;\n  color: #4aae9b;\n  background: transparent;\n}\n.no-border[data-v-420ae72c] {\n  border: none;\n  padding-bottom: 0px;\n}\n.next[data-v-420ae72c] {\n  margin: 20px auto 0px auto;\n  display: block;\n}\n.nav-tabs [data-toggle=\"tab\"][data-v-420ae72c] {\n  width: 25px;\n  height: 25px;\n  margin: 20px auto;\n  border: none;\n  padding: 0px;\n}\n.nav-tabs[data-v-420ae72c] {\n  margin-bottom: 15px;\n  border: none;\n}\n.round-tab[data-v-420ae72c] {\n  border-radius: 50%;\n  width: 60px;\n  height: 60px;\n  line-height: 60px;\n  display: inline-block;\n  z-index: 2;\n  position: absolute;\n  left: 0;\n  text-align: center;\n  font-size: 16px;\n  font-weight: bold;\n  cursor: pointer;\n}\n.nav-tabs > li[data-v-420ae72c] {\n  width: 33%;\n  position: relative;\n}\n#stepper-step-3 .action[data-v-420ae72c] {\n  font-size: .5em;\n  min-height: 230px;\n}\n#stepper-step-3 .action .form-group[data-v-420ae72c] {\n    margin-right: 5px;\n    margin-left: 5px;\n    padding: 0px;\n}\n#stepper-step-3 .action .btn-cta[data-v-420ae72c] {\n    padding: 6px;\n}\n", ""]);
 
 // exports
 
@@ -7006,6 +6086,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vee_validate__ = __webpack_require__(76);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -15009,7 +14120,7 @@ var render = function() {
                               "span",
                               {
                                 staticClass:
-                                  "round-tab glyphicon glyphicon-book"
+                                  "round-tab glyphicon glyphicon-book gray-border"
                               },
                               [_vm._v("1")]
                             )
@@ -15043,7 +14154,7 @@ var render = function() {
                               "span",
                               {
                                 staticClass:
-                                  "round-tab glyphicon glyphicon-pencil"
+                                  "round-tab glyphicon glyphicon-pencil gray-border"
                               },
                               [_vm._v("2")]
                             )
@@ -15077,7 +14188,7 @@ var render = function() {
                               "span",
                               {
                                 staticClass:
-                                  "round-tab glyphicon glyphicon-list-alt"
+                                  "round-tab glyphicon glyphicon-list-alt gray-border"
                               },
                               [_vm._v("3")]
                             )
@@ -15099,7 +14210,7 @@ var render = function() {
                   2
                 ),
                 _vm._v(" "),
-                _c("div", { staticClass: "tab-content" }, [
+                _c("div", { staticClass: "tab-content no-border" }, [
                   _c(
                     "form",
                     {
@@ -15109,14 +14220,14 @@ var render = function() {
                     },
                     [
                       _c(
-                        "v-container",
-                        { attrs: { "grid-list-md": "", "text-xs-center": "" } },
+                        "div",
+                        { staticClass: "action" },
                         [
                           _c(
-                            "v-layout",
-                            { attrs: { column: "" } },
+                            "div",
+                            { staticClass: "personal-info form-group row" },
                             [
-                              _c("v-layout", { attrs: { row: "" } }, [
+                              _c("div", { staticClass: "col-xs-6" }, [
                                 _c("input", {
                                   directives: [
                                     {
@@ -15126,6 +14237,7 @@ var render = function() {
                                       expression: "studentInfo.first_name"
                                     }
                                   ],
+                                  staticClass: "form-control",
                                   attrs: {
                                     type: "text",
                                     name: "first_name",
@@ -15148,8 +14260,10 @@ var render = function() {
                                       )
                                     }
                                   }
-                                }),
-                                _vm._v(" "),
+                                })
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-xs-6" }, [
                                 _c("input", {
                                   directives: [
                                     {
@@ -15159,6 +14273,7 @@ var render = function() {
                                       expression: "studentInfo.last_name"
                                     }
                                   ],
+                                  staticClass: "form-control",
                                   attrs: {
                                     type: "text",
                                     name: "Last name",
@@ -15182,175 +14297,191 @@ var render = function() {
                                     }
                                   }
                                 })
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "personal-info form-group row" },
+                            [
+                              _c("div", { staticClass: "col-xs-6" }, [
+                                _c("input", {
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    type: "text",
+                                    placeholder: "Midle name (Optional)"
+                                  }
+                                })
                               ]),
                               _vm._v(" "),
+                              _c("div", { staticClass: "col-xs-6" }, [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.studentInfo.birthdate,
+                                      expression: "studentInfo.birthdate"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    id: "birthdate",
+                                    name: "birthdate",
+                                    required: "",
+                                    placeholder: "Select Birthdate",
+                                    "data-provide": "datepicker",
+                                    "data-date-autoclose": "true",
+                                    "data-date-disable-touch-keyboard": "true",
+                                    "data-date-assume-nearby-year": "true",
+                                    "data-date-end-date": "0d",
+                                    "data-date-today-btn": "linked",
+                                    "data-date-today-highlight": "true"
+                                  },
+                                  domProps: {
+                                    value: _vm.studentInfo.birthdate
+                                  },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.studentInfo,
+                                        "birthdate",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "options form-group row" }, [
+                            _c("div", { staticClass: "col-xs-6 form-group" }, [
+                              _c("label", { staticClass: "radio-inline" }, [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.studentInfo.gender,
+                                      expression: "studentInfo.gender"
+                                    }
+                                  ],
+                                  attrs: {
+                                    type: "radio",
+                                    name: "gender",
+                                    id: "gender-female",
+                                    required: ""
+                                  },
+                                  domProps: {
+                                    value: 1,
+                                    checked: _vm._q(_vm.studentInfo.gender, 1)
+                                  },
+                                  on: {
+                                    change: function($event) {
+                                      _vm.$set(_vm.studentInfo, "gender", 1)
+                                    }
+                                  }
+                                }),
+                                _vm._v("Male")
+                              ]),
+                              _vm._v(" "),
+                              _c("label", { staticClass: "radio-inline" }, [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.studentInfo.gender,
+                                      expression: "studentInfo.gender"
+                                    }
+                                  ],
+                                  attrs: {
+                                    type: "radio",
+                                    name: "gender",
+                                    id: "gender-male",
+                                    required: ""
+                                  },
+                                  domProps: {
+                                    value: 2,
+                                    checked: _vm._q(_vm.studentInfo.gender, 2)
+                                  },
+                                  on: {
+                                    change: function($event) {
+                                      _vm.$set(_vm.studentInfo, "gender", 2)
+                                    }
+                                  }
+                                }),
+                                _vm._v("Female")
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-xs-3 form-group" }, [
                               _c(
-                                "v-layout",
+                                "select",
                                 {
-                                  staticStyle: { height: "35px" },
-                                  attrs: { row: "" }
+                                  staticClass: "form-control",
+                                  attrs: { name: "ethnicity", id: "ethnicity" }
                                 },
                                 [
-                                  _c("input", {
-                                    attrs: {
-                                      type: "text",
-                                      placeholder: "Midle name (Optional)"
-                                    }
-                                  }),
+                                  _c("option", [_vm._v("Ethnicity(optional)")]),
                                   _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
+                                  _vm._l(_vm.options.ethnicities, function(
+                                    ethnicity
+                                  ) {
+                                    return _c(
+                                      "option",
                                       {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.studentInfo.birthdate,
-                                        expression: "studentInfo.birthdate"
-                                      }
-                                    ],
-                                    attrs: {
-                                      id: "birthdate",
-                                      name: "birthdate",
-                                      required: "",
-                                      placeholder: "Select Birthdate",
-                                      "data-provide": "datepicker",
-                                      "data-date-autoclose": "true",
-                                      "data-date-disable-touch-keyboard":
-                                        "true",
-                                      "data-date-assume-nearby-year": "true",
-                                      "data-date-end-date": "0d",
-                                      "data-date-today-btn": "linked",
-                                      "data-date-today-highlight": "true"
-                                    },
-                                    domProps: {
-                                      value: _vm.studentInfo.birthdate
-                                    },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.$set(
-                                          _vm.studentInfo,
-                                          "birthdate",
-                                          $event.target.value
-                                        )
-                                      }
-                                    }
+                                        key: ethnicity.id,
+                                        domProps: { value: ethnicity.id }
+                                      },
+                                      [_vm._v(_vm._s(ethnicity.name))]
+                                    )
                                   })
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c("v-layout", { attrs: { row: "", wrap: "" } }, [
-                                _c("label", [
-                                  _c("input", {
-                                    directives: [
+                                ],
+                                2
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-xs-3 form-group" }, [
+                              _c(
+                                "select",
+                                {
+                                  staticClass: "form-control",
+                                  attrs: { name: "iep", id: "iep" }
+                                },
+                                [
+                                  _c("option", [_vm._v("IEP(optional)")]),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.options.ieps, function(iep) {
+                                    return _c(
+                                      "option",
                                       {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.studentInfo.gender,
-                                        expression: "studentInfo.gender"
-                                      }
-                                    ],
-                                    attrs: {
-                                      type: "radio",
-                                      name: "gender",
-                                      id: "gender-female",
-                                      required: ""
-                                    },
-                                    domProps: {
-                                      value: 1,
-                                      checked: _vm._q(_vm.studentInfo.gender, 1)
-                                    },
-                                    on: {
-                                      change: function($event) {
-                                        _vm.$set(_vm.studentInfo, "gender", 1)
-                                      }
-                                    }
-                                  }),
-                                  _vm._v("Male")
-                                ]),
-                                _vm._v(" "),
-                                _c("label", [
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.studentInfo.gender,
-                                        expression: "studentInfo.gender"
-                                      }
-                                    ],
-                                    attrs: {
-                                      type: "radio",
-                                      name: "gender",
-                                      id: "gender-male",
-                                      required: ""
-                                    },
-                                    domProps: {
-                                      value: 2,
-                                      checked: _vm._q(_vm.studentInfo.gender, 2)
-                                    },
-                                    on: {
-                                      change: function($event) {
-                                        _vm.$set(_vm.studentInfo, "gender", 2)
-                                      }
-                                    }
-                                  }),
-                                  _vm._v("Femalw")
-                                ]),
-                                _vm._v(" "),
+                                        key: iep.id,
+                                        domProps: { value: iep.id }
+                                      },
+                                      [_vm._v(_vm._s(iep.contents))]
+                                    )
+                                  })
+                                ],
+                                2
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group row" }, [
+                            _c(
+                              "div",
+                              { staticClass: "col-xs-8 col-xs-offset-2" },
+                              [
                                 _c(
                                   "select",
                                   {
-                                    attrs: {
-                                      name: "ethnicity",
-                                      id: "ethnicity"
-                                    }
-                                  },
-                                  [
-                                    _c("option", [
-                                      _vm._v("Ethnicity(optional)")
-                                    ]),
-                                    _vm._v(" "),
-                                    _vm._l(_vm.options.ethnicities, function(
-                                      ethnicity
-                                    ) {
-                                      return _c(
-                                        "option",
-                                        {
-                                          key: ethnicity.id,
-                                          domProps: { value: ethnicity.id }
-                                        },
-                                        [_vm._v(_vm._s(ethnicity.name))]
-                                      )
-                                    })
-                                  ],
-                                  2
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "select",
-                                  { attrs: { name: "iep", id: "iep" } },
-                                  [
-                                    _c("option", [_vm._v("IEP(optional)")]),
-                                    _vm._v(" "),
-                                    _vm._l(_vm.options.ieps, function(iep) {
-                                      return _c(
-                                        "option",
-                                        {
-                                          key: iep.id,
-                                          domProps: { value: iep.id }
-                                        },
-                                        [_vm._v(_vm._s(iep.contents))]
-                                      )
-                                    })
-                                  ],
-                                  2
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "select",
-                                  {
+                                    staticClass: "form-control",
                                     attrs: {
                                       name: "designateMentor",
                                       id: "designateMentor",
@@ -15392,9 +14523,15 @@ var render = function() {
                                   ],
                                   2
                                 )
-                              ]),
-                              _vm._v(" "),
-                              _c("v-flex", { attrs: { xs12: "" } }, [
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group row" }, [
+                            _c(
+                              "div",
+                              { staticClass: "col-xs-8 col-xs-offset-2" },
+                              [
                                 _c("input", {
                                   directives: [
                                     {
@@ -15404,6 +14541,7 @@ var render = function() {
                                       expression: "studentInfo.username"
                                     }
                                   ],
+                                  staticClass: "form-control",
                                   attrs: {
                                     type: "text",
                                     placeholder: "iConnect UserName",
@@ -15425,9 +14563,15 @@ var render = function() {
                                     }
                                   }
                                 })
-                              ]),
-                              _vm._v(" "),
-                              _c("v-flex", { attrs: { xs12: "" } }, [
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group row" }, [
+                            _c(
+                              "div",
+                              { staticClass: "col-xs-8 col-xs-offset-2" },
+                              [
                                 _c("input", {
                                   directives: [
                                     {
@@ -15437,6 +14581,7 @@ var render = function() {
                                       expression: "studentInfo.password"
                                     }
                                   ],
+                                  staticClass: "form-control",
                                   attrs: {
                                     type: "password",
                                     placeholder: "iConnect Password",
@@ -15458,36 +14603,30 @@ var render = function() {
                                     }
                                   }
                                 })
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "v-layout",
-                                { attrs: { "justify-center": "" } },
-                                [
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass:
-                                        "btn btn-lg btn-cta btn-blue",
-                                      attrs: { type: "submit" },
-                                      on: {
-                                        click: function($event) {
-                                          _vm.gotoStep2($event)
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("Next Step 2")]
-                                  )
-                                ]
-                              )
-                            ],
-                            1
-                          )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("v-layout", { attrs: { "justify-center": "" } }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "btn btn-lg btn-cta btn-lightblue next iconnect-blue",
+                                attrs: { type: "submit" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.gotoStep2($event)
+                                  }
+                                }
+                              },
+                              [_vm._v("Next Step 2")]
+                            )
+                          ])
                         ],
                         1
                       )
-                    ],
-                    1
+                    ]
                   ),
                   _vm._v(" "),
                   _c(
@@ -15513,7 +14652,7 @@ var render = function() {
                       _c(
                         "a",
                         {
-                          staticClass: "btn btn-lg btn-cta btn-blue",
+                          staticClass: "btn btn-lg btn-cta btn-lightblue next",
                           on: {
                             click: function($event) {
                               _vm.gotoStep3()
@@ -15533,65 +14672,120 @@ var render = function() {
                       attrs: { role: "tabpanel", id: "stepper-step-3" }
                     },
                     [
-                      _vm._v(
-                        "\n\t\t\t\t\t\t\t\tAdd stakeholder(s)\n\t\t\t\t\t\t\t\t"
-                      ),
+                      _c("h2", [_vm._v("Add stakeholder(s)")]),
+                      _vm._v(" "),
                       _c(
-                        "v-container",
-                        [
-                          _vm._l(3, function(i) {
-                            return _c(
-                              "v-layout",
-                              { key: i, attrs: { row: "" } },
-                              [
-                                _c("span", [_vm._v(_vm._s(i) + ":First name")]),
-                                _vm._v(" "),
-                                _c("input", { attrs: { type: "text" } }),
-                                _vm._v(" "),
-                                _c("span", [_vm._v("Last name")]),
-                                _vm._v(" "),
-                                _c("input", { attrs: { type: "text" } }),
-                                _vm._v(" "),
-                                _c("span", [_vm._v("Email Address")]),
-                                _vm._v(" "),
-                                _c("input", { attrs: { type: "text" } }),
-                                _vm._v(" "),
-                                _c("span", [_vm._v("Relationship")]),
-                                _vm._v(" "),
-                                _c("select", { attrs: { name: "", id: "" } }),
-                                _vm._v(" "),
-                                _c(
-                                  "button",
-                                  { staticClass: "btn btn-cta btn-green" },
-                                  [_vm._v("Enable")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "button",
-                                  { staticClass: "btn btn-cta btn-yellow" },
-                                  [_vm._v("Desable")]
-                                )
-                              ]
-                            )
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "a",
-                            {
-                              staticClass: "btn btn-lg btn-cta btn-blue",
-                              on: {
-                                click: function($event) {
-                                  _vm.submit()
-                                }
-                              }
-                            },
-                            [_vm._v("Save new student!!")]
+                        "div",
+                        { staticClass: "action" },
+                        _vm._l(3, function(i) {
+                          return _c(
+                            "div",
+                            { key: i, staticClass: "personal-info row" },
+                            [
+                              _c(
+                                "div",
+                                { staticClass: "col-xs-2 form-group" },
+                                [
+                                  _c("input", {
+                                    staticClass: "form-control",
+                                    attrs: {
+                                      type: "text",
+                                      id: "first_name",
+                                      placeholder: "First name"
+                                    }
+                                  })
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "col-xs-2 form-group" },
+                                [
+                                  _c("input", {
+                                    staticClass: "form-control",
+                                    attrs: {
+                                      type: "text",
+                                      id: "last_name",
+                                      placeholder: "Last name"
+                                    }
+                                  })
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "col-xs-2 form-group" },
+                                [
+                                  _c("input", {
+                                    staticClass: "form-control",
+                                    attrs: {
+                                      type: "text",
+                                      id: "stakeholder_email",
+                                      placeholder: "Email Address"
+                                    }
+                                  })
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "col-xs-2 form-group" },
+                                [
+                                  _c(
+                                    "select",
+                                    {
+                                      staticClass: "form-control",
+                                      attrs: { id: "relationship" }
+                                    },
+                                    [
+                                      _c(
+                                        "option",
+                                        {
+                                          attrs: {
+                                            value: "",
+                                            disabled: "",
+                                            selected: ""
+                                          }
+                                        },
+                                        [_vm._v("Relationship")]
+                                      )
+                                    ]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                { staticClass: "btn btn-cta btn-green" },
+                                [_vm._v("Enable")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                { staticClass: "btn btn-cta btn-yellow" },
+                                [_vm._v("Desable")]
+                              )
+                            ]
                           )
-                        ],
-                        2
-                      )
-                    ],
-                    1
+                        })
+                      ),
+                      _vm._v(" "),
+                      _c("div", [
+                        _c(
+                          "a",
+                          {
+                            staticClass:
+                              "btn btn-lg btn-cta btn-lightblue next",
+                            on: {
+                              click: function($event) {
+                                _vm.submit()
+                              }
+                            }
+                          },
+                          [_vm._v("Save new student!")]
+                        )
+                      ])
+                    ]
                   )
                 ])
               ])
@@ -15625,7 +14819,7 @@ var render = function() {
                       "a",
                       {
                         staticClass:
-                          "modal-default-button btn btn-cta btn-blue",
+                          "modal-default-button btn btn-cta btn-lightblue",
                         staticStyle: { width: "max-content" },
                         on: { click: _vm.submit }
                       },
@@ -15741,9 +14935,15 @@ var render = function() {
               }
             },
             [
-              _c("h1", { attrs: { slot: "header" }, slot: "header" }, [
-                _vm._v("Add/Edit Student")
-              ])
+              _c(
+                "h1",
+                {
+                  staticClass: "text-center",
+                  attrs: { slot: "header" },
+                  slot: "header"
+                },
+                [_vm._v("Add/Edit Student")]
+              )
             ]
           )
         : _vm._e()
@@ -36052,6 +35252,997 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_vue__;
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 82 */,
+/* 83 */,
+/* 84 */,
+/* 85 */,
+/* 86 */,
+/* 87 */,
+/* 88 */,
+/* 89 */,
+/* 90 */,
+/* 91 */,
+/* 92 */,
+/* 93 */,
+/* 94 */,
+/* 95 */,
+/* 96 */,
+/* 97 */,
+/* 98 */,
+/* 99 */,
+/* 100 */,
+/* 101 */,
+/* 102 */,
+/* 103 */,
+/* 104 */,
+/* 105 */,
+/* 106 */,
+/* 107 */,
+/* 108 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(109);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(8)("15c98ab8", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1a8d4186\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./CitizenshipValueFields.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1a8d4186\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./CitizenshipValueFields.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 109 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(7)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.panel-group[data-v-1a8d4186] {\n  min-height: 265px;\n  max-height: 265px;\n  overflow-y: scroll;\n  font-size: .5em;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 110 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "panel-group" },
+    _vm._l(_vm.selectedLocationIds, function(locationId, locationIndex) {
+      return _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.locationCanBeSelected(locationIndex),
+              expression: "locationCanBeSelected(locationIndex)"
+            }
+          ],
+          key: locationIndex,
+          staticClass: "panel panel-default"
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "panel-heading",
+              attrs: {
+                role: "tab",
+                id: _vm.formAttributeAsPhpArray("locationTab", locationIndex)
+              }
+            },
+            [
+              _c("h2", { staticClass: "panel-title" }, [
+                _c(
+                  "a",
+                  {
+                    attrs: {
+                      role: "button",
+                      "aria-controls": _vm.formAttributeAsPhpArray(
+                        "locationPanel",
+                        locationIndex
+                      )
+                    },
+                    on: { click: _vm.toggleLocation }
+                  },
+                  [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(
+                          _vm.locationDisplayName(locationIndex, locationId)
+                        ) +
+                        "\n                "
+                    )
+                  ]
+                )
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "panel-collapse collapse",
+              attrs: {
+                id: _vm.formAttributeAsPhpArray("locationPanel", locationIndex),
+                role: "tabpanel",
+                "aria-labeledby": _vm.formAttributeAsPhpArray(
+                  "locationTab",
+                  locationIndex
+                )
+              }
+            },
+            [
+              _c("div", { staticClass: "panel-body" }, [
+                _c("fieldset", [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.selectedLocationIds[locationIndex],
+                              expression: "selectedLocationIds[locationIndex]"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            name: _vm.formAttributeAsPhpArray(
+                              "monitoringLocations",
+                              locationIndex
+                            ),
+                            id: _vm.formAttributeAsPhpArray(
+                              "monitoringLocations",
+                              locationIndex
+                            )
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.selectedLocationIds,
+                                locationIndex,
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "option",
+                            {
+                              attrs: { disabled: "" },
+                              domProps: { value: null }
+                            },
+                            [_vm._v("Select a location")]
+                          ),
+                          _vm._v(" "),
+                          _vm._l(_vm.monitoringLocationsByCategory, function(
+                            locations,
+                            categoryName
+                          ) {
+                            return _c(
+                              "optgroup",
+                              {
+                                key: categoryName,
+                                attrs: { label: categoryName }
+                              },
+                              _vm._l(locations, function(location) {
+                                return _c(
+                                  "option",
+                                  {
+                                    key: location.id,
+                                    domProps: { value: location.id }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                        " +
+                                        _vm._s(location.name) +
+                                        "\n                                    "
+                                    )
+                                  ]
+                                )
+                              })
+                            )
+                          })
+                        ],
+                        2
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model.lazy",
+                            value: _vm.locationLabels[locationIndex],
+                            expression: "locationLabels[locationIndex]",
+                            modifiers: { lazy: true }
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          name: _vm.formAttributeAsPhpArray(
+                            "locationLabels",
+                            locationIndex
+                          ),
+                          disabled: !locationId,
+                          placeholder: "(Optional) Location label"
+                        },
+                        domProps: { value: _vm.locationLabels[locationIndex] },
+                        on: {
+                          change: function($event) {
+                            _vm.$set(
+                              _vm.locationLabels,
+                              locationIndex,
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c(
+                      "h3",
+                      {
+                        staticClass: "col-md-12",
+                        staticStyle: {
+                          "font-size": "1em",
+                          "margin-bottom": "0",
+                          "padding-bottom": "0",
+                          "padding-top": "0"
+                        }
+                      },
+                      [_vm._v("Citizenship prompts")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "fieldset",
+                      {
+                        staticClass: "col-md-12",
+                        attrs: { disabled: !locationId }
+                      },
+                      [
+                        _c("table", { staticClass: "table table-bordered" }, [
+                          _c(
+                            "tbody",
+                            _vm._l(_vm.citizenshipValuesByType, function(
+                              citizenshipValues,
+                              typeName
+                            ) {
+                              return _c("tr", { key: typeName }, [
+                                _c("td", [
+                                  _c("label", {
+                                    attrs: {
+                                      for: _vm.formAttributeAsPhpArray(
+                                        "citizenshipValues",
+                                        locationIndex,
+                                        typeName
+                                      )
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "select",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value:
+                                            _vm.selectedPromptIds[
+                                              locationIndex
+                                            ][typeName],
+                                          expression:
+                                            "selectedPromptIds[locationIndex][typeName]"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        name: _vm.formAttributeAsPhpArray(
+                                          "citizenshipValues",
+                                          locationIndex,
+                                          typeName
+                                        ),
+                                        id: _vm.formAttributeAsPhpArray(
+                                          "citizenshipValues",
+                                          locationIndex,
+                                          typeName
+                                        )
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          var $$selectedVal = Array.prototype.filter
+                                            .call(
+                                              $event.target.options,
+                                              function(o) {
+                                                return o.selected
+                                              }
+                                            )
+                                            .map(function(o) {
+                                              var val =
+                                                "_value" in o
+                                                  ? o._value
+                                                  : o.value
+                                              return val
+                                            })
+                                          _vm.$set(
+                                            _vm.selectedPromptIds[
+                                              locationIndex
+                                            ],
+                                            typeName,
+                                            $event.target.multiple
+                                              ? $$selectedVal
+                                              : $$selectedVal[0]
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "option",
+                                        { domProps: { value: null } },
+                                        [
+                                          _vm._v(
+                                            "Select " +
+                                              _vm._s(typeName) +
+                                              " prompt"
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _vm._l(citizenshipValues, function(
+                                        citizenshipValue
+                                      ) {
+                                        return _c(
+                                          "option",
+                                          {
+                                            key: citizenshipValue.id,
+                                            domProps: {
+                                              value: citizenshipValue.id
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                    " +
+                                                _vm._s(
+                                                  citizenshipValue.phrasing
+                                                ) +
+                                                "\n                                                "
+                                            )
+                                          ]
+                                        )
+                                      })
+                                    ],
+                                    2
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model.lazy",
+                                        value:
+                                          _vm.customPrompts[locationIndex][
+                                            typeName
+                                          ],
+                                        expression:
+                                          "customPrompts[locationIndex][typeName]",
+                                        modifiers: { lazy: true }
+                                      },
+                                      {
+                                        name: "show",
+                                        rawName: "v-show",
+                                        value: _vm.customPromptSelected(
+                                          locationIndex,
+                                          typeName
+                                        ),
+                                        expression:
+                                          "customPromptSelected(locationIndex, typeName)"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: {
+                                      type: "text",
+                                      name: _vm.formAttributeAsPhpArray(
+                                        "customPrompts",
+                                        locationIndex,
+                                        typeName
+                                      ),
+                                      disabled: !_vm.customPromptSelected(
+                                        locationIndex,
+                                        typeName
+                                      ),
+                                      placeholder:
+                                        "E.g. Are you meeting your citizenship objective?"
+                                    },
+                                    domProps: {
+                                      value:
+                                        _vm.customPrompts[locationIndex][
+                                          typeName
+                                        ]
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        _vm.$set(
+                                          _vm.customPrompts[locationIndex],
+                                          typeName,
+                                          $event.target.value
+                                        )
+                                      }
+                                    }
+                                  })
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "radio",
+                                      attrs: {
+                                        title:
+                                          "Variable intervals do not guarantee a sample mean. Generated intervals may be as low as 33% and as high as 167% of the desired mean."
+                                      }
+                                    },
+                                    [
+                                      _c("label", [
+                                        _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value:
+                                                _vm.useVariableInterval[
+                                                  locationIndex
+                                                ][typeName],
+                                              expression:
+                                                "useVariableInterval[locationIndex][typeName]"
+                                            }
+                                          ],
+                                          attrs: {
+                                            type: "radio",
+                                            name: _vm.formAttributeAsPhpArray(
+                                              "isVariableInterval",
+                                              locationIndex,
+                                              typeName
+                                            ),
+                                            disabled: !_vm.selectedPromptIds[
+                                              locationIndex
+                                            ][typeName]
+                                          },
+                                          domProps: {
+                                            value: true,
+                                            checked: _vm._q(
+                                              _vm.useVariableInterval[
+                                                locationIndex
+                                              ][typeName],
+                                              true
+                                            )
+                                          },
+                                          on: {
+                                            change: function($event) {
+                                              _vm.$set(
+                                                _vm.useVariableInterval[
+                                                  locationIndex
+                                                ],
+                                                typeName,
+                                                true
+                                              )
+                                            }
+                                          }
+                                        }),
+                                        _vm._v(
+                                          "\n                                                    Variable interval\n                                                "
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("span", {
+                                        staticClass:
+                                          "glyphicon glyphicon-info-sign",
+                                        attrs: { "aria-hidden": "true" }
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "radio" }, [
+                                    _c("label", [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.useVariableInterval[
+                                                locationIndex
+                                              ][typeName],
+                                            expression:
+                                              "useVariableInterval[locationIndex][typeName]"
+                                          }
+                                        ],
+                                        attrs: {
+                                          type: "radio",
+                                          name: _vm.formAttributeAsPhpArray(
+                                            "isVariableInterval",
+                                            locationIndex,
+                                            typeName
+                                          ),
+                                          disabled: !_vm.selectedPromptIds[
+                                            locationIndex
+                                          ][typeName]
+                                        },
+                                        domProps: {
+                                          value: false,
+                                          checked: _vm._q(
+                                            _vm.useVariableInterval[
+                                              locationIndex
+                                            ][typeName],
+                                            false
+                                          )
+                                        },
+                                        on: {
+                                          change: function($event) {
+                                            _vm.$set(
+                                              _vm.useVariableInterval[
+                                                locationIndex
+                                              ],
+                                              typeName,
+                                              false
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(
+                                        "\n                                                    Fixed interval\n                                                "
+                                      )
+                                    ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _c(
+                                    "div",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "show",
+                                          rawName: "v-show",
+                                          value:
+                                            _vm.useVariableInterval[
+                                              locationIndex
+                                            ][typeName],
+                                          expression:
+                                            "useVariableInterval[locationIndex][typeName]"
+                                        }
+                                      ]
+                                    },
+                                    [
+                                      _c(
+                                        "label",
+                                        {
+                                          attrs: {
+                                            for: _vm.formAttributeAsPhpArray(
+                                              "desiredMeanInSeconds",
+                                              locationIndex,
+                                              typeName
+                                            )
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                                    Desired mean interval\n                                                "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "select",
+                                        {
+                                          directives: [
+                                            {
+                                              name: "show",
+                                              rawName: "v-show",
+                                              value:
+                                                _vm.useVariableInterval[
+                                                  locationIndex
+                                                ][typeName],
+                                              expression:
+                                                "useVariableInterval[locationIndex][typeName]"
+                                            }
+                                          ],
+                                          staticClass: "form-control",
+                                          attrs: {
+                                            name: _vm.formAttributeAsPhpArray(
+                                              "desiredMeanInSeconds",
+                                              locationIndex,
+                                              typeName
+                                            ),
+                                            id: _vm.formAttributeAsPhpArray(
+                                              "desiredMeanInSeconds",
+                                              locationIndex,
+                                              typeName
+                                            ),
+                                            disabled: !_vm.selectedPromptIds[
+                                              locationIndex
+                                            ][typeName]
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "option",
+                                            {
+                                              attrs: { value: "", selected: "" }
+                                            },
+                                            [_vm._v("Select a desired mean")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "option",
+                                            { attrs: { value: "30" } },
+                                            [_vm._v("30 seconds")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "option",
+                                            { attrs: { value: "60" } },
+                                            [_vm._v("60 seconds")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "option",
+                                            { attrs: { value: "120" } },
+                                            [_vm._v("2 minutes")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "option",
+                                            { attrs: { value: "180" } },
+                                            [_vm._v("3 minutes")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "option",
+                                            { attrs: { value: "300" } },
+                                            [_vm._v("5 minutes")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "option",
+                                            { attrs: { value: "600" } },
+                                            [_vm._v("10 minutes")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "option",
+                                            { attrs: { value: "1800" } },
+                                            [_vm._v("30 minutes")]
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "show",
+                                          rawName: "v-show",
+                                          value: !_vm.useVariableInterval[
+                                            locationIndex
+                                          ][typeName],
+                                          expression:
+                                            "!useVariableInterval[locationIndex][typeName]"
+                                        }
+                                      ]
+                                    },
+                                    [
+                                      _c("div", { staticClass: "row" }, [
+                                        _c("div", { staticClass: "col-sm-4" }, [
+                                          _c(
+                                            "label",
+                                            {
+                                              attrs: {
+                                                for: _vm.formAttributeAsPhpArray(
+                                                  "intervalHours",
+                                                  locationIndex,
+                                                  typeName
+                                                )
+                                              }
+                                            },
+                                            [_vm._v("Hours")]
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("div", { staticClass: "col-sm-4" }, [
+                                          _c(
+                                            "label",
+                                            {
+                                              attrs: {
+                                                for: _vm.formAttributeAsPhpArray(
+                                                  "intervalMinutes",
+                                                  locationIndex,
+                                                  typeName
+                                                )
+                                              }
+                                            },
+                                            [_vm._v("Minutes")]
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("div", { staticClass: "col-sm-4" }, [
+                                          _c(
+                                            "label",
+                                            {
+                                              attrs: {
+                                                for: _vm.formAttributeAsPhpArray(
+                                                  "intervalSeconds",
+                                                  locationIndex,
+                                                  typeName
+                                                )
+                                              }
+                                            },
+                                            [_vm._v("Seconds")]
+                                          )
+                                        ])
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "row" }, [
+                                        _c("div", { staticClass: "col-sm-4" }, [
+                                          _c(
+                                            "select",
+                                            {
+                                              staticClass: "form-control",
+                                              attrs: {
+                                                name: _vm.formAttributeAsPhpArray(
+                                                  "intervalHours",
+                                                  locationIndex,
+                                                  typeName
+                                                ),
+                                                id: _vm.formAttributeAsPhpArray(
+                                                  "intervalHours",
+                                                  locationIndex,
+                                                  typeName
+                                                ),
+                                                disabled: !_vm
+                                                  .selectedPromptIds[
+                                                  locationIndex
+                                                ][typeName]
+                                              }
+                                            },
+                                            _vm._l(25, function(i) {
+                                              return _c("option", { key: i }, [
+                                                _vm._v(_vm._s(i - 1))
+                                              ])
+                                            })
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("div", { staticClass: "col-sm-4" }, [
+                                          _c(
+                                            "select",
+                                            {
+                                              staticClass: "form-control",
+                                              attrs: {
+                                                name: _vm.formAttributeAsPhpArray(
+                                                  "intervalMinutes",
+                                                  locationIndex,
+                                                  typeName
+                                                ),
+                                                id: _vm.formAttributeAsPhpArray(
+                                                  "intervalMinutes",
+                                                  locationIndex,
+                                                  typeName
+                                                ),
+                                                disabled: !_vm
+                                                  .selectedPromptIds[
+                                                  locationIndex
+                                                ][typeName]
+                                              }
+                                            },
+                                            _vm._l(60, function(i) {
+                                              return _c("option", { key: i }, [
+                                                _vm._v(
+                                                  "\n                                                                " +
+                                                    _vm._s(i - 1) +
+                                                    "\n                                                            "
+                                                )
+                                              ])
+                                            })
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("div", { staticClass: "col-sm-4" }, [
+                                          _c(
+                                            "select",
+                                            {
+                                              staticClass: "form-control",
+                                              attrs: {
+                                                name: _vm.formAttributeAsPhpArray(
+                                                  "intervalSeconds",
+                                                  locationIndex,
+                                                  typeName
+                                                ),
+                                                id: _vm.formAttributeAsPhpArray(
+                                                  "intervalSeconds",
+                                                  locationIndex,
+                                                  typeName
+                                                ),
+                                                disabled: !_vm
+                                                  .selectedPromptIds[
+                                                  locationIndex
+                                                ][typeName]
+                                              }
+                                            },
+                                            _vm._l(60, function(i) {
+                                              return _c("option", { key: i }, [
+                                                _vm._v(_vm._s(i - 1))
+                                              ])
+                                            })
+                                          )
+                                        ])
+                                      ])
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _c(
+                                    "label",
+                                    {
+                                      attrs: {
+                                        for: _vm.formAttributeAsPhpArray(
+                                          "goals",
+                                          locationIndex,
+                                          typeName
+                                        )
+                                      }
+                                    },
+                                    [_vm._v("Goal %")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "select",
+                                    {
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        name: _vm.formAttributeAsPhpArray(
+                                          "goals",
+                                          locationIndex,
+                                          typeName
+                                        ),
+                                        id: _vm.formAttributeAsPhpArray(
+                                          "goals",
+                                          locationIndex,
+                                          typeName
+                                        ),
+                                        disabled: !_vm.selectedPromptIds[
+                                          locationIndex
+                                        ][typeName]
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "option",
+                                        { attrs: { value: "", selected: "" } },
+                                        [_vm._v("No goal")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("option", { attrs: { value: "50" } }, [
+                                        _vm._v("50%")
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("option", { attrs: { value: "55" } }, [
+                                        _vm._v("55%")
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("option", { attrs: { value: "60" } }, [
+                                        _vm._v("60%")
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("option", { attrs: { value: "65" } }, [
+                                        _vm._v("65%")
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("option", { attrs: { value: "70" } }, [
+                                        _vm._v("70%")
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("option", { attrs: { value: "75" } }, [
+                                        _vm._v("75%")
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("option", { attrs: { value: "80" } }, [
+                                        _vm._v("80%")
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("option", { attrs: { value: "85" } }, [
+                                        _vm._v("85%")
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("option", { attrs: { value: "90" } }, [
+                                        _vm._v("90%")
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("option", { attrs: { value: "95" } }, [
+                                        _vm._v("95%")
+                                      ]),
+                                      _vm._v(" "),
+                                      _c(
+                                        "option",
+                                        { attrs: { value: "100" } },
+                                        [_vm._v("100%")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ])
+                            })
+                          )
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "clearfix" })
+                  ])
+                ])
+              ])
+            ]
+          )
+        ]
+      )
+    })
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-1a8d4186", module.exports)
+  }
+}
 
 /***/ })
 ],[22]);

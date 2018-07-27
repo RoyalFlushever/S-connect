@@ -13622,6 +13622,22 @@ div.checkbox {
   border-color: #0275d8;
 }
 
+.btn-lightblue {
+  background-color: #5bc0de;
+  color: white;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  padding: 3px;
+  font-size: 1.4em;
+}
+
+.btn-lightblue:hover {
+  color: #5bc0de;
+  background-color: white;
+  border-color: #5bc0de;
+}
+
 .btn-yellow {
   background-color: #ffeb3b;
   color: white;
@@ -13746,7 +13762,7 @@ a.register {
   padding: 15px 25px;
 }
 
-.create-modal .btn-blue {
+.create-modal .btn-lightblue {
   padding: 15px 80px;
 }
 

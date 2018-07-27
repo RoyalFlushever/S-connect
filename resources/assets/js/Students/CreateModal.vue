@@ -3,23 +3,22 @@
 	<div class="modal-mask">
 		<div class="modal-wrapper">
 			<div class="modal-container create-modal">
-
 				<div class="modal-body">
 					<slot name="body">
 						<ul class="nav nav-tabs" role="tablist">
 							<li role="presentation" class="active">
 								<a class="persistant-disabled" href="#stepper-step-1" data-toggle="tab" aria-controls="stepper-step-1" role="tab" title="Step 1">
-									<span class="round-tab glyphicon glyphicon-book">1</span>
+									<span class="round-tab glyphicon glyphicon-book gray-border">1</span>
 								</a>
 							</li>
 							<li role="presentation" class="disabled">
 								<a class="persistant-disabled" href="#stepper-step-2" data-toggle="tab" aria-controls="stepper-step-2" role="tab" title="Step 2" ref="navTab2">
-									<span class="round-tab glyphicon glyphicon-pencil">2</span>
+									<span class="round-tab glyphicon glyphicon-pencil gray-border">2</span>
 								</a>
 							</li>
 							<li role="presentation" class="disabled">
 								<a class="persistant-disabled" href="#stepper-step-3" data-toggle="tab" aria-controls="stepper-step-3" role="tab" title="Step 3" ref="navTab3">
-									<span class="round-tab glyphicon glyphicon-list-alt">3</span>
+									<span class="round-tab glyphicon glyphicon-list-alt gray-border">3</span>
 								</a>
 							</li>
 						</ul>
@@ -28,17 +27,23 @@
 								default header
 							</slot>
 						</div>
-						<div class="tab-content">
+						<div class="tab-content no-border">
 							<form class="tab-pane fade in active" role="tabpanel" id="stepper-step-1" ref="stepForm1">
-								<v-container grid-list-md text-xs-center>
-									<v-layout column>
-										<v-layout row>
-											<input type="text" name="first_name" id="first_name" placeholder="First name" required v-model="studentInfo.first_name">
-											<input type="text" name="Last name" id="last_name" placeholder="Last name" required v-model="studentInfo.last_name">
-										</v-layout>
-										<v-layout row style="height: 35px;">
-											<input type="text" placeholder="Midle name (Optional)">
-											<input id="birthdate" name="birthdate" required
+								<div class="action">
+									<div class="personal-info form-group row">
+										<div class="col-xs-6">
+											<input type="text" name="first_name" id="first_name" class="form-control" placeholder="First name" required v-model="studentInfo.first_name">
+										</div>
+										<div class="col-xs-6">
+											<input type="text" name="Last name" id="last_name" class="form-control" placeholder="Last name" required v-model="studentInfo.last_name">
+										</div>
+									</div>	
+									<div class="personal-info form-group row">
+										<div class="col-xs-6">
+											<input type="text" class="form-control" placeholder="Midle name (Optional)">
+										</div>
+										<div class="col-xs-6">
+											<input id="birthdate" name="birthdate" class="form-control" required
 												v-model="studentInfo.birthdate"
 												placeholder="Select Birthdate"
 												data-provide="datepicker"
@@ -49,34 +54,48 @@
 												data-date-today-btn="linked"
 												data-date-today-highlight="true"
 											>
-										</v-layout>
-										<v-layout row wrap>
-											<label><input type="radio" name="gender" id="gender-female" required v-model="studentInfo.gender" :value="1">Male</label>
-											<label><input type="radio" name="gender" id="gender-male" required v-model="studentInfo.gender" :value="2">Femalw</label>
-											<select name="ethnicity" id="ethnicity">
+										</div>
+									</div>
+									<div class="options form-group row">
+										<div class="col-xs-6 form-group">
+											<label class="radio-inline"><input type="radio" name="gender" id="gender-female" required v-model="studentInfo.gender" :value="1">Male</label>
+											<label class="radio-inline"><input type="radio" name="gender" id="gender-male" required v-model="studentInfo.gender" :value="2">Female</label>
+										</div>
+										<div class="col-xs-3 form-group">
+											<select name="ethnicity" id="ethnicity"  class="form-control" >
 												<option>Ethnicity(optional)</option>
 												<option v-for="ethnicity in options.ethnicities" :value="ethnicity.id" :key="ethnicity.id">{{ethnicity.name}}</option>
 											</select>
-											<select name="iep" id="iep">
+										</div>
+										<div class="col-xs-3 form-group">
+											<select name="iep" id="iep"  class="form-control">
 												<option>IEP(optional)</option>
 												<option v-for="iep in options.ieps" :value="iep.id" :key="iep.id">{{iep.contents}}</option>
 											</select>
-											<select name="designateMentor" id="designateMentor" required>
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-xs-8 col-xs-offset-2">
+											<select name="designateMentor" id="designateMentor" class="form-control" required>
 												<option value="" disabled selected>Designate Mentor</option>
 												<option v-for="mentor in options.availableMentors" :value="mentor.id" :key="mentor.id">{{mentor.last_name}}, {{mentor.first_name}}</option>
 											</select>
-										</v-layout>
-										<v-flex xs12>
-											<input type="text" placeholder="iConnect UserName" v-model="studentInfo.username" name="username" id="username" required>
-										</v-flex>
-										<v-flex xs12>
-											<input type="password" placeholder="iConnect Password" v-model="studentInfo.password" name="password" id="password" required>
-										</v-flex>
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-xs-8 col-xs-offset-2">
+											<input type="text" placeholder="iConnect UserName" class="form-control" v-model="studentInfo.username" name="username" id="username" required>
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-xs-8 col-xs-offset-2">
+											<input type="password" placeholder="iConnect Password" class="form-control" v-model="studentInfo.password" name="password" id="password" required>
+										</div>
+									</div>
 										<v-layout justify-center>
-											<button type="submit" class="btn btn-lg btn-cta btn-blue" @click="gotoStep2($event)">Next Step 2</button>
+											<button type="submit" class="btn btn-lg btn-cta btn-lightblue next iconnect-blue" @click="gotoStep2($event)">Next Step 2</button>
 										</v-layout>
-									</v-layout>
-								</v-container>
+								</div>
 							</form>
 							<div class="tab-pane fade" role="tabpanel" id="stepper-step-2">
 								<span>Monitoring and Citizenship</span>
@@ -85,26 +104,38 @@
 										:monitoring-locations-by-category="options.monitoringLocationsByCategory"
 										:citizenship-values-by-type="options.citizenshipValuesByType"
 								></citizenship-value-fields>
-								<a class="btn btn-lg btn-cta btn-blue" @click="gotoStep3()">Next Step 3</a>
+								<a class="btn btn-lg btn-cta btn-lightblue next" @click="gotoStep3()">Next Step 3</a>
 
 							</div>
 							<div class="tab-pane fade" role="tabpanel" id="stepper-step-3">
-								Add stakeholder(s)
-								<v-container>
-									<v-layout v-for="i in 3" :key="i" row>
-										<span>{{i}}:First name</span>
-										<input type="text">
-										<span>Last name</span>
-										<input type="text">
-										<span>Email Address</span>
-										<input type="text">
-										<span>Relationship</span>
-										<select name="" id=""></select>
+								<h2>Add stakeholder(s)</h2>
+								<div class="action" >
+									<div class="personal-info row"  v-for="i in 3" :key="i">
+										<div class="col-xs-2 form-group">
+											<!-- <label for="first_name">{{i}}.First name</label> -->
+											<input type="text" id="first_name" class="form-control" placeholder="First name">
+										</div>
+										<div class="col-xs-2 form-group">
+											<!-- <label for="last_name">Last name</label> -->
+											<input type="text" id="last_name" class="form-control" placeholder="Last name">
+										</div>
+										<div class="col-xs-2 form-group">
+											<!-- <label for="stakeholder_email">Email Address</label> -->
+											<input type="text" id="stakeholder_email" class="form-control" placeholder="Email Address">
+										</div>
+										<div class="col-xs-2 form-group">
+											<!-- <label for="relationship">Relationship</label> -->
+											<select id="relationship" class="form-control">
+												<option value="" disabled selected>Relationship</option>
+											</select>
+										</div>
 										<button class="btn btn-cta btn-green">Enable</button>
 										<button class="btn btn-cta btn-yellow">Desable</button>
-									</v-layout>
-									<a class="btn btn-lg btn-cta btn-blue" @click="submit()">Save new student!!</a>
-								</v-container>
+									</div>
+								</div>
+								<div>
+									<a class="btn btn-lg btn-cta btn-lightblue next" @click="submit()">Save new student!</a>
+								</div>
 							</div>
 						</div>
 					</slot>
@@ -122,7 +153,7 @@
 								Exit Add new Student (Does NOT save)
 							</slot>
 						</a>
-						<a v-if="actionurl" class="modal-default-button btn btn-cta btn-blue" style="width: max-content;" @click="submit">
+						<a v-if="actionurl" class="modal-default-button btn btn-cta btn-lightblue" style="width: max-content;" @click="submit">
 							<slot name="action">
 								Submit
 							</slot>
@@ -199,6 +230,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .modal-mask {
   position: fixed;
   z-index: 9998;
@@ -227,10 +259,15 @@ export default {
   font-family: Helvetica, Arial, sans-serif;
 }
 
-.modal-header h3 {
-  margin-top: 0;
-  color: #42b983;
-  font-size: 30px !important;
+.modal-header {
+	
+	border-bottom: none!important;
+
+	h3 {
+		margin-top: 0;
+		color: #42b983;
+		font-size: 30px !important;
+	}
 }
 
 .modal-body {
@@ -260,6 +297,10 @@ export default {
   text-align: center;
 }
 
+.tab-content {
+	padding-top: 0px;
+}
+
 .btn-close {
   border: none;
   font-size: 20px;
@@ -268,5 +309,62 @@ export default {
   font-weight: bold;
   color: #4aae9b;
   background: transparent;
+}
+
+.no-border {
+	border: none;
+	padding-bottom: 0px;
+}
+
+.next {
+	margin: 20px auto 0px auto;
+	display: block;
+}
+
+.nav-tabs [data-toggle="tab"] {
+    width: 25px;
+    height: 25px;
+    margin: 20px auto;
+    border: none;
+    padding: 0px;
+}
+.nav-tabs {
+	margin-bottom: 15px;
+	border: none;
+}
+.round-tab {
+	border-radius: 50%;
+	width: 60px;
+	height: 60px;
+	line-height: 60px;
+	display: inline-block;
+	z-index: 2;
+	position: absolute;
+	left: 0;
+	text-align: center;
+	font-size: 16px;
+	font-weight: bold;
+	cursor: pointer;
+}
+.nav-tabs > li {
+	width: 33%;
+	position: relative;
+}
+
+#stepper-step-3 {
+	.action {
+		font-size: .5em;
+		min-height: 230px;
+
+		.form-group {
+			margin-right: 5px;
+			margin-left: 5px;
+			padding: 0px;
+		}
+
+		.btn-cta {
+			padding: 6px;
+		}
+	}
 }
 </style>
