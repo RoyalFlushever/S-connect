@@ -31,7 +31,6 @@ class IepsSeeder extends Seeder
             [ 'id' => 15, 'contents' => 'To Be Obtained',                        'created_at' => $now, 'updated_at' => $now ],
             [ 'id' => 16, 'contents' => 'Traumatic Brain Injury',                'created_at' => $now, 'updated_at' => $now ],
             [ 'id' => 17, 'contents' => 'Visual Impairment',                     'created_at' => $now, 'updated_at' => $now ],
-            [ 'id' => 18, 'contents' => 'If none selected note “Not Selected"',  'created_at' => $now, 'updated_at' => $now ],
         ]);
     }
 }
