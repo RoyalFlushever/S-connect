@@ -22,10 +22,9 @@ Vue.component('welcome-form', require('./welcome/WelcomeForm.vue'));
 Vue.component('my-students', require('./students/MyStudents.vue'));
 Vue.component('create-modal', require('./students/CreateModal.vue'));
 
-
-
 import Toasted from 'vue-toasted';
 import Vuetify from 'vuetify';
+
 
 Vue.use(Vuetify);
 

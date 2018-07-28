@@ -10,6 +10,7 @@ use App\Student;
 use App\User;
 use App\Ethnicity;
 use App\Iep;
+use App\SchoolLevel;
 
 use DB;
 use Illuminate\Http\Request;
@@ -54,16 +55,31 @@ class StudentController extends Controller
      */
     public function myStudents()
     {
-        $students = Student::query()->orderBy('last_name', 'asc')->orderBy('first_name', 'asc')
-            ->orderBy('middle_name', 'asc')->orderBy('id', 'asc')->with('mentor')->get();
+        return view('students.my-students');
+    }
 
-        // Administrator : 1
-        // Facilitator : 2
-        // Site Facilitator : 3
-        // Mentor : 4
-        $user_role = (int)Auth::user()->user_role_id;
-        return view('students.my-students', ['students' => $students, 'role' => $user_role]);
-        // return view('students.my-students0', ['students' => $students, 'role' => $user_role]);
+
+    // Administrator : 1
+    // Facilitator : 2
+    // Site Facilitator : 3
+    // Mentor : 4
+
+    private function getStudentData($param, $isCount)
+    {
+        $query = DB::table('students as s');
+            $query->select(
+                's.id',
+                's.first_name',
+                's.last_name',
+                's.birthdate',
+                's.mentor_id',
+                'u.first_name as mentor_first_name',
+                'u.last_name as mentor_last_name'
+            );
+        $query->leftjoin('users as u', 's.mentor_id', '=', 'u.id');
+
+        return $query->paginate(2);
+
     }
 
     /**
@@ -71,18 +87,25 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getList()
+    public function getList(Request $filter)
     {
-        $students = Student::query()->orderBy('last_name', 'asc')->orderBy('first_name', 'asc')
-            ->orderBy('middle_name', 'asc')->orderBy('id', 'asc')->with('mentor')->get();
 
-        // Administrator : 1
-        // Facilitator : 2
-        // Site Facilitator : 3
-        // Mentor : 4
-        $user_role = (int)Auth::user()->user_role_id;
-        return json_encode(['students' => $students, 'role' => $user_role]);
-        // return view('students.my-students0', ['students' => $students, 'role' => $user_role]);
+        $query = DB::table('students as s');
+        $query->select(
+            's.id',
+            's.first_name',
+            's.last_name',
+            's.birthdate',
+            's.mentor_id',
+            'u.first_name as mentor_first_name',
+            'u.last_name as mentor_last_name'
+        );
+        $query->leftjoin('users as u', 's.mentor_id', '=', 'u.id');
+
+        $ret = $query->paginate($filter->input('rowCount'));
+        $ret->role = (int)Auth::user()->user_role_id;
+
+        return response()->json($ret);
     }
 
 
@@ -413,6 +436,15 @@ class StudentController extends Controller
         //
     }
 
+    /**
+     * Get options for student list
+     * @return \JSON
+     */
+    public function getLevels()
+    {
+        $schoolLevels = SchoolLevel::all();
+        return json_encode($schoolLevels);
+    }
     /**
      * Get options for student creation
      * @return \JSON

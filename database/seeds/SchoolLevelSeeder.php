@@ -3,7 +3,7 @@
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
-class ScholeLevelSeeder extends Seeder
+class SchoolLevelSeeder extends Seeder
 {
     /**
      * Run the database seeds.
