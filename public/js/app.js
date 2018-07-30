@@ -7048,6 +7048,10 @@ Vue.component('pagination', __webpack_require__(80));
 
             this.filter.page = pgNum;
             __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/my-students/get-list", this.filter).then(function (response) {
+                if (response.data.current_page > response.data.last_page) {
+                    _this5.updateList(response.data.last_page);
+                    return;
+                }
                 _this5.students = response.data;
             });
         },

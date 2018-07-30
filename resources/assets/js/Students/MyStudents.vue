@@ -167,9 +167,14 @@ export default {
         },
         updateList: function (pgNum = 1) {
             this.filter.page = pgNum;
-            Axios.post("/my-students/get-list", this.filter).then(response => {
-                this.students = response.data;
-            });
+            Axios.post("/my-students/get-list", this.filter)
+                .then(response => {
+                    if(response.data.current_page > response.data.last_page) {
+                        this.updateList(response.data.last_page);
+                        return;
+                    }
+                    this.students = response.data;
+                });
         },
         filterChange: function () {
             this.updateList(this.filter.page);

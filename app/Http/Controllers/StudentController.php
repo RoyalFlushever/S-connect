@@ -125,8 +125,13 @@ class StudentController extends Controller
         }
 
         $ret = $query->paginate($filter->input('rowCount'));
-        $ret->role = (int)Auth::user()->user_role_id;
+        // if($ret->current_page < $ret->last_page) {
+        //     $ret->current_page = $ret->last_page;
+        // }
 
+        // Log::debug(var_export($ret, true));
+
+        // return response()->json($ret);
         return response()->json($ret);
     }
 
