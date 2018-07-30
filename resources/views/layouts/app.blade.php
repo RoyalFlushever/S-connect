@@ -25,6 +25,7 @@
 <body>
     <script src="{{ mix('/js/manifest.js') }}"></script>
     <script src="{{ mix('/js/vendor.js') }}"></script>
+
     <div id="app">
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
@@ -144,6 +145,5 @@
     </div>
 
     <script src="{{ mix('/js/app.js') }}"></script>
-
 </body>
 </html>

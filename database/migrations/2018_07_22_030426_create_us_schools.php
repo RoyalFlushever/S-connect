@@ -17,6 +17,7 @@ class CreateUsSchools extends Migration
 			$table->engine = 'InnoDB';
 			$table->increments('id');
 			$table->string('name', 125);
+			$table->integer('level');
 			$table->integer('district_id')->unsigned();
 			$table->timestamps();
 		});

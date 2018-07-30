@@ -21,8 +21,26 @@ class StudentLocalSeeder extends Seeder
                         'created_at' => $now, 'updated_at' => $now ];
                 },
                 [
-                    [ 'id' => 1 , 'username' => 'teststudent1' , 'birthdate' => '2017-04-17' , 'gender_id' => 1 , 'mentor_id' => null ],
-                    [ 'id' => 2 , 'username' => 'teststudent2' , 'birthdate' => '2017-04-18' , 'gender_id' => 2 , 'mentor_id' => 4    ],
+                    [ 'id' => 1 ,  'username' => 'teststudent1' , 'birthdate' => '2000-04-17' , 'gender_id' => 1 , 'mentor_id' => null ],
+                    [ 'id' => 2 ,  'username' => 'teststudent2' , 'birthdate' => '1999-04-18' , 'gender_id' => 2 , 'mentor_id' => 4    ],
+                    [ 'id' => 3 ,  'username' => 'teststudent2' , 'birthdate' => '1998-04-18' , 'gender_id' => 2 , 'mentor_id' => 4    ],
+                    [ 'id' => 4 ,  'username' => 'teststudent2' , 'birthdate' => '1999-04-18' , 'gender_id' => 2 , 'mentor_id' => 4    ],
+                    [ 'id' => 5 ,  'username' => 'teststudent2' , 'birthdate' => '1999-04-18' , 'gender_id' => 2 , 'mentor_id' => 4    ],
+                    [ 'id' => 6 ,  'username' => 'teststudent2' , 'birthdate' => '1995-04-18' , 'gender_id' => 2 , 'mentor_id' => 4    ],
+                    [ 'id' => 7 ,  'username' => 'teststudent2' , 'birthdate' => '1999-04-18' , 'gender_id' => 2 , 'mentor_id' => 4    ],
+                    [ 'id' => 8 ,  'username' => 'teststudent2' , 'birthdate' => '1999-04-18' , 'gender_id' => 1 , 'mentor_id' => 4    ],
+                    [ 'id' => 9 ,  'username' => 'teststudent2' , 'birthdate' => '2001-04-18' , 'gender_id' => 1 , 'mentor_id' => 4    ],
+                    [ 'id' => 19 , 'username' => 'teststudent2' , 'birthdate' => '1999-04-18' , 'gender_id' => 2 , 'mentor_id' => null ],
+                    [ 'id' => 11 , 'username' => 'teststudent2' , 'birthdate' => '1999-04-18' , 'gender_id' => 2 , 'mentor_id' => 4    ],
+                    [ 'id' => 12 , 'username' => 'teststudent2' , 'birthdate' => '1999-04-18' , 'gender_id' => 2 , 'mentor_id' => 4    ],
+                    [ 'id' => 13 , 'username' => 'teststudent2' , 'birthdate' => '2003-04-18' , 'gender_id' => 2 , 'mentor_id' => 4    ],
+                    [ 'id' => 14 , 'username' => 'teststudent2' , 'birthdate' => '1995-04-18' , 'gender_id' => 2 , 'mentor_id' => 4    ],
+                    [ 'id' => 15 , 'username' => 'teststudent2' , 'birthdate' => '1999-04-18' , 'gender_id' => 2 , 'mentor_id' => null ],
+                    [ 'id' => 16 , 'username' => 'teststudent2' , 'birthdate' => '1995-04-18' , 'gender_id' => 2 , 'mentor_id' => 4    ],
+                    [ 'id' => 17 , 'username' => 'teststudent2' , 'birthdate' => '1999-04-18' , 'gender_id' => 2 , 'mentor_id' => 4    ],
+                    [ 'id' => 18 , 'username' => 'teststudent2' , 'birthdate' => '1993-04-18' , 'gender_id' => 2 , 'mentor_id' => 4    ],
+                    [ 'id' => 19 , 'username' => 'teststudent2' , 'birthdate' => '1994-04-18' , 'gender_id' => 2 , 'mentor_id' => 4    ],
+                    [ 'id' => 20 , 'username' => 'teststudent2' , 'birthdate' => '1999-04-18' , 'gender_id' => 2 , 'mentor_id' => 4    ],
                 ]
             )
         );

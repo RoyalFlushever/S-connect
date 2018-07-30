@@ -2,57 +2,38 @@
 <div class="container">
     <div class="row" style="margin-bottom: 80px;">
         <div class="pull-left home-icon">
-            <span class="round-tab">		<a href="/home">		<i class="fa fa-home fa-2x" aria-hidden="true"></i>		<br>		Home		</a>		</span>
+            <span class="round-tab">
+                <a href="/home"><i class="fa fa-home fa-2x" aria-hidden="true"></i><br>Home</a>
+            </span>
         </div>
         <div class="pull-right help">
-            <span class="round-tab"><i class="fa fa-question-circle fa-2x"></i> <br> Help</span>
+            <span class="round-tab"><i class="fa fa-question-circle fa-2x"></i><br>Help</span>
         </div>
     </div>
     <div class="filter">
-        <form action="">
-            <div class="row">
-                <template v-if="role == 2">
-                    <div class="form-group col-xs-2 text-center">
-                        <label for="school_level">School Level</label>
-                        <select name="school level" id="school_level" class="form-control">
-                            <option value="" selected disabled>Select</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-xs-2 col-xs-offset-1 text-center">
-                        <label for="school_name">School Name</label>
-                        <select name="school name" id="school_name" class="form-control">
-                            <option value="" selected disabled>Select</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-xs-2 col-xs-offset-1 text-center">
-                        <label for="mentor">Mentor</label>
-                        <select name="mentor" id="mentor" class="form-control">]
-                            <option value="" selected disabled>Select</option>
-                        </select>
-                    </div>
-                </template>
-                <template v-else-if="role == 3">
-                    <div class="form-group col-xs-2 col-xs-offset-5 text-center">
-                        <label for="mentor">Mentor</label>
-                        <select name="mentor" id="mentor" class="form-control">
-                            <option value="" selected disabled>Select</option>
-                        </select>
-                    </div>
-                </template>
-                <template v-else>
-                    <div class="pull-right">
-                        <a href="/students/create" class="btn btn-lg btn-cta pull-left">Add New Student</a>
-                        <input type="text" placeholder="Search Students ...">
-                    </div>
-                </template>
-                <template v-if="role != 4">
-                    <div class="form-group col-xs-2 text-center">
-                        <a href="#" class="btn btn-large btn-blue">View Students</a>
-                    </div>
-                </template>
-            </div>
-
-        </form>
+        <div class="row">
+            <template>
+                <div v-if="role == 2" class="form-group col-xs-2 text-center">
+                    <select name="school level" id="school_level" v-model="filter.level" class="form-control">
+                        <option value="0" selected disabled>School Level</option>
+                        <option v-for="level in levels" :value="level.id" :key="level.id">{{level.name}}</option>
+                    </select>
+                </div>
+                <div  v-if="role == 2" class="form-group col-xs-2 text-center">
+                    <select name="school name" id="school_name" class="form-control">
+                        <option value="" selected disabled>School Name</option>
+                    </select>
+                </div>
+                <div v-if="role == 2 || role == 3" class="form-group col-xs-2 text-center">
+                    <select name="mentor" id="mentor" class="form-control">]
+                        <option value="" selected disabled>Mentor</option>
+                    </select>
+                </div>
+                <div class="form-group col-xs-2 text-center">
+                    <input type="text" placeholder="Search Students ...">
+                </div>
+            </template>
+        </div>
     </div>
     <div class="table-responsive">
         <table class="table table-hover my-students">
@@ -66,23 +47,30 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(student, key) in students" :key="student.id">
-                    <td>{{key + 1}}</td>
+                <tr v-for="(student, key) in students.data" :key="student.id">
+                    <td>{{no(key)}}</td>
                     <td>{{student.first_name}}</td>
                     <td>{{student.last_name}}</td>
-                    <td>{{age}}</td>
+                    <td>{{getAge(student.birthdate)}}</td>
                     <td class="actions text-center">
                         <a href="#" class="btn btn-large btn-cta">Edit</a>
                         <a href="#" class="btn btn-large btn-blue">View Chart</a>
-                        <a href="/transfer" class="btn btn-large btn-yellow">Transfer</a>
+                        <a  class="btn btn-large btn-yellow" @click="goTransfer(student.id)">Transfer</a>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
+    
+    <pagination :data="students" @pagination-change-page="updateList">
+        <span slot="prev-nav">&lt; Previous</span>
+        <span slot="next-nav">Next &gt;</span>
+    </pagination>
+
     <div v-if="role != 4" class="text-center">
         <a href="#" class="btn btn-lg btn-cta" @click="createModal = true">Add New Student</a>
     </div>
+
     <create-modal v-if="createModal" @close="createModal = false">
         <h1 slot="header" class="text-center">Add/Edit Student</h1>
     </create-modal>
@@ -93,34 +81,66 @@
 import CreateModal from "./CreateModal.vue";
 import Axios from "axios";
 
+Vue.component('pagination', require('laravel-vue-pagination'));
+
 export default {
     data: function () {
         return {
             createModal: false,
 
             role: 2,
-            students: [],
+            students: {},
+            levels: [],
+
+            filter: {
+                level: 0,
+                schoolId: 0,
+                mentoId: 0,
+
+                page: 1,
+                rowCount: 4,
+            }
 
         };
     },
     created() {
-        Axios.get("/my-students/get-list").then(response => {
-            this.students = response.data.students;
+        Axios.get('/my-students/get-levels').then(response => {
+            this.levels = response.data;
         });
+        this.updateList();
     },
-    computed: {
-        age: function () {
-            console.log(this)
-            let age = '1'
-            // var today = new Date();
-            // var birthDate = new Date(this.birthDate);
-            // var age = today.getFullYear() - birthDate.getFullYear();
-            // var m = today.getMonth() - birthDate.getMonth();
-            // if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-            //     age--;
-            // }
+    mounted: function() {
+    },
+    methods: {
+        getAge: function (birthdate) {
+            let today = new Date();
+            let birthDate = new Date(birthdate);
+            let age = today.getFullYear() - birthDate.getFullYear();
+            let m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
             return age;
         },
+        goTransfer: function (studentId) {
+            console.log(studentId);
+            let form = document.createElement("form");
+            form.method = 'post';
+            form.action = '/transfer';
+            $("<input />").attr('type', 'hidden')
+                .attr('name', "something")
+                .attr('value', "something")
+                .appendTo(form);
+        },
+        updateList: function (pgNum = 1) {
+            this.filter.page = pgNum;
+            Axios.post("/my-students/get-list", this.filter).then(response => {
+                this.students = response.data;
+            });
+        },
+        no: function (rowNum) {
+            return this.filter.rowCount * (this.filter.page - 1) + rowNum + 1;
+        }
     },
 };
 </script>

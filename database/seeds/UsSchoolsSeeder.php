@@ -90,11 +90,65 @@ class UsSchoolsSeeder extends Seeder
                 $states[$stateAbbr]->counties[$county]->districts[$district]->schools[$school] = new stdClass;
                 $states[$stateAbbr]->counties[$county]->districts[$district]->schools[$school]->id = $schoolCount;
                 $states[$stateAbbr]->counties[$county]->districts[$district]->schools[$school]->name = $school;
+
+                $LowestGrade = mb_strtolower(explode(' ', trim($items[22]))[0]);
+                $HighestGrade = mb_strtolower(explode(' ', trim($items[23]))[0]);
+
+                $level = 0;
+                $lowStart = false;
+                switch ($LowestGrade) {
+                    case '':
+                    case 'all':
+                    case 'kindergarten':
+                    case 'prekindergarten':
+                    case 'ungraded':
+                    case 'transitional':
+                    case '1st':
+                    case '2nd':
+                    case '3rd':
+                    case '4th':
+                    case '5th':
+                    case '6th':
+                        $lowStart = true;
+                        break;
+                }
+                $highEnd = false;
+                switch ($HighestGrade) {
+                    case '':
+                    case 'all':
+                    case 'ungraded':
+                    case '7th':
+                    case '8th':
+                    case '9th':
+                    case '10th':
+                    case '11th':
+                    case '12th':
+                    case '13th':
+                        $highEnd = true;
+                        break;
+                }
+                if($lowStart) {
+                    if($highEnd) {
+                        $level = 3; // combined
+                    } else {
+                        $level = 1; // elementary
+                    }
+                } else {
+                    if($highEnd) {
+                        $level = 2; // secondary
+                    } else {
+                        $level = 0; //error
+                        echo $lnum.":".$LowestGrade.", ".$HighestGrade."\n";
+                    }
+                }
             }
+            // if($lnum % 1500 == 0) echo $lnum."(Level:".$level."):".trim($items[22])." ~ ".trim($items[23])."\n";
+            $states[$stateAbbr]->counties[$county]->districts[$district]->schools[$school]->level = $level;
 
             $lineCount++;
         }
 
+        DB::table('us_schools')->truncate();
 
         /**
          * make counties table
@@ -108,7 +162,10 @@ class UsSchoolsSeeder extends Seeder
                     foreach ($district->schools as $school) {
                         $cc++;
                         $now = Carbon::now();
-                        array_push($rows, [ 'id' => $school->id, 'name' => $school->name, 'district_id' => $district->id, 'created_at' => $now, 'updated_at' => $now ]);
+                        array_push($rows, [ 'id' => $school->id, 'name' => $school->name, 'level' => $school->level, 'district_id' => $district->id, 'created_at' => $now, 'updated_at' => $now ]);
+                        if($cc == 1) {
+                            // var_dump($rows);
+                        }
                         if($cc == 10000) {
                             DB::table('us_schools')->insert($rows);
                             $cc = 0;
