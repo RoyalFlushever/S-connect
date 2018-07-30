@@ -64,4 +64,8 @@ class HomeController extends Controller
     public function welcome() {
         return view('welcome');
     }
+
+    public function site_admin(){
+        return view('site-admin');
+    }
 }
