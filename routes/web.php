@@ -25,6 +25,7 @@ Route::get('/tos', 'RegistrationController@tos');
 // See \Illuminate\Routing\Router@auth
 // Authentication Routes...
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::get('get-auth', 'Auth\UserController@getAuth')->middleware('auth');
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 // Password Reset Routes...
@@ -41,7 +42,9 @@ Route::resource('students', 'StudentController', ['only' => [
 ]]);
 Route::get('my-students', 'StudentController@myStudents');
 Route::post('my-students/get-list', 'StudentController@getList');
-Route::get('my-students/get-levels', 'StudentController@getLevels');
+Route::get('my-students/get-filter-levels', 'StudentController@getFilterLevels');
+Route::post('my-students/get-filter-schools', 'StudentController@getFilterSchools');
+Route::post('my-students/get-filter-mentors', 'UserController@mentors');
 
 Route::get('create-students/get-options', 'StudentController@getOptions');
 Route::post('create-students/save-student', 'StudentController@saveStudent');

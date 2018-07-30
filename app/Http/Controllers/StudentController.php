@@ -11,6 +11,7 @@ use App\User;
 use App\Ethnicity;
 use App\Iep;
 use App\SchoolLevel;
+use App\School;
 
 use DB;
 use Illuminate\Http\Request;
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Support\Facades\Log;
 use function GuzzleHttp\json_encode;
+// use Zend\Diactoros\Request;
 
 class StudentController extends Controller
 {
@@ -90,17 +92,31 @@ class StudentController extends Controller
     public function getList(Request $filter)
     {
 
+        $role = (int)Auth::user()->user_role_id;
+
         $query = DB::table('students as s');
         $query->select(
+
             's.id',
             's.first_name',
             's.last_name',
             's.birthdate',
-            's.mentor_id',
-            'u.first_name as mentor_first_name',
-            'u.last_name as mentor_last_name'
+            's.mentor_id'
         );
-        $query->leftjoin('users as u', 's.mentor_id', '=', 'u.id');
+
+        $district_id = Auth::user()->district_id;
+
+        $query->leftjoin('users as u', 's.mentor_id', 'u.id');
+        $query->leftjoin('us_schools as sch', 'u.school_id', 'sch.id');
+        if($district_id != 0) {
+            $query->where('sch.district_id', Auth::user()->district_id);
+        }
+        if($filter->input('level') && $filter->input('level') != 0) {
+            $query->where('sch.level', $filter->input('level'));
+        }
+        if($filter->input('schoolId') && $filter->input('schoolId') != 0) {
+            $query->where('school_id', $filter->input('schoolId'));
+        }
 
         $ret = $query->paginate($filter->input('rowCount'));
         $ret->role = (int)Auth::user()->user_role_id;
@@ -437,14 +453,32 @@ class StudentController extends Controller
     }
 
     /**
-     * Get options for student list
+     * Get levels in student list
      * @return \JSON
      */
-    public function getLevels()
+    public function getFilterLevels()
     {
         $schoolLevels = SchoolLevel::all();
-        return json_encode($schoolLevels);
+        return response()->json($schoolLevels);
     }
+
+    /**
+     * Get schools for level in student list
+     * @param  \Illuminate\Http\Request  $request
+     * @return \JSON
+     */
+    public function getFilterSchools(Request $request)
+    {
+        $schoolQuery = School::query();
+        $schoolQuery->where('district_id', '=', Auth::user()->district_id);
+        if($request->input('level') != 0) {
+            $schoolQuery->where('level', '=', $request->input('level'));
+        }
+        $schools = $schoolQuery->get();
+        return response()->json($schools);
+        // return response()->json(['district_id' => Auth::user()->district_id]);
+    }
+
     /**
      * Get options for student creation
      * @return \JSON

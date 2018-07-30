@@ -55,6 +55,28 @@ class UserController extends Controller
         return view('users.index', [ 'users' => $users, 'stakeholders' => $this->stakeholders->getFilteredList() ]);
     }
 
+    public function mentors(Request $request) {
+
+        $userQuery = User::query();
+        $userQuery->leftjoin('us_schools as sch', 'school_id', 'sch.id');
+
+        $district_id = Auth::user()->district_id;
+
+        $userQuery->where('user_role_id', 4);
+        if($district_id != 0) {
+            $userQuery->where('sch.district_id', $district_id);
+        }
+        if($request->input('level') && $request->input('level') != 0) {
+            $userQuery->where('sch.level', $request->input('level'));
+        }
+        if($request->input('schoolId') && $request->input('schoolId') != 0) {
+            $userQuery->where('school_id', $request->input('schoolId'));
+        }
+
+        $mentors = $userQuery->get();
+        return response()->json($mentors);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
