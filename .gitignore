@@ -21,5 +21,5 @@
 
 # JetBrains project files
 /.idea
-/public
+/public/**
 /package-lock.json

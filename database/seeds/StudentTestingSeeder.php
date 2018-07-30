@@ -17,8 +17,10 @@ class StudentTestingSeeder extends Seeder
             array_map(
                 function($data) {
                     $now = Carbon::now();
-                    return $data + [ 'first_name' => 'Test', 'last_name' => 'Student', 'password' => Hash::make('test'),
-                        'created_at' => $now, 'updated_at' => $now ];
+                    return $data + [ 
+                        'first_name' => 'Test', 'last_name' => 'Student', 'password' => Hash::make('test'),
+                        'created_at' => $now, 'updated_at' => $now 
+                    ];
                 },
                 [
                     [ 'id' => 1 ,  'username' => 'teststudent1'  , 'birthdate' => '2017-04-17' , 'gender_id' => 1 , 'mentor_id' => null ],
