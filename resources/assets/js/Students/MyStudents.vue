@@ -26,13 +26,13 @@
                     </select>
                 </div>
                 <div v-if="auth.user_role_id == 2 || auth.user_role_id == 3" class="form-group col-xs-2 text-center">
-                    <select name="mentor" id="mentor" @change="mentorChange" class="form-control" v-model="filter.mentorId">
+                    <select name="mentor" id="mentor" @change="filterChange" class="form-control" v-model="filter.mentorId">
                         <option v-for="mentor in mentors" :value="mentor.id" :key="mentor.id">{{mentor.last_name}} {{mentor.first_name}}</option>
                         <option value="0">Mentor(No Selected)</option>
                     </select>
                 </div>
                 <div class="form-group col-xs-2 text-center">
-                    <input type="text" placeholder="Search Students ...">
+                    <input type="text" v-model="filter.searchKeyword" @change="filterChange" placeholder="Search Students ...">
                 </div>
             </template>
         </div>
@@ -100,6 +100,7 @@ export default {
                 level: 0,
                 schoolId: 0,
                 mentorId: 0,
+                searchKeyword: "",
 
                 page: 1,
                 rowCount: 4,
@@ -151,7 +152,7 @@ export default {
             Axios.post('/my-students/get-filter-mentors', this.filter).then(response => {
                 this.mentors = response.data;
                 this.filter.mentorId = 0;
-                this.mentorChange();
+                this.filterChange();
             });
         },
         goTransfer: function (studentId) {
@@ -170,8 +171,7 @@ export default {
                 this.students = response.data;
             });
         },
-        mentorChange: function () {
-            console.log(this.filter.page);
+        filterChange: function () {
             this.updateList(this.filter.page);
         },
         no: function (rowNum) {

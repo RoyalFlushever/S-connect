@@ -117,6 +117,12 @@ class StudentController extends Controller
         if($filter->input('schoolId') && $filter->input('schoolId') != 0) {
             $query->where('school_id', $filter->input('schoolId'));
         }
+        if($filter->input('searchKeyword') && $filter->input('searchKeyword') != '') {
+            $query->where(function($query) use ($filter) {
+                $query->where('s.first_name', 'like', '%' . $filter->input('searchKeyword') . '%')
+                    ->orWhere('s.last_name', 'like', '%' . $filter->input('searchKeyword') . '%');
+            });
+        }
 
         $ret = $query->paginate($filter->input('rowCount'));
         $ret->role = (int)Auth::user()->user_role_id;

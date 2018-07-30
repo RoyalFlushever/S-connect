@@ -6972,6 +6972,7 @@ Vue.component('pagination', __webpack_require__(80));
                 level: 0,
                 schoolId: 0,
                 mentorId: 0,
+                searchKeyword: "",
 
                 page: 1,
                 rowCount: 4
@@ -7031,7 +7032,7 @@ Vue.component('pagination', __webpack_require__(80));
             __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/my-students/get-filter-mentors', this.filter).then(function (response) {
                 _this4.mentors = response.data;
                 _this4.filter.mentorId = 0;
-                _this4.mentorChange();
+                _this4.filterChange();
             });
         },
         goTransfer: function goTransfer(studentId) {
@@ -7050,8 +7051,7 @@ Vue.component('pagination', __webpack_require__(80));
                 _this5.students = response.data;
             });
         },
-        mentorChange: function mentorChange() {
-            console.log(this.filter.page);
+        filterChange: function filterChange() {
             this.updateList(this.filter.page);
         },
         no: function no(rowNum) {
@@ -16156,7 +16156,7 @@ var render = function() {
                                     : $$selectedVal[0]
                                 )
                               },
-                              _vm.mentorChange
+                              _vm.filterChange
                             ]
                           }
                         },
@@ -16188,7 +16188,29 @@ var render = function() {
                   )
                 : _vm._e(),
               _vm._v(" "),
-              _vm._m(1)
+              _c("div", { staticClass: "form-group col-xs-2 text-center" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.filter.searchKeyword,
+                      expression: "filter.searchKeyword"
+                    }
+                  ],
+                  attrs: { type: "text", placeholder: "Search Students ..." },
+                  domProps: { value: _vm.filter.searchKeyword },
+                  on: {
+                    change: _vm.filterChange,
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.filter, "searchKeyword", $event.target.value)
+                    }
+                  }
+                })
+              ])
             ]
           ],
           2
@@ -16197,7 +16219,7 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "table-responsive" }, [
         _c("table", { staticClass: "table table-hover my-students" }, [
-          _vm._m(2),
+          _vm._m(1),
           _vm._v(" "),
           _c(
             "tbody",
@@ -16342,16 +16364,6 @@ var staticRenderFns = [
         ])
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group col-xs-2 text-center" }, [
-      _c("input", {
-        attrs: { type: "text", placeholder: "Search Students ..." }
-      })
-    ])
   },
   function() {
     var _vm = this
