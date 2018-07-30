@@ -117,6 +117,9 @@ class StudentController extends Controller
         if($filter->input('schoolId') && $filter->input('schoolId') != 0) {
             $query->where('school_id', $filter->input('schoolId'));
         }
+        if($filter->input('mentorId') && $filter->input('mentorId') != 0) {
+            $query->where('mentor_id', $filter->input('mentorId'));
+        }
         if($filter->input('searchKeyword') && $filter->input('searchKeyword') != '') {
             $query->where(function($query) use ($filter) {
                 $query->where('s.first_name', 'like', '%' . $filter->input('searchKeyword') . '%')
@@ -128,8 +131,6 @@ class StudentController extends Controller
         // if($ret->current_page < $ret->last_page) {
         //     $ret->current_page = $ret->last_page;
         // }
-
-        // Log::debug(var_export($ret, true));
 
         // return response()->json($ret);
         return response()->json($ret);
@@ -219,7 +220,6 @@ class StudentController extends Controller
      */
     public function saveStudent(Request $request)
     {
-        Log::debug(var_export($request->all(), true));
         $this->authorize('create', Student::class);
 
         // TODO: Validate monitoring locations
@@ -324,7 +324,6 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        Log::debug(var_export($request->all(), true));
         $this->authorize('create', Student::class);
 
         // TODO: Validate monitoring locations

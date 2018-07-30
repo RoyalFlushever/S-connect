@@ -32,10 +32,10 @@
 								<div class="action">
 									<div class="personal-info form-group row">
 										<div class="col-xs-6">
-											<input type="text" name="first_name" id="first_name" class="form-control" placeholder="First name" required v-model="studentInfo.first_name">
+											<input type="text" name="student_first_name" id="student_first_name" class="form-control" placeholder="First name" required v-model="studentInfo.first_name">
 										</div>
 										<div class="col-xs-6">
-											<input type="text" name="Last name" id="last_name" class="form-control" placeholder="Last name" required v-model="studentInfo.last_name">
+											<input type="text" name="student_Last name" id="student_last_name" class="form-control" placeholder="Last name" required v-model="studentInfo.last_name">
 										</div>
 									</div>	
 									<div class="personal-info form-group row">
@@ -77,8 +77,8 @@
 									<div class="form-group row">
 										<div class="col-xs-8 col-xs-offset-2">
 											<select name="designateMentor" id="designateMentor" class="form-control" required>
-												<option value="" disabled selected>Designate Mentor</option>
 												<option v-for="mentor in options.availableMentors" :value="mentor.id" :key="mentor.id">{{mentor.last_name}}, {{mentor.first_name}}</option>
+												<option value="0" selected>Designate Mentor(No Selected)</option>
 											</select>
 										</div>
 									</div>
