@@ -26,13 +26,13 @@
                     </select>
                 </div>
                 <div v-if="auth.user_role_id == 2 || auth.user_role_id == 3" class="form-group col-xs-2 text-center">
-                    <select name="mentor" id="mentor" @change="filterChange" class="form-control" v-model="filter.mentorId">
+                    <select name="mentor" id="mentor" @change="reloadPage" class="form-control" v-model="filter.mentorId">
                         <option v-for="mentor in mentors" :value="mentor.id" :key="mentor.id">{{mentor.last_name}} {{mentor.first_name}}</option>
                         <option value="0">Mentor(No Selected)</option>
                     </select>
                 </div>
                 <div class="form-group col-xs-2 text-center">
-                    <input type="text" v-model="filter.searchKeyword" @change="filterChange" placeholder="Search Students ...">
+                    <input type="text" v-model="filter.searchKeyword" @change="reloadPage" placeholder="Search Students ...">
                 </div>
             </template>
         </div>
@@ -55,7 +55,7 @@
                     <td>{{student.last_name}}</td>
                     <td>{{getAge(student.birthdate)}}</td>
                     <td class="actions text-center">
-                        <a href="#" class="btn btn-large btn-cta">Edit</a>
+                        <a href="#" class="btn btn-large btn-cta" @click.prevent="newStudent(student.id)">Edit</a>
                         <a href="#" class="btn btn-large btn-blue">View Chart</a>
                         <a  class="btn btn-large btn-yellow" @click="goTransfer(student.id)">Transfer</a>
                     </td>
@@ -70,10 +70,10 @@
     </pagination>
 
     <div v-if="auth.user_role_id != 4" class="text-center">
-        <a href="#" class="btn btn-lg btn-cta" @click="createModal = true">Add New Student</a>
+        <a href="#" class="btn btn-lg btn-cta" @click="newStudent(0)">Add New Student</a>
     </div>
 
-    <create-modal v-if="createModal" @close="createModal = false">
+    <create-modal v-if="createModal" @close="createModal = false" :student-id="selected_student_id" @submit="editOk">
         <h1 slot="header" class="text-center">Add/Edit Student</h1>
     </create-modal>
 </div>
@@ -89,6 +89,8 @@ export default {
     data: function () {
         return {
             createModal: false,
+            selected_student_id: 0,
+            selected_mentor_id: 0,
 
             auth: {},
             students: {},
@@ -118,9 +120,11 @@ export default {
             }
         });
     },
-    mounted: function() {
-    },
     methods: {
+        newStudent: function(student_id) {
+            this.selected_student_id = student_id;
+            this.createModal = true;
+        },
         getAge: function (birthdate) {
             let today = new Date();
             let birthDate = new Date(birthdate);
@@ -152,7 +156,7 @@ export default {
             Axios.post('/my-students/get-filter-mentors', this.filter).then(response => {
                 this.mentors = response.data;
                 this.filter.mentorId = 0;
-                this.filterChange();
+                this.reloadPage();
             });
         },
         goTransfer: function (studentId) {
@@ -176,11 +180,16 @@ export default {
                     this.students = response.data;
                 });
         },
-        filterChange: function () {
+        reloadPage: function () {
             this.updateList(this.filter.page);
         },
         no: function (rowNum) {
             return this.filter.rowCount * (this.filter.page - 1) + rowNum + 1;
+        },
+        editOk: function () {
+            this.reloadPage();
+            this.selected_student_id = 0;
+            this.createModal = false;
         }
     },
 };

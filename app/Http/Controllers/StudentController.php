@@ -143,7 +143,8 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function transfer() {
+    public function transfer()
+    {
         $students = Student::query()->orderBy('last_name', 'asc')->orderBy('first_name', 'asc')
             ->orderBy('middle_name', 'asc')->orderBy('id', 'asc')->where('mentor_id', '=', Auth::user()->id)->get();
 
@@ -213,6 +214,20 @@ class StudentController extends Controller
     }
 
     /**
+     * get a student info.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getStudent(Request $request)
+    {
+        $student = Student::find($request->input('id'));
+        // $student->birthdate['date'] = $student->birthdate->format('');
+        // Log::debug(var_export($student->birthdate, true));
+        return response()->json($student);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -228,19 +243,26 @@ class StudentController extends Controller
             'first_name' => 'required',
             'last_name'  => 'required',
             'birthdate'  => 'required|date|before_or_equal:today',
-            'username'   => 'bail|required|min:6|regex:/[0-9]+/|regex:/[a-zA-Z]+/|unique:students,username',
-            'password'   => 'required',
-            'gender'     => "required|integer|between:1,2",
+            'username'   => 'bail|required|min:6|regex:/[0-9]+/|regex:/[a-zA-Z]+/|unique:students,username'.($request->input('id') != 0 ? ','.$request->input('id') : ''),
+            'password'   => 'required,'.($request->input('id') != 0 ? ','.$request->input('id') : ''),
+            'gender_id'     => "required|integer|between:1,2",
             'mentor'     => 'nullable|integer'
         ]);
 
         // Password needs to be hashed before storing; date needs to be formatted using ISO 8601 for Carbon database storage
         $attributes = $request->only([ 'first_name', 'middle_name', 'last_name', 'username' ]);
         $attributes['birthdate'] = date('Y-m-d', strtotime($request->input('birthdate')));
-        $attributes['password'] = Hash::make($request->input('password'));
+        if($request->input('password') != '') {
+            $attributes['password'] = Hash::make($request->input('password'));
+        }
 
 
-        $student = new Student($attributes);
+        if($request->input('id') == 0) {
+            $student = new Student($attributes);
+        } else {
+            $student = Student::Find($request->input('id'));
+            $student->fill($attributes);
+        }
 
         // Make the authenticated user the student's mentor (should be set for Mentor users)
         if ($request->input('auto_assign_mentor')) {
@@ -250,7 +272,7 @@ class StudentController extends Controller
             $student->mentor()->associate($request->input('mentor'));
         }
 
-        $student->gender()->associate($request->input('gender'));
+        $student->gender()->associate($request->input('gender_id'));
 
         // TODO: Need to save to get student id
 

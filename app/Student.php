@@ -42,7 +42,7 @@ class Student extends Authenticatable
      * @var array
      */
     protected $dates = [
-        'birthdate',
+        // 'birthdate',
         'created_at',
         'updated_at'
     ];

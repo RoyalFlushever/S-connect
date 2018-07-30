@@ -46,8 +46,9 @@ Route::get('my-students/get-filter-levels', 'StudentController@getFilterLevels')
 Route::post('my-students/get-filter-schools', 'StudentController@getFilterSchools');
 Route::post('my-students/get-filter-mentors', 'UserController@mentors');
 
-Route::get('create-students/get-options', 'StudentController@getOptions');
-Route::post('create-students/save-student', 'StudentController@saveStudent');
+Route::get('create-student/get-options', 'StudentController@getOptions');
+Route::post('create-student/get-student', 'StudentController@getStudent');
+Route::post('create-student/save-student', 'StudentController@saveStudent');
 
 Route::get('transfer', 'StudentController@transfer');
 
