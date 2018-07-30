@@ -169,7 +169,7 @@ export default {
             this.filter.page = pgNum;
             Axios.post("/my-students/get-list", this.filter)
                 .then(response => {
-                    if(response.data.current_page > response.data.last_page) {
+                    if(response.data.last_page != 0 && response.data.current_page > response.data.last_page) {
                         this.updateList(response.data.last_page);
                         return;
                     }
