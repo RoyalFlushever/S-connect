@@ -127,23 +127,43 @@ class StudentController extends Controller
         $query->leftjoin('us_counties as cnt',  'dst.county_id',    'cnt.id' );
         $query->leftjoin('us_states as st',     'cnt.state_id',     'st.id'  );
 
-        if($district_id != 0) {
-            $query->where('sch.district_id', Auth::user()->district_id);
-        }
-        if($filter->input('level') && $filter->input('level') != 0) {
-            $query->where('sch.level', $filter->input('level'));
-        }
-        if($filter->input('schoolId') && $filter->input('schoolId') != 0) {
-            $query->where('s.school_id', $filter->input('schoolId'));
-        }
-        if($filter->input('mentorId') && $filter->input('mentorId') != 0) {
-            $query->where('mentor_id', $filter->input('mentorId'));
-        }
+        if(Auth::user()->user_role_id == 4) {
+
+            $query->where('mentor_id', Auth::user()->id);
+
+        } else {
+
+            if(Auth::user()->user_role_id == 3) {
+
+                $query->where('s.school_id', Auth::user()->school_id);
+
+            } else {
+
+                if($district_id != 0) {
+                    $query->where('sch.district_id', Auth::user()->district_id);
+                }
+                if($filter->input('level') && $filter->input('level') != 0) {
+                    $query->where('sch.level', $filter->input('level'));
+                }
+                if($filter->input('schoolId') && $filter->input('schoolId') != 0) {
+                    $query->where('s.school_id', $filter->input('schoolId'));
+                }
+
+            }
+
+            if($filter->input('mentorId') && $filter->input('mentorId') != 0) {
+                $query->where('mentor_id', $filter->input('mentorId'));
+            }
+
+        } 
+
         if($filter->input('searchKeyword') && $filter->input('searchKeyword') != '') {
+
             $query->where(function($query) use ($filter) {
                 $query->where('s.first_name', 'like', '%' . $filter->input('searchKeyword') . '%')
                     ->orWhere('s.last_name', 'like', '%' . $filter->input('searchKeyword') . '%');
             });
+            
         }
 
         $ret = $query->paginate($filter->input('rowCount'));
@@ -207,8 +227,6 @@ class StudentController extends Controller
     public function getStudent(Request $request)
     {
         $student = Student::find($request->input('id'));
-        // $student->birthdate['date'] = $student->birthdate->format('');
-        // Log::debug(var_export($student->birthdate, true));
         return response()->json($student);
     }
 
@@ -222,21 +240,26 @@ class StudentController extends Controller
     {
         $this->authorize('create', Student::class);
 
-        // TODO: Validate monitoring locations
-
-        $this->validate($request, [
+        $attributes = $request->only([ 'first_name', 'middle_name', 'last_name', 'username', 'school_id' ]);
+        
+        $validate_arr = [
             'first_name' => 'required',
             'last_name'  => 'required',
             'birthdate'  => 'required|date|before_or_equal:today',
             'username'   => 'bail|required|min:6|regex:/[0-9]+/|regex:/[a-zA-Z]+/|unique:students,username'.($request->input('id') != 0 ? ','.$request->input('id') : ''),
             'password'   => 'required'.($request->input('id') != 0 ? ','.$request->input('id') : ''),
-            'gender_id'     => "required|integer|between:1,2",
+            'gender_id'  => "required|integer|between:1,2",
             'mentor'     => 'nullable|integer'
-        ]);
+        ];
 
-        // Password needs to be hashed before storing; date needs to be formatted using ISO 8601 for Carbon database storage
-        $attributes = $request->only([ 'first_name', 'middle_name', 'last_name', 'username' ]);
-        $attributes['school_id'] = Auth::user()->school_id;
+        if(Auth::user()->user_role_id < 3) {
+            $validate_arr['school_id'] = 'required|integer|min:1';
+        } else {
+            $attributes['school_id'] = Auth::user()->school_id;
+        }
+
+        $this->validate($request, $validate_arr);
+
         $attributes['birthdate'] = date('Y-m-d', strtotime($request->input('birthdate')));
         if($request->input('password') != '') {
             $attributes['password'] = Hash::make($request->input('password'));
@@ -531,9 +554,11 @@ class StudentController extends Controller
 
         return json_encode(
             [
+                'userRole'                      => Auth::user()->user_role_id,
                 'ethnicities'                   => $ethnicities,
                 'ieps'                          => $ieps,
                 'availableMentors'              => $availableMentors,
+                'availableSchools'              => School::where('district_id', Auth::user()->district_id)->get(),
                 'monitoringLocationsByCategory' => $monitoringLocationsByCategory,
                 'monitoringLocationNamesById'   => $monitoringLocationNamesById,
                 'citizenshipValuesByType'       => $citizenshipValuesByType,
