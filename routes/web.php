@@ -49,6 +49,7 @@ Route::post('my-students/get-filter-mentors', 'UserController@mentors');
 Route::get('create-student/get-options', 'StudentController@getOptions');
 Route::post('create-student/get-student', 'StudentController@getStudent');
 Route::post('create-student/save-student', 'StudentController@saveStudent');
+Route::post('transfer-student', 'StudentController@transfer');
 
 Route::get('transfer', 'StudentController@transfer');
 
@@ -79,10 +80,10 @@ Route::get('registration', 'RegistrationController@registration');
 Route::get('report', 'ReportController@index');
 
 
-Route::get('states',            'RegistrationController@states');
-Route::post('counties',         'RegistrationController@counties');
-Route::post('districts',        'RegistrationController@districts');
-Route::post('schools',          'RegistrationController@schools');
+Route::get('states',            'LocationController@states');
+Route::post('counties',         'LocationController@counties');
+Route::post('districts',        'LocationController@districts');
+Route::post('schools',          'LocationController@schools');
 
 Route::get('referralSource',    'RegistrationController@referralSource');
 

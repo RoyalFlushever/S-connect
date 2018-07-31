@@ -57,7 +57,7 @@
                     <td class="actions text-center">
                         <a href="#" class="btn btn-large btn-cta" @click.prevent="newStudent(student.id)">Edit</a>
                         <a href="#" class="btn btn-large btn-blue">View Chart</a>
-                        <a  class="btn btn-large btn-yellow" @click="goTransfer(student.id)">Transfer</a>
+                        <a  class="btn btn-large btn-yellow" @click="transfer(student)">Transfer</a>
                     </td>
                 </tr>
             </tbody>
@@ -76,21 +76,31 @@
     <create-modal v-if="createModal" @close="createModal = false" :student-id="selected_student_id" @submit="editOk">
         <h1 slot="header" class="text-center">Add/Edit Student</h1>
     </create-modal>
+    <transfer-modal v-if="transferModal" @close="transferModal = false" :student-info="selected_student" @submit="transferOk">
+        <h1 slot="header" class="text-center">Transfer Student {{selected_student.first_name}} {{selected_student.last_name}}</h1>
+    </transfer-modal>
 </div>
 </template>
 
 <script>
 import CreateModal from "./CreateModal.vue";
+import TransferModal from "./TransferModal.vue";
 import Axios from "axios";
 
 Vue.component('pagination', require('laravel-vue-pagination'));
 
 export default {
+    components: {
+        CreateModal,
+        TransferModal,
+    },
     data: function () {
         return {
             createModal: false,
+            transferModal: false,
             selected_student_id: 0,
             selected_mentor_id: 0,
+            selected_student: {},
 
             auth: {},
             students: {},
@@ -159,15 +169,9 @@ export default {
                 this.reloadPage();
             });
         },
-        goTransfer: function (studentId) {
-            let form = document.createElement("form");
-            form.method = 'post';
-            form.action = '/transfer';
-            $("<input />")
-                .attr('type', 'hidden')
-                .attr('name', "something")
-                .attr('value', "something")
-                .appendTo(form);
+        transfer: function (student) {
+            this.selected_student = student;
+            this.transferModal = true;
         },
         updateList: function (pgNum = 1) {
             this.filter.page = pgNum;
@@ -190,7 +194,12 @@ export default {
             this.reloadPage();
             this.selected_student_id = 0;
             this.createModal = false;
-        }
+        },
+        transferOk: function () {
+            this.reloadPage();
+            this.selected_student_id = 0;
+            this.transferModal = false;
+        },
     },
 };
 </script>

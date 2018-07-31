@@ -99,34 +99,6 @@ class RegistrationController extends Controller
     }
 
     /**
-     * get state list
-     */
-    public function states() {
-        return json_encode(DB::select("select * from us_states order by abbreviation"));
-    }
-    /**
-     * get county list
-     */
-    public function counties(Request $request) {
-        $state_id = $request->input("state_id");
-        return json_encode(DB::select("select * from us_counties where state_id={$state_id} order by name"));
-    }
-    // }
-    /**
-     * get district list
-     */
-    public function districts(Request $request) {
-        $county_id = $request->input("county_id");
-        return json_encode(DB::select("select * from us_districts where county_id={$county_id} order by name"));
-    }
-    /**
-     * get class list
-     */
-    public function schools(Request $request) {
-        $district_id = $request->input("district_id");
-        return json_encode(DB::select("select * from us_schools where district_id={$district_id} order by name"));
-    }
-    /**
      * get referralSource list
      */
     public function referralSource() {

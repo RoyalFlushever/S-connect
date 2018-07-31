@@ -11,4 +11,7 @@ class School extends Model
     // public function SchoolLevel() {
     //     return $this->hasOne('App\SchoolLevel');
     // }
+    public function district() {
+        return $this->hasOne('App\District');
+    }
 }

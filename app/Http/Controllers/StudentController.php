@@ -66,22 +66,28 @@ class StudentController extends Controller
     // Site Facilitator : 3
     // Mentor : 4
 
-    private function getStudentData($param, $isCount)
-    {
-        $query = DB::table('students as s');
-            $query->select(
-                's.id',
-                's.first_name',
-                's.last_name',
-                's.birthdate',
-                's.mentor_id',
-                'u.first_name as mentor_first_name',
-                'u.last_name as mentor_last_name'
-            );
-        $query->leftjoin('users as u', 's.mentor_id', '=', 'u.id');
+    // private function getStudentData($param, $isCount)
+    // {
+    //     $query = DB::table('students as s');
+    //         $query->select(
+    //             's.id',
+    //             's.first_name',
+    //             's.last_name',
+    //             's.birthdate',
+    //             's.mentor_id',
+    //             'u.first_name as mentor_first_name',
+    //             'u.last_name as mentor_last_name'
+    //         );
+    //     $query->leftjoin('users as u', 's.mentor_id', '=', 'u.id');
 
-        return $query->paginate(2);
+    //     return $query->paginate(2);
+    // }
 
+    public function transfer(Request $request) {
+        $student = Student::find($request->input('id'));
+        $student->school_id = $request->input('school_id');
+        $student->mentor_id = null;
+        return response()->json(['result' => $student->save()]);
     }
 
     /**
@@ -101,13 +107,26 @@ class StudentController extends Controller
             's.first_name',
             's.last_name',
             's.birthdate',
-            's.mentor_id'
+            's.mentor_id',
+            'st.id as state_id',
+            'st.name as state_name',
+            'dst.id as district_id',
+            'dst.name as district_name',
+            'cnt.id as county_id',
+            'cnt.name as county_name',
+            'sch.id as school_id',
+            'sch.name as school_name'
+
         );
 
         $district_id = Auth::user()->district_id;
 
-        $query->leftjoin('users as u', 's.mentor_id', 'u.id');
-        $query->leftjoin('us_schools as sch', 'u.school_id', 'sch.id');
+        $query->leftjoin('users as u',          's.mentor_id',      'u.id'   );
+        $query->leftjoin('us_schools as sch',   's.school_id',      'sch.id' );
+        $query->leftjoin('us_districts as dst', 'sch.district_id',  'dst.id' );
+        $query->leftjoin('us_counties as cnt',  'dst.county_id',    'cnt.id' );
+        $query->leftjoin('us_states as st',     'cnt.state_id',     'st.id'  );
+
         if($district_id != 0) {
             $query->where('sch.district_id', Auth::user()->district_id);
         }
@@ -115,7 +134,7 @@ class StudentController extends Controller
             $query->where('sch.level', $filter->input('level'));
         }
         if($filter->input('schoolId') && $filter->input('schoolId') != 0) {
-            $query->where('school_id', $filter->input('schoolId'));
+            $query->where('s.school_id', $filter->input('schoolId'));
         }
         if($filter->input('mentorId') && $filter->input('mentorId') != 0) {
             $query->where('mentor_id', $filter->input('mentorId'));
@@ -135,40 +154,6 @@ class StudentController extends Controller
         // return response()->json($ret);
         return response()->json($ret);
     }
-
-
-
-    /**
-     * Display a list of students being directly mentored by the authenticated user
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function transfer()
-    {
-        $students = Student::query()->orderBy('last_name', 'asc')->orderBy('first_name', 'asc')
-            ->orderBy('middle_name', 'asc')->orderBy('id', 'asc')->where('mentor_id', '=', Auth::user()->id)->get();
-
-        $schools = [
-            'West Middle School',
-            'Left High School',
-            'Right High School',
-            'East Middle School'
-        ];
-        $mentors = [
-            'Dr. Dre',
-            'Dr. Who',
-            'Dr. Lee',
-            'Dr. Young'
-        ];
-
-        // Administrator : 1
-        // Facilitator : 2
-        // Site Facilitator : 3
-        // Mentor : 4
-        $user_role = (int)Auth::user()->user_role_id;
-        return view('students.transfer-students', ['students' => $students, 'role' => $user_role, 'schools' => $schools, 'mentors' => $mentors]);
-    }
-
 
     /**
      * Show the form for creating a new resource.
@@ -244,18 +229,18 @@ class StudentController extends Controller
             'last_name'  => 'required',
             'birthdate'  => 'required|date|before_or_equal:today',
             'username'   => 'bail|required|min:6|regex:/[0-9]+/|regex:/[a-zA-Z]+/|unique:students,username'.($request->input('id') != 0 ? ','.$request->input('id') : ''),
-            'password'   => 'required,'.($request->input('id') != 0 ? ','.$request->input('id') : ''),
+            'password'   => 'required'.($request->input('id') != 0 ? ','.$request->input('id') : ''),
             'gender_id'     => "required|integer|between:1,2",
             'mentor'     => 'nullable|integer'
         ]);
 
         // Password needs to be hashed before storing; date needs to be formatted using ISO 8601 for Carbon database storage
         $attributes = $request->only([ 'first_name', 'middle_name', 'last_name', 'username' ]);
+        $attributes['school_id'] = Auth::user()->school_id;
         $attributes['birthdate'] = date('Y-m-d', strtotime($request->input('birthdate')));
         if($request->input('password') != '') {
             $attributes['password'] = Hash::make($request->input('password'));
         }
-
 
         if($request->input('id') == 0) {
             $student = new Student($attributes);

@@ -140,16 +140,13 @@
 </template>
 
 <script>
-import DatePicker from 'vue2-datepicker'
+// import DatePicker from 'vue2-datepicker'
 import Axios from 'axios';
-import VeeValidate from 'vee-validate';
-
-Vue.use(VeeValidate)
 
 export default {
-    components: {
-        DatePicker
-    },
+    // components: {
+    //     DatePicker
+    // },
     name: "create-modal",
     props: {
         actionurl: {

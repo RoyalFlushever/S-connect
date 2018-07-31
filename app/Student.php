@@ -24,7 +24,7 @@ class Student extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'middle_name', 'last_name', 'username', 'password', 'birthdate'
+        'first_name', 'middle_name', 'last_name', 'username', 'password', 'birthdate', 'school_id'
     ];
 
     /**
@@ -50,6 +50,11 @@ class Student extends Authenticatable
     public function gender()
     {
         return $this->belongsTo('App\Gender');
+    }
+
+    public function school()
+    {
+        return $this->hasOne('App\School');
     }
 
     public function mentor()
