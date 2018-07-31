@@ -5,7 +5,7 @@
             <div class="modal-container create-modal">
                 <div class="modal-header">
                     <slot name="header">
-                        Transfer Student
+                        Transfer Student 
                     </slot>
                 </div>
                 <div class="modal-body">
