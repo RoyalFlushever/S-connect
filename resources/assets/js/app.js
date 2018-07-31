@@ -20,7 +20,7 @@ Vue.component('registration-form', require('./Registration/RegistrationForm.vue'
 Vue.component('v-modal', require('./components/VModal.vue'));
 Vue.component('welcome-form', require('./welcome/WelcomeForm.vue'));
 Vue.component('my-students', require('./students/MyStudents.vue'));
-Vue.component('create-modal', require('./students/CreateModal.vue'));
+// Vue.component('create-modal', require('./students/CreateModal.vue'));
 
 import Toasted from 'vue-toasted';
 import Vuetify from 'vuetify';

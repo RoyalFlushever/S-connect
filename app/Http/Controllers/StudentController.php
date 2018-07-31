@@ -11,6 +11,7 @@ use App\User;
 use App\Ethnicity;
 use App\Iep;
 use App\SchoolLevel;
+use App\School;
 
 use DB;
 use Illuminate\Http\Request;
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Support\Facades\Log;
 use function GuzzleHttp\json_encode;
+// use Zend\Diactoros\Request;
 
 class StudentController extends Controller
 {
@@ -64,22 +66,28 @@ class StudentController extends Controller
     // Site Facilitator : 3
     // Mentor : 4
 
-    private function getStudentData($param, $isCount)
-    {
-        $query = DB::table('students as s');
-            $query->select(
-                's.id',
-                's.first_name',
-                's.last_name',
-                's.birthdate',
-                's.mentor_id',
-                'u.first_name as mentor_first_name',
-                'u.last_name as mentor_last_name'
-            );
-        $query->leftjoin('users as u', 's.mentor_id', '=', 'u.id');
+    // private function getStudentData($param, $isCount)
+    // {
+    //     $query = DB::table('students as s');
+    //         $query->select(
+    //             's.id',
+    //             's.first_name',
+    //             's.last_name',
+    //             's.birthdate',
+    //             's.mentor_id',
+    //             'u.first_name as mentor_first_name',
+    //             'u.last_name as mentor_last_name'
+    //         );
+    //     $query->leftjoin('users as u', 's.mentor_id', '=', 'u.id');
 
-        return $query->paginate(2);
+    //     return $query->paginate(2);
+    // }
 
+    public function transfer(Request $request) {
+        $student = Student::find($request->input('id'));
+        $student->school_id = $request->input('school_id');
+        $student->mentor_id = null;
+        return response()->json(['result' => $student->save()]);
     }
 
     /**
@@ -90,56 +98,62 @@ class StudentController extends Controller
     public function getList(Request $filter)
     {
 
+        $role = (int)Auth::user()->user_role_id;
+
         $query = DB::table('students as s');
         $query->select(
+
             's.id',
             's.first_name',
             's.last_name',
             's.birthdate',
             's.mentor_id',
-            'u.first_name as mentor_first_name',
-            'u.last_name as mentor_last_name'
+            'st.id as state_id',
+            'st.name as state_name',
+            'dst.id as district_id',
+            'dst.name as district_name',
+            'cnt.id as county_id',
+            'cnt.name as county_name',
+            'sch.id as school_id',
+            'sch.name as school_name'
+
         );
-        $query->leftjoin('users as u', 's.mentor_id', '=', 'u.id');
+
+        $district_id = Auth::user()->district_id;
+
+        $query->leftjoin('users as u',          's.mentor_id',      'u.id'   );
+        $query->leftjoin('us_schools as sch',   's.school_id',      'sch.id' );
+        $query->leftjoin('us_districts as dst', 'sch.district_id',  'dst.id' );
+        $query->leftjoin('us_counties as cnt',  'dst.county_id',    'cnt.id' );
+        $query->leftjoin('us_states as st',     'cnt.state_id',     'st.id'  );
+
+        if($district_id != 0) {
+            $query->where('sch.district_id', Auth::user()->district_id);
+        }
+        if($filter->input('level') && $filter->input('level') != 0) {
+            $query->where('sch.level', $filter->input('level'));
+        }
+        if($filter->input('schoolId') && $filter->input('schoolId') != 0) {
+            $query->where('s.school_id', $filter->input('schoolId'));
+        }
+        if($filter->input('mentorId') && $filter->input('mentorId') != 0) {
+            $query->where('mentor_id', $filter->input('mentorId'));
+        }
+        if($filter->input('searchKeyword') && $filter->input('searchKeyword') != '') {
+            $query->where(function($query) use ($filter) {
+                $query->where('s.first_name', 'like', '%' . $filter->input('searchKeyword') . '%')
+                    ->orWhere('s.last_name', 'like', '%' . $filter->input('searchKeyword') . '%');
+            });
+        }
 
         $ret = $query->paginate($filter->input('rowCount'));
-        $ret->role = (int)Auth::user()->user_role_id;
+        // if($ret->current_page < $ret->last_page) {
+        //     $ret->current_page = $ret->last_page;
+        // }
 
+        // return response()->json($ret);
         return response()->json($ret);
     }
-
-
-
-    /**
-     * Display a list of students being directly mentored by the authenticated user
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function transfer() {
-        $students = Student::query()->orderBy('last_name', 'asc')->orderBy('first_name', 'asc')
-            ->orderBy('middle_name', 'asc')->orderBy('id', 'asc')->where('mentor_id', '=', Auth::user()->id)->get();
-
-        $schools = [
-            'West Middle School',
-            'Left High School',
-            'Right High School',
-            'East Middle School'
-        ];
-        $mentors = [
-            'Dr. Dre',
-            'Dr. Who',
-            'Dr. Lee',
-            'Dr. Young'
-        ];
-
-        // Administrator : 1
-        // Facilitator : 2
-        // Site Facilitator : 3
-        // Mentor : 4
-        $user_role = (int)Auth::user()->user_role_id;
-        return view('students.transfer-students', ['students' => $students, 'role' => $user_role, 'schools' => $schools, 'mentors' => $mentors]);
-    }
-
 
     /**
      * Show the form for creating a new resource.
@@ -185,6 +199,20 @@ class StudentController extends Controller
     }
 
     /**
+     * get a student info.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getStudent(Request $request)
+    {
+        $student = Student::find($request->input('id'));
+        // $student->birthdate['date'] = $student->birthdate->format('');
+        // Log::debug(var_export($student->birthdate, true));
+        return response()->json($student);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -192,7 +220,6 @@ class StudentController extends Controller
      */
     public function saveStudent(Request $request)
     {
-        Log::debug(var_export($request->all(), true));
         $this->authorize('create', Student::class);
 
         // TODO: Validate monitoring locations
@@ -201,19 +228,26 @@ class StudentController extends Controller
             'first_name' => 'required',
             'last_name'  => 'required',
             'birthdate'  => 'required|date|before_or_equal:today',
-            'username'   => 'bail|required|min:6|regex:/[0-9]+/|regex:/[a-zA-Z]+/|unique:students,username',
-            'password'   => 'required',
-            'gender'     => "required|integer|between:1,2",
+            'username'   => 'bail|required|min:6|regex:/[0-9]+/|regex:/[a-zA-Z]+/|unique:students,username'.($request->input('id') != 0 ? ','.$request->input('id') : ''),
+            'password'   => 'required'.($request->input('id') != 0 ? ','.$request->input('id') : ''),
+            'gender_id'     => "required|integer|between:1,2",
             'mentor'     => 'nullable|integer'
         ]);
 
         // Password needs to be hashed before storing; date needs to be formatted using ISO 8601 for Carbon database storage
         $attributes = $request->only([ 'first_name', 'middle_name', 'last_name', 'username' ]);
+        $attributes['school_id'] = Auth::user()->school_id;
         $attributes['birthdate'] = date('Y-m-d', strtotime($request->input('birthdate')));
-        $attributes['password'] = Hash::make($request->input('password'));
+        if($request->input('password') != '') {
+            $attributes['password'] = Hash::make($request->input('password'));
+        }
 
-
-        $student = new Student($attributes);
+        if($request->input('id') == 0) {
+            $student = new Student($attributes);
+        } else {
+            $student = Student::Find($request->input('id'));
+            $student->fill($attributes);
+        }
 
         // Make the authenticated user the student's mentor (should be set for Mentor users)
         if ($request->input('auto_assign_mentor')) {
@@ -223,7 +257,7 @@ class StudentController extends Controller
             $student->mentor()->associate($request->input('mentor'));
         }
 
-        $student->gender()->associate($request->input('gender'));
+        $student->gender()->associate($request->input('gender_id'));
 
         // TODO: Need to save to get student id
 
@@ -297,7 +331,6 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        Log::debug(var_export($request->all(), true));
         $this->authorize('create', Student::class);
 
         // TODO: Validate monitoring locations
@@ -437,14 +470,32 @@ class StudentController extends Controller
     }
 
     /**
-     * Get options for student list
+     * Get levels in student list
      * @return \JSON
      */
-    public function getLevels()
+    public function getFilterLevels()
     {
         $schoolLevels = SchoolLevel::all();
-        return json_encode($schoolLevels);
+        return response()->json($schoolLevels);
     }
+
+    /**
+     * Get schools for level in student list
+     * @param  \Illuminate\Http\Request  $request
+     * @return \JSON
+     */
+    public function getFilterSchools(Request $request)
+    {
+        $schoolQuery = School::query();
+        $schoolQuery->where('district_id', '=', Auth::user()->district_id);
+        if($request->input('level') != 0) {
+            $schoolQuery->where('level', '=', $request->input('level'));
+        }
+        $schools = $schoolQuery->get();
+        return response()->json($schools);
+        // return response()->json(['district_id' => Auth::user()->district_id]);
+    }
+
     /**
      * Get options for student creation
      * @return \JSON

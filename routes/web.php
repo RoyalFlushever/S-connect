@@ -25,6 +25,7 @@ Route::get('/tos', 'RegistrationController@tos');
 // See \Illuminate\Routing\Router@auth
 // Authentication Routes...
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::get('get-auth', 'Auth\UserController@getAuth')->middleware('auth');
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 // Password Reset Routes...
@@ -41,10 +42,14 @@ Route::resource('students', 'StudentController', ['only' => [
 ]]);
 Route::get('my-students', 'StudentController@myStudents');
 Route::post('my-students/get-list', 'StudentController@getList');
-Route::get('my-students/get-levels', 'StudentController@getLevels');
+Route::get('my-students/get-filter-levels', 'StudentController@getFilterLevels');
+Route::post('my-students/get-filter-schools', 'StudentController@getFilterSchools');
+Route::post('my-students/get-filter-mentors', 'UserController@mentors');
 
-Route::get('create-students/get-options', 'StudentController@getOptions');
-Route::post('create-students/save-student', 'StudentController@saveStudent');
+Route::get('create-student/get-options', 'StudentController@getOptions');
+Route::post('create-student/get-student', 'StudentController@getStudent');
+Route::post('create-student/save-student', 'StudentController@saveStudent');
+Route::post('transfer-student', 'StudentController@transfer');
 
 Route::get('transfer', 'StudentController@transfer');
 
@@ -75,10 +80,10 @@ Route::get('registration', 'RegistrationController@registration');
 Route::get('report', 'ReportController@index');
 
 
-Route::get('states',            'RegistrationController@states');
-Route::post('counties',         'RegistrationController@counties');
-Route::post('districts',        'RegistrationController@districts');
-Route::post('schools',          'RegistrationController@schools');
+Route::get('states',            'LocationController@states');
+Route::post('counties',         'LocationController@counties');
+Route::post('districts',        'LocationController@districts');
+Route::post('schools',          'LocationController@schools');
 
 Route::get('referralSource',    'RegistrationController@referralSource');
 
