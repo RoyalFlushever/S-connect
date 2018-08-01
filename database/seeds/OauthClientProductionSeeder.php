@@ -3,7 +3,7 @@
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
-class OauthClientLocalSeeder extends Seeder
+class OauthClientProductionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
