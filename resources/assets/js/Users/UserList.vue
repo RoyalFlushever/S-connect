@@ -55,7 +55,7 @@
 
 
     <create-modal v-if="createModal" :auth="auth" @close="createModal = false" @submit="onCreate">
-        <h1 slot="header" class="text-center">Add New</h1>
+        <h1 slot="header" class="text-center">Add New User</h1>
     </create-modal>
 
     <edit-modal v-if="editModal" @close="editModal = false" :auth="auth" :user="selected_user" @submit="onEditSave">
