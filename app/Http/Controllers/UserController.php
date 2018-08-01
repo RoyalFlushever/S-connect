@@ -6,11 +6,14 @@ use App\Stakeholder;
 use App\Student;
 use App\User;
 use App\UserRole;
+use App\District;
+use App\County;
 use App\Repositories\StakeholderRepository;
 
 use DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -54,6 +57,14 @@ class UserController extends Controller
         if ($user->user_role_id > 1) {
             $userQuery->where('user_role_id', '>', $user->user_role_id);
         }
+        if($filter->input('searchKeyword') && $filter->input('searchKeyword') != '') {
+
+            $userQuery->where(function($query) use ($filter) {
+                $query->where('first_name', 'like', '%' . $filter->input('searchKeyword') . '%')
+                    ->orWhere('last_name', 'like', '%' . $filter->input('searchKeyword') . '%');
+            });
+            
+        }
         $users = $userQuery
             ->orderBy('last_name', 'asc')
             ->orderBy('first_name', 'asc')
@@ -63,6 +74,21 @@ class UserController extends Controller
             ->paginate($filter->input('rowCount'));
         
         return response()->json($users);
+    }
+
+    public function getLocation(Request $request) {
+        $userInfo = $request->all();
+        $user_role_id = $userInfo['user_role_id'];
+        if($user_role_id < 3) {
+            $userInfo['school_id']      = 0;
+            $userInfo['district_id']    = 0;
+            $userInfo['county_id']      = 0;
+            $userInfo['state_id']       = 0;
+        } else {
+            $userInfo['county_id']  = District::find($userInfo['district_id'])->county->id;
+            $userInfo['state_id']   = County::find($userInfo['county_id'])->state->id;
+        }
+        return response()->json($userInfo);
     }
 
     public function getUserRoles() {
@@ -137,7 +163,7 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created and edited resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -152,42 +178,50 @@ class UserController extends Controller
         $this->validate($request, [
             'first_name' => 'required',
             'last_name'  => 'required',
-            'email'      => 'bail|required|email|unique:users,email',
+            'email'      => 'bail|required|email|unique:users,email'.($request->input('id') != 0 ? ','.$request->input('id') : ''),
             'password'   => 'required',
-            'user_role'  => "required|integer|between:$minUserRoleId,4",
+            'user_role_id'  => "required|integer|between:$minUserRoleId,4",
             'student-list-assigned' => 'array'
         ]);
 
         // Password needs to be hashed before storing
-        $attributes = $request->only(['first_name', 'middle_name', 'last_name', 'email']);
-        $attributes['password'] = Hash::make($request->input('password'));
+        $attributes = $request->only(['first_name', 'middle_name', 'last_name', 'email', 'is_enabled', 'district_id', 'school_id']);
+        if($request->input('id') == 0 && $request->input('password') != '') {
+            $attributes['password'] = Hash::make($request->input('password'));
+        }
+
+        // $attributes['is_enabled'] = 0;
 
         // Wrap this in a transaction saving separate relationships
-        $newUser = new User($attributes);
-        $newUser->user_role()->associate($request->input('user_role'));
+        if($request->input('id') == 0) {
+            $saveUser = new User($attributes);
+        } else {
+            $saveUser = User::find($request->input('id'));
+            $saveUser->fill($attributes);
+            $saveUser->is_enabled = $attributes['is_enabled'];
+        }
+        $saveUser->user_role()->associate($request->input('user_role_id'));
         DB::beginTransaction();
-        if ($successfulSave = $newUser->save()) {
+        if ($successfulSave = $saveUser->save()) {
             $assignedStudents = $request->input('student-list-assigned');
             if (!empty($assignedStudents)) {
-                // Assign mentor id to newUser->id for all selected students (must not already be assigned a mentor)
+                // Assign mentor id to saveUser->id for all selected students (must not already be assigned a mentor)
                 $numRowsAffected = DB::table('students')
                     ->whereIn('id', $request->input('student-list-assigned'))
                     ->whereNull('mentor_id')
-                    ->update([ 'mentor_id' => $newUser->id, 'updated_at' => Carbon::now() ]);
+                    ->update([ 'mentor_id' => $saveUser->id, 'updated_at' => Carbon::now() ]);
                 $successfulSave = $numRowsAffected === count($assignedStudents);
             }
         }
 
         if ($successfulSave) {
             DB::commit();
-            return redirect()->route('home')->with('status', 'New account created');
+            return response()->json(['result' => 'success']);
         }
         else {
             // Generic failure handling. TODO: Determine if we need to use more detailed troubleshooting messages
             DB::rollBack();
-            return redirect()->action('UserController@create')
-                ->withErrors('User account was not saved. Please try again')
-                ->withInput($request->only(['first_name', 'middle_name', 'last_name', 'email', 'user_role']));
+            return response()->json(['result' => 'User account was not saved. Please try again']);
         }
     }
 

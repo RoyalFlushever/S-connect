@@ -247,7 +247,7 @@ class StudentController extends Controller
             'last_name'  => 'required',
             'birthdate'  => 'required|date|before_or_equal:today',
             'username'   => 'bail|required|min:6|regex:/[0-9]+/|regex:/[a-zA-Z]+/|unique:students,username'.($request->input('id') != 0 ? ','.$request->input('id') : ''),
-            'password'   => 'required'.($request->input('id') != 0 ? ','.$request->input('id') : ''),
+            'password'   => 'required',
             'gender_id'  => "required|integer|between:1,2",
             'mentor'     => 'nullable|integer'
         ];
@@ -261,7 +261,7 @@ class StudentController extends Controller
         $this->validate($request, $validate_arr);
 
         $attributes['birthdate'] = date('Y-m-d', strtotime($request->input('birthdate')));
-        if($request->input('password') != '') {
+        if($request->input('id') == 0 && $request->input('password') != '') {
             $attributes['password'] = Hash::make($request->input('password'));
         }
 
