@@ -117,6 +117,7 @@
 </template>
 
 <script>
+
 import DatePicker from 'vue2-datepicker'
 import Axios from 'axios';
 // import VeeValidate from 'vee-validate';
@@ -268,6 +269,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~vuetify/dist/vuetify.min.css';
 .container {
     width: auto;
 }
