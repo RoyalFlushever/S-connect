@@ -54,6 +54,14 @@ class UserController extends Controller
         if ($user->user_role_id > 1) {
             $userQuery->where('user_role_id', '>', $user->user_role_id);
         }
+        if($filter->input('searchKeyword') && $filter->input('searchKeyword') != '') {
+
+            $userQuery->where(function($query) use ($filter) {
+                $query->where('first_name', 'like', '%' . $filter->input('searchKeyword') . '%')
+                    ->orWhere('last_name', 'like', '%' . $filter->input('searchKeyword') . '%');
+            });
+            
+        }
         $users = $userQuery
             ->orderBy('last_name', 'asc')
             ->orderBy('first_name', 'asc')
@@ -159,7 +167,7 @@ class UserController extends Controller
         ]);
 
         // Password needs to be hashed before storing
-        $attributes = $request->only(['first_name', 'middle_name', 'last_name', 'email']);
+        $attributes = $request->only(['first_name', 'middle_name', 'last_name', 'email', 'district_id', 'school_id']);
         $attributes['password'] = Hash::make($request->input('password'));
 
         // Wrap this in a transaction saving separate relationships
@@ -180,14 +188,12 @@ class UserController extends Controller
 
         if ($successfulSave) {
             DB::commit();
-            return redirect()->route('home')->with('status', 'New account created');
+            return response()->json(['result' => 'success']);
         }
         else {
             // Generic failure handling. TODO: Determine if we need to use more detailed troubleshooting messages
             DB::rollBack();
-            return redirect()->action('UserController@create')
-                ->withErrors('User account was not saved. Please try again')
-                ->withInput($request->only(['first_name', 'middle_name', 'last_name', 'email', 'user_role']));
+            return response()->json(['result' => 'User account was not saved. Please try again']);
         }
     }
 

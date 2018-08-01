@@ -123,13 +123,13 @@
                 console.log(pgNum);
                 this.filter.page = pgNum;
                 Axios.post("/users/get-list", this.filter)
-                    .then(response => {
-                        if(response.data.last_page != 0 && response.data.current_page > response.data.last_page) {
-                            this.updateList(response.data.last_page);
-                            return;
-                        }
-                        this.users = response.data;
-                    });
+                .then(response => {
+                    if(response.data.last_page != 0 && response.data.current_page > response.data.last_page) {
+                        this.updateList(response.data.last_page);
+                        return;
+                    }
+                    this.users = response.data;
+                });
             },
             reloadPage: function () {
                 this.updateList(this.filter.page);
