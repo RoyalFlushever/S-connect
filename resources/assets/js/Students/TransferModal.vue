@@ -5,24 +5,24 @@
             <div class="modal-container create-modal">
                 <div class="modal-header">
                     <slot name="header">
-                        Transfer Student
+                        Transfer 
                     </slot>
                 </div>
                 <div class="modal-body">
                     <slot name="body">
-                        <div class="location form-group row-box">
+                        <div class="location form-group row">
                             <span class="col-xs-3">State</span>
                             <span class="col-xs-3">County</span>
                             <span class="col-xs-3">District</span>
                             <span class="col-xs-3">School</span>
                         </div>
-                        <div class="location form-group row-box">
+                        <div class="location form-group row">
                             <span class="col-xs-3">{{studentInfo.state_name}}</span>
                             <span class="col-xs-3">{{studentInfo.county_name}}</span>
                             <span class="col-xs-3">{{studentInfo.district_name}}</span>
                             <span class="col-xs-3">{{studentInfo.school_name}}</span>
                         </div>
-                        <div class="location form-group row-box">
+                        <div class="location form-group row">
                             <div class="col-xs-3">
                                 <select v-model="state_id" class="form-control" autocomplete="address-level1" @change="changeState()">
                                     <option value="0">State(No Selected)</option>
@@ -48,7 +48,7 @@
                                 </select>
                             </div>
                         </div>
-                        <a class="modal-default-button btn btn-cta btn-lightblue" style="width: max-content;" @click="submit">
+                        <a class="modal-default-button btn btn-cta btn-lightblue next" style="width: max-content;" @click="submit">
                             <slot name="action">
                                 Submit
                             </slot>
