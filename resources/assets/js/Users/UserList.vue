@@ -12,13 +12,13 @@
     </div>
     <div class="filter">
         <div class="row">
-            <div class="form-group col-xs-3 text-center">
+            <div class="form-group col-xs-4">
                 <h2>Users</h2>
             </div>
             <div class="form-group col-xs-3 text-center">
-                <a v-if="auth.user_role_id != 4" href="#" class="btn btn-lg btn-cta" @click="editUser(0)">Add New User</a>
+                <a v-if="auth.user_role_id != 4" href="#" class="btn btn-lg btn-cta" @click="addUser">Add New User</a>
             </div>
-            <div class="form-group col-xs-6 text-center">
+            <div class="form-group col-xs-5 text-center">
                 <input type="text" v-model="filter.searchKeyword" @change="reloadPage" placeholder="Search Students ...">
             </div>
         </div>
@@ -54,116 +54,110 @@
     </pagination>
 
 
-    <create-modal v-if="createModal" @close="createModal = false" :student-id="selected_student_id" @submit="editOk">
-        <h1 slot="header" class="text-center">Add/Edit Student</h1>
+    <create-modal v-if="createModal" :auth="auth" @close="createModal = false" @submit="onCreate">
+        <h1 slot="header" class="text-center">Add New</h1>
     </create-modal>
-    <edit-modal v-if="transferModal" @close="transferModal = false" :student-info="selected_student" @submit="transferOk">
-        <h1 slot="header" class="text-center">Transfer Student {{selected_student.first_name}} {{selected_student.last_name}}</h1>
+    <edit-modal v-if="transferModal" @close="transferModal = false" :student-info="selected_user" @submit="onEditSave">
+        <h1 slot="header" class="text-center">Transfer Student {{selected_user.first_name}} {{selected_user.last_name}}</h1>
     </edit-modal>
 </div>
 </template>
 
 <script>
-import CreateModal from "./CreateModal.vue";
-import editModal from "./EditModal.vue";
-import Axios from "axios";
+    import CreateModal from "./CreateModal.vue";
+    import editModal from "./EditModal.vue";
+    import Axios from "axios";
 
-Vue.component('pagination', require('laravel-vue-pagination'));
+    Vue.component('pagination', require('laravel-vue-pagination'));
 
-export default {
-    components: {
-        CreateModal,
-        editModal,
-    },
-    data: function () {
-        return {
-            createModal: false,
-            transferModal: false,
-            selected_student_id: 0,
-            selected_mentor_id: 0,
-            selected_student: {},
+    export default {
+        components: {
+            CreateModal,
+            editModal,
+        },
+        data: function () {
+            return {
+                createModal: false,
+                transferModal: false,
+                selected_student_id: 0,
+                selected_mentor_id: 0,
+                selected_user: {},
 
-            auth: {},
-            users: {},
-            levels: [],
-            schools: [],
-            mentors: [],
+                auth: {},
+                users: {},
+                levels: [],
+                schools: [],
+                mentors: [],
 
-            filter: {
-                level: 0,
-                schoolId: 0,
-                mentorId: 0,
-                searchKeyword: "",
+                filter: {
+                    level: 0,
+                    schoolId: 0,
+                    mentorId: 0,
+                    searchKeyword: "",
 
-                page: 1,
-                rowCount: 4,
-            }
+                    page: 1,
+                    rowCount: 4,
+                }
 
-        };
-    },
-    created() {
-        // Axios.get('/get-auth').then(response => {
-        //     this.auth = response.data;
-        //     switch(this.auth.user_role_id) {
-        //         case 2:
-        //             this.getFilterLevels();
-        //             break;
-        //         case 3:
-        //             this.getFilterMentors();
-        //             break;
-        //         case 4:
-        //             break;
-        //     }
-        // });
-        this.reloadPage();
-    },
-    methods: {
-        editUser: function(student_id) {
-            this.selected_student_id = student_id;
-            if(student_id == 0) {
+            };
+        },
+        created() {
+            Axios.get('/get-auth').then(response => {
+                this.auth = response.data;
+                this.reloadPage();
+            });
+        },
+        methods: {
+            addUser: function() {
                 this.createModal = true;
-            } else {
-                this.editModal = true;
-            }
+            },
+            editUser: function(student_id) {
+                this.selected_student_id = student_id;
+                if(student_id == 0) {
+                    this.createModal = true;
+                } else {
+                    this.editModal = true;
+                }
+            },
+            updateList: function (pgNum = 1) {
+                console.log(pgNum);
+                this.filter.page = pgNum;
+                Axios.post("/users/get-list", this.filter)
+                    .then(response => {
+                        if(response.data.last_page != 0 && response.data.current_page > response.data.last_page) {
+                            this.updateList(response.data.last_page);
+                            return;
+                        }
+                        this.users = response.data;
+                    });
+            },
+            reloadPage: function () {
+                this.updateList(this.filter.page);
+            },
+            no: function (rowNum) {
+                return this.filter.rowCount * (this.filter.page - 1) + rowNum + 1;
+            },
+            onCreate: function () {
+                this.reloadPage();
+                this.selected_student_id = 0;
+                this.createModal = false;
+            },
+            onEditSave: function () {
+                this.reloadPage();
+                this.selected_student_id = 0;
+                this.transferModal = false;
+            },
         },
-        updateList: function (pgNum = 1) {
-            this.filter.page = pgNum;
-            Axios.post("/users/get-list", this.filter)
-                .then(response => {
-                    if(response.data.last_page != 0 && response.data.current_page > response.data.last_page) {
-                        this.updateList(response.data.last_page);
-                        return;
-                    }
-                    this.users = response.data;
-                });
-        },
-        reloadPage: function () {
-            this.updateList(this.filter.page);
-        },
-        no: function (rowNum) {
-            return this.filter.rowCount * (this.filter.page - 1) + rowNum + 1;
-        },
-        editOk: function () {
-            this.reloadPage();
-            this.selected_student_id = 0;
-            this.createModal = false;
-        },
-        transferOk: function () {
-            this.reloadPage();
-            this.selected_student_id = 0;
-            this.transferModal = false;
-        },
-    },
-};
+    };
 </script>
 
 
 <style lang="scss" scoped>
-.row {
-    .form-group {
-        * {
-            margin-top: 20px;
+    .row {
+        .form-group {
+            * {
+                margin-top: 20px;
+            }
         }
     }
-}
 </style>

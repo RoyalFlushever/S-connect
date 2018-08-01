@@ -86,6 +86,7 @@ Route::get('states',            'LocationController@states');
 Route::post('counties',         'LocationController@counties');
 Route::post('districts',        'LocationController@districts');
 Route::post('schools',          'LocationController@schools');
+Route::get('default-location',  'LocationController@defaultLocation');
 
 Route::get('referralSource',    'RegistrationController@referralSource');
 

@@ -12,6 +12,6 @@ class School extends Model
     //     return $this->hasOne('App\SchoolLevel');
     // }
     public function district() {
-        return $this->hasOne('App\District');
+        return $this->belongsTo('App\District');
     }
 }
