@@ -55,7 +55,7 @@
 
 
     <create-modal v-if="createModal" :auth="auth" @close="createModal = false" @submit="onCreate">
-        <h1 slot="header" class="text-center">Add New</h1>
+        <h1 slot="header" class="text-center">Add New User</h1>
     </create-modal>
     <edit-modal v-if="transferModal" @close="transferModal = false" :student-info="selected_user" @submit="onEditSave">
         <h1 slot="header" class="text-center">Transfer Student {{selected_user.first_name}} {{selected_user.last_name}}</h1>

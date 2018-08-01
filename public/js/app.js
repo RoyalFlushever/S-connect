@@ -19155,7 +19155,11 @@ var render = function() {
                   attrs: { slot: "header" },
                   slot: "header"
                 },
+<<<<<<< HEAD
                 [_vm._v("Add New")]
+=======
+                [_vm._v("Add New User")]
+>>>>>>> master
               )
             ]
           )
