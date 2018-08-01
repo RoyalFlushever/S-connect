@@ -11,7 +11,7 @@
 
     @include('layouts.homeheading')
 
-    <div class="panel panel-default">
+    <!-- <div class="panel panel-default">
         <div class="panel-heading">
             <h1 class="panel-title">Dashboard</h1>
         </div>
@@ -28,7 +28,7 @@
             @endforelse
             </div>
         </div>
-    </div>
+    </div> -->
 
     
     @if ($role == 4)
@@ -42,9 +42,12 @@
                     <div>
                         <h3 class="module-title"><a href="/my-students">Manage Students</a></h3>
                         <ul>
-                            <li><a>Add</a></li>
+                            <!-- <li><a>Add</a></li>
                             <li><a>Edit</a></li>
-                            <li><a>View Chart</a></li>
+                            <li><a>View Chart</a></li> -->
+                            <li>Add</li>
+                            <li>Edit</li>
+                            <li>View Chart</li>
                         </ul>
                     </div>
                 </div>
@@ -58,7 +61,7 @@
                 <div class="dashboard-content">
                     <div>
                         <h3 class="module-title">Additional Resources</h3>
-                        <button class="btn btn-cta btn-green">Link to iConnect.Ku.edu</button>
+                        <a class="btn btn-cta btn-green" href="http://iconnect.ku.edu" target="_blank">Link to iConnect.Ku.edu</a>
                     </div>
                 </div>
             </div>
@@ -75,9 +78,12 @@
                         <div>
                             <h3 class="module-title"><a href="/my-students">Manage Students</a></h3>
                             <ul>
-                                <li><a>Add</a></li>
+                                <!-- <li><a>Add</a></li>
                                 <li><a>Edit</a></li>
-                                <li><a>View Chart</a></li>
+                                <li><a>View Chart</a></li> -->
+                                <li>Add</li>
+                                <li>Edit</li>
+                                <li>View Chart</li>
                             </ul>
                         </div>
                     </div>
@@ -90,7 +96,7 @@
                     </div>
                     <div class="dashboard-content">
                         <div>
-                        <h3 class="module-title">Reports</h3>
+                        <h3 class="module-title"><a href="/report">Reports</a></h3>
                         <ul>
                             <li><a href="/reports">Create</a></li>
                             <li><a>View Summary Reports</a></li>
@@ -110,9 +116,12 @@
                         <div>
                         <h3 class="module-title"> <a href="/users">Manage <br>Site Facilitators/Mentors</a></h3>
                         <ul>
-                            <li><a>Add</a></li>
+                            <!-- <li><a>Add</a></li>
                             <li><a>Edit</a></li>
-                            <li><a>De-Activate</a></li>
+                            <li><a>De-Activate</a></li> -->
+                            <li>Add</li>
+                            <li>Edit</li>
+                            <li>De-Activate</li>
                         </ul>
                         </div>
                     </div>
@@ -126,7 +135,7 @@
                     <div class="dashboard-content">
                         <div>
                             <h3 class="module-title">Additional Resources</h3>
-                            <button class="btn btn-cta btn-green">Link to iConnect.Ku.edu</button>
+                            <a class="btn btn-cta btn-green" href="http://iconnect.ku.edu" target="_blank">Link to iConnect.Ku.edu</a>
                         </div>
                     </div>
                 </div>

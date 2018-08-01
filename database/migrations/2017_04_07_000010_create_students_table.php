@@ -23,6 +23,10 @@ class CreateStudentsTable extends Migration
             $table->string('last_name');
             $table->date('birthdate');
             $table->integer('gender_id')->unsigned();
+            $table->integer('school_id')->unsigned()
+                ->references('id')->on('schools')
+                ->onUpdate('cascade')
+                ->onDelete('restrict');;
             $table->integer('mentor_id')->unsigned()->nullable();
             $table->timestamps();
 

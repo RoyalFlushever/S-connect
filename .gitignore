@@ -21,5 +21,6 @@
 
 # JetBrains project files
 /.idea
-/public
 /package-lock.json
+public/js/app.js
+public/js/vendor.js

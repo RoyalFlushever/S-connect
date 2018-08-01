@@ -98,11 +98,11 @@
                                 <li>
                                     <a href="{{ url('/logout') }}" class="btn btn-red logout nav-link"
                                     onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">
+                                    document.getElementById('logout-form1').submit();">
                                     Logout
                                     </a>
                                     
-                                    <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                    <form id="logout-form1" action="{{ url('/logout') }}" method="POST" style="display: none;">
                                         {{ csrf_field() }}
                                     </form>
                                 </li>

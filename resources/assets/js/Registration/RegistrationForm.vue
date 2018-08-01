@@ -408,7 +408,7 @@ export default {
 			location.href = "/login";
 		},
 	},
-  mounted() {
+  created() {
     Axios.get("/states").then(result => {
       this.states = result.data;
     });
