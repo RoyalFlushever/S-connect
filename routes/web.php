@@ -56,6 +56,8 @@ Route::get('transfer', 'StudentController@transfer');
 Route::resource('users', 'UserController', ['only' => [
     'index', 'create', 'store'
 ]]);
+Route::post('users/get-list', 'UserController@getList');
+
 Route::resource('stakeholders', 'StakeholderController', ['only' => [
     'index', 'create', 'store'
 ]]);

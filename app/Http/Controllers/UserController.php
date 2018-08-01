@@ -38,6 +38,13 @@ class UserController extends Controller
         $user = Auth::user();
         $this->authorize('view', $user);
 
+        return view('users.index');
+    }
+
+    public function getList(Request $filter) {
+        $user = Auth::user();
+        $this->authorize('view', $user);
+
         // Determine what list of users I can view
         // Admins can always see all users
         // TODO: when we actually have Schools, add filter based on that. For now, non-admins can vew all users who are
@@ -47,12 +54,14 @@ class UserController extends Controller
             $userQuery->where('user_role_id', '>', $user->user_role_id);
         }
         $users = $userQuery
-            ->select('id', 'first_name', 'middle_name', 'last_name', 'email', 'user_role_id', 'last_login')
-            ->orderBy('last_name', 'asc')->orderBy('first_name', 'asc')->orderBy('middle_name', 'asc')->orderBy('id', 'asc')
+            ->orderBy('last_name', 'asc')
+            ->orderBy('first_name', 'asc')
+            ->orderBy('middle_name', 'asc')
+            ->orderBy('id', 'asc')
             ->with('user_role')
-            ->get();
-
-        return view('users.index', [ 'users' => $users, 'stakeholders' => $this->stakeholders->getFilteredList() ]);
+            ->paginate($filter->input('rowCount'));
+        
+        return response()->json($users);
     }
 
     public function mentors(Request $request) {
