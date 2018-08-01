@@ -55,9 +55,9 @@
                     <td>{{student.last_name}}</td>
                     <td>{{getAge(student.birthdate)}}</td>
                     <td class="actions text-center">
-                        <a href="#" class="btn btn-large btn-cta" @click.prevent="newStudent(student.id)">Edit</a>
+                        <a v-if="auth.user_role_id != 4" href="#" class="btn btn-large btn-cta" @click.prevent="newStudent(student.id)">Edit</a>
                         <a href="#" class="btn btn-large btn-blue">View Chart</a>
-                        <a  class="btn btn-large btn-yellow" @click="transfer(student)">Transfer</a>
+                        <a v-if="auth.user_role_id != 4" class="btn btn-large btn-yellow" @click="transfer(student)">Transfer</a>
                     </td>
                 </tr>
             </tbody>
@@ -69,8 +69,8 @@
         <span slot="next-nav">Next &gt;</span>
     </pagination>
 
-    <div v-if="auth.user_role_id != 4" class="text-center">
-        <a href="#" class="btn btn-lg btn-cta" @click="newStudent(0)">Add New Student</a>
+    <div class="text-center">
+        <a v-if="auth.user_role_id != 4" href="#" class="btn btn-lg btn-cta" @click="newStudent(0)">Add New Student</a>
     </div>
 
     <create-modal v-if="createModal" @close="createModal = false" :student-id="selected_student_id" @submit="editOk">
@@ -123,10 +123,16 @@ export default {
     created() {
         Axios.get('/get-auth').then(response => {
             this.auth = response.data;
-            if(this.auth.user_role_id == 2) {
-                this.getFilterLevels();
-                // this.getFilterSchools();
-                // this.getFilterMentors();
+            switch(this.auth.user_role_id) {
+                case 2:
+                    this.getFilterLevels();
+                    break;
+                case 3:
+                    this.getFilterMentors();
+                    break;
+                case 4:
+                    this.reloadPage();
+                    break;
             }
         });
     },

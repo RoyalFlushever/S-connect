@@ -59,11 +59,19 @@
 											</select>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
+                                    <div v-if="options.userRole < 4" class="form-group row">
                                         <div class="col-xs-8 col-xs-offset-2">
-                                            <select name="designateMentor" id="designateMentor" class="form-control" required>
+                                            <select name="designateMentor" id="designateMentor" class="form-control">
 												<option v-for="mentor in options.availableMentors" :value="mentor.id" :key="mentor.id">{{mentor.last_name}}, {{mentor.first_name}}</option>
 												<option value="0" selected>Designate Mentor(No Selected)</option>
+											</select>
+                                        </div>
+                                    </div>
+                                    <div v-if="options.userRole < 3" class="form-group row">
+                                        <div class="col-xs-8 col-xs-offset-2">
+                                            <select name="school" id="school" class="form-control" required v-model="studentInfo.school_id" min='1'>
+												<option v-for="school in options.availableSchools" :value="school.id" :key="school.id">{{school.name}}</option>
+												<option value="0" selected>School(No Selected)</option>
 											</select>
                                         </div>
                                     </div>
@@ -165,6 +173,7 @@ export default {
 				gender_id: 0,
 				ethnicity: 0,
                 mentor: null,
+                school_id: 0,
 
             },
         };
@@ -183,9 +192,9 @@ export default {
 			error => {
 				for (const key in error.response.data) {
 					this.$toasted.show(error.response.data[key], {
-							theme: "outline",
-							position: "top-center",
-							duration: 3000,
+                        theme: "outline",
+                        position: "top-center",
+                        duration: 3000,
 					});
 				}
 			});
@@ -193,6 +202,14 @@ export default {
         gotoStep2: function (e) {
             if (this.$refs.stepForm1.checkValidity()) {
                 e.preventDefault();
+                if(this.options.userRole < 3 && this.studentInfo.school_id == 0) {
+                    this.$toasted.show("Please select a school", {
+                        theme: "outline",
+                        position: "top-center",
+                        duration: 3000,
+                    });
+                    return;
+                }
                 $(this.$refs.navTab2).tab("show");
             }
         },

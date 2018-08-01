@@ -136,7 +136,7 @@ export default {
             this.loadCounties();
         },
         loadCounties: function() {
-            Axios.post("/counties", { state_id: this.studentInfo.state_id }).then(
+            Axios.post("/counties", { state_id: this.state_id }).then(
                 result => {
                 this.counties = result.data;
                 }
@@ -148,7 +148,7 @@ export default {
             this.loadDistricts();
         },
         loadDistricts: function() {
-            Axios.post("/districts", { county_id: this.studentInfo.county_id }).then(
+            Axios.post("/districts", { county_id: this.county_id }).then(
                 result => {
                 this.districts = result.data;
                 }
@@ -158,8 +158,8 @@ export default {
             this.school_id = 0;
             this.loadSchools();
         },
-        loadSchool: function() {
-            Axios.post("/schools", { district_id: this.studentInfo.district_id }).then(
+        loadSchools: function() {
+            Axios.post("/schools", { district_id: this.district_id }).then(
                 result => {
                 this.schools = result.data;
                 }
@@ -179,7 +179,7 @@ export default {
 
         this.loadCounties();
         this.loadDistricts();
-        this.loadSchool();
+        this.loadSchools();
     },
 };
 </script>
