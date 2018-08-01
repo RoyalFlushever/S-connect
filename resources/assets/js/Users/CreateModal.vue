@@ -18,7 +18,6 @@
 											label="First Name"
 											v-model="userInfo.first_name"
 											:rules="firstNameRules"
-											:counter="10"
 											required
 										></v-text-field>
 									</v-flex>
@@ -27,7 +26,6 @@
 											label="Last Name"
 											v-model="userInfo.last_name"
 											:rules="lastNameRules"
-											:counter="10"
 											required
 										></v-text-field>
 									</v-flex>
@@ -41,9 +39,9 @@
 									</v-flex>
 								</v-layout>
 								<v-layout row wrap>
-									<select v-model="userInfo.user_role" :disabled="auth.user_role_id > 2 || location.district_id==0" name="user_role" id="user_role" class="form-control">
+									<select v-model="userInfo.user_role_id" name="user_role" id="user_role" class="form-control">
 										<option value="0">Choose User Role(No Selected)</option>
-										<option v-for="user_role in user_roles" :key="user_role.id" :value="user_role.id">{{user_role.name}}</option>
+										<option v-for="user_role in user_roles" :key="user_role.id" :value="user_role.id" :disabled="auth.user_role_id != 1 && user_role.id <= auth.user_role_id">{{user_role.name}}</option>
 									</select>
 								</v-layout>
 								<v-layout row wrap>
@@ -105,7 +103,7 @@
 						<!-- <a class="modal-default-button btn btn-red" href="/login" @click="close">		<slot name="close">		OK		</slot>    		</a> -->
 						<a class="modal-default-button btn btn-red" @click="close">
 							<slot name="close">
-								Exit Transfer Student (Does NOT save)
+								Exit Add New User (Does NOT save)
 							</slot>
 						</a>
 					</slot>
@@ -147,11 +145,12 @@ export default {
 			},
 
 			userInfo: {
+				id:0,
 				first_name: '',
 				last_name: '',
 				email: '',
 				password: '',
-				user_role: 0,
+				user_role_id: 0,
 				state_id: 0,
 				county_id: 0,
 				district_id: 0,
@@ -162,11 +161,11 @@ export default {
 			valid: false,
 			firstNameRules: [
 				v => !!v || 'First name is required',
-				v => v.length <= 10 || 'Name must be less than 10 characters'
+				// v => v.length <= 10 || 'Name must be less than 10 characters'
 			],
 			lastNameRules: [
 				v => !!v || 'Last name is required',
-				v => v.length <= 10 || 'Name must be less than 10 characters'
+				// v => v.length <= 10 || 'Name must be less than 10 characters'
 			],
 			emailRules: [
 				v => !!v || 'E-mail is required',

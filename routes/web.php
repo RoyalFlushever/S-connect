@@ -57,6 +57,7 @@ Route::resource('users', 'UserController', ['only' => [
     'index', 'create', 'store'
 ]]);
 Route::post('users/get-list', 'UserController@getList');
+Route::post('users/get-location', 'UserController@getLocation');
 Route::post('users/save', 'UserController@store');
 Route::get('user-roles', 'UserController@getUserRoles');
 

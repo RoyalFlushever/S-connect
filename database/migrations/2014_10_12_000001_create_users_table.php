@@ -27,6 +27,7 @@ class CreateUsersTable extends Migration
             $table->integer('referral_source_id')->unsigned()->default(0);
             $table->rememberToken();
             $table->timestamp('last_login')->nullable();
+            $table->boolean('is_enabled')->default(1);
             $table->timestamps();
 
             $table->foreign('user_role_id')->references('id')->on('user_roles')

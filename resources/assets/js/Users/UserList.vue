@@ -41,7 +41,7 @@
                     <td>{{user.last_name}}</td>
                     <td>{{user.user_role.name}}</td>
                     <td class="actions text-center">
-                        <a v-if="auth.user_role_id != 4" href="#" class="btn btn-large btn-cta" @click.prevent="editUser(student.id)">Edit</a>
+                        <a v-if="auth.user_role_id != 4" href="#" class="btn btn-large btn-cta" @click.prevent="editUser(user)">Edit</a>
                     </td>
                 </tr>
             </tbody>
@@ -57,15 +57,17 @@
     <create-modal v-if="createModal" :auth="auth" @close="createModal = false" @submit="onCreate">
         <h1 slot="header" class="text-center">Add New</h1>
     </create-modal>
-    <edit-modal v-if="transferModal" @close="transferModal = false" :student-info="selected_user" @submit="onEditSave">
-        <h1 slot="header" class="text-center">Transfer Student {{selected_user.first_name}} {{selected_user.last_name}}</h1>
+
+    <edit-modal v-if="editModal" @close="editModal = false" :auth="auth" :user="selected_user" @submit="onEditSave">
+        <h1 slot="header" class="text-center">Editing {{selected_user.first_name}} {{selected_user.last_name}}</h1>
     </edit-modal>
+
 </div>
 </template>
 
 <script>
     import CreateModal from "./CreateModal.vue";
-    import editModal from "./EditModal.vue";
+    import EditModal from "./EditModal.vue";
     import Axios from "axios";
 
     Vue.component('pagination', require('laravel-vue-pagination'));
@@ -73,12 +75,12 @@
     export default {
         components: {
             CreateModal,
-            editModal,
+            EditModal,
         },
         data: function () {
             return {
                 createModal: false,
-                transferModal: false,
+                editModal: false,
                 selected_student_id: 0,
                 selected_mentor_id: 0,
                 selected_user: {},
@@ -111,16 +113,11 @@
             addUser: function() {
                 this.createModal = true;
             },
-            editUser: function(student_id) {
-                this.selected_student_id = student_id;
-                if(student_id == 0) {
-                    this.createModal = true;
-                } else {
-                    this.editModal = true;
-                }
+            editUser: function(user) {
+                this.selected_user = user;
+                this.editModal = true;
             },
             updateList: function (pgNum = 1) {
-                console.log(pgNum);
                 this.filter.page = pgNum;
                 Axios.post("/users/get-list", this.filter)
                 .then(response => {
@@ -139,13 +136,11 @@
             },
             onCreate: function () {
                 this.reloadPage();
-                this.selected_student_id = 0;
                 this.createModal = false;
             },
             onEditSave: function () {
                 this.reloadPage();
-                this.selected_student_id = 0;
-                this.transferModal = false;
+                this.editModal = false;
             },
         },
     };
