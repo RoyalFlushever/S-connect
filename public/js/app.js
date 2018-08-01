@@ -19155,7 +19155,7 @@ var render = function() {
                   attrs: { slot: "header" },
                   slot: "header"
                 },
-                [_vm._v("Add New")]
+                [_vm._v("Add New User")]
               )
             ]
           )
