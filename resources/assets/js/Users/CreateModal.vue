@@ -82,13 +82,21 @@
                                         </select>
                                     </v-flex>
                                 </v-layout>
+                                <v-layout row wrap>
+                                    <select v-model="userInfo.user_role_id" :disabled="auth.user_role_id > 2 || location.district_id==0" name="user_role" id="user_role" class="form-control">
+                                        <option value="0">Choose User Role(No Selected)</option>
+                                        <option v-for="user_role in user_roles" :key="user_role.id" :value="user_role.id">{{user_role.name}}</option>
+                                    </select>
+                                </v-layout>
+                                <v-layout row wrap>
+                                    <a class="modal-default-button btn btn-cta btn-lightblue" style="width: max-content;" @click="submit">
+                                        <slot name="action">
+                                            Submit
+                                        </slot>
+                                    </a>
+                                </v-layout>
                             </v-container>
                         </v-form>
-                        <a class="modal-default-button btn btn-cta btn-lightblue" style="width: max-content;" @click="submit">
-                            <slot name="action">
-                                Submit
-                            </slot>
-                        </a>
                     </slot>
                 </div>
 
@@ -129,6 +137,7 @@ export default {
             counties: [],
             districts: [],
             schools: [],
+            user_roles: [],
             location: {
                 state_id: 0,
                 county_id: 0,
@@ -140,6 +149,11 @@ export default {
                 first_name: '',
                 last_name: '',
                 school_email: '',
+                user_role_id: 0,
+                state_id: 0,
+                county_id: 0,
+                district_id: 0,
+                school_id: 0,
             },
 
 
@@ -238,9 +252,16 @@ export default {
                 }
             );
         },
+        loadUserRoles: function() {
+            Axios.get("/user-roles").then(
+                result => {
+                    this.user_roles = result.data;
+                }
+            );
+        },
     },
     created() {
-
+        this.loadUserRoles();
         this.loadDefaultLocation();
     },
 };

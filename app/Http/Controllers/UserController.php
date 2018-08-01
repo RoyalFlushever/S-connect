@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Stakeholder;
 use App\Student;
 use App\User;
+use App\UserRole;
 use App\Repositories\StakeholderRepository;
 
 use DB;
@@ -62,6 +63,10 @@ class UserController extends Controller
             ->paginate($filter->input('rowCount'));
         
         return response()->json($users);
+    }
+
+    public function getUserRoles() {
+        return response()->json(UserRole::All());
     }
 
     public function mentors(Request $request) {

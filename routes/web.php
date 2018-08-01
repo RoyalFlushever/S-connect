@@ -57,6 +57,7 @@ Route::resource('users', 'UserController', ['only' => [
     'index', 'create', 'store'
 ]]);
 Route::post('users/get-list', 'UserController@getList');
+Route::get('user-roles', 'UserController@getUserRoles');
 
 Route::resource('stakeholders', 'StakeholderController', ['only' => [
     'index', 'create', 'store'
