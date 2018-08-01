@@ -56,6 +56,9 @@ Route::get('transfer', 'StudentController@transfer');
 Route::resource('users', 'UserController', ['only' => [
     'index', 'create', 'store'
 ]]);
+Route::post('users/get-list', 'UserController@getList');
+Route::get('user-roles', 'UserController@getUserRoles');
+
 Route::resource('stakeholders', 'StakeholderController', ['only' => [
     'index', 'create', 'store'
 ]]);
@@ -84,6 +87,7 @@ Route::get('states',            'LocationController@states');
 Route::post('counties',         'LocationController@counties');
 Route::post('districts',        'LocationController@districts');
 Route::post('schools',          'LocationController@schools');
+Route::get('default-location',  'LocationController@defaultLocation');
 
 Route::get('referralSource',    'RegistrationController@referralSource');
 

@@ -4,7 +4,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
-class StakeholderLocalSeeder extends Seeder
+class StakeholderProductionSeeder extends Seeder
 {
     /**
      * Run the database seeds.

@@ -77,7 +77,7 @@
         <h1 slot="header" class="text-center">Add/Edit Student</h1>
     </create-modal>
     <transfer-modal v-if="transferModal" @close="transferModal = false" :student-info="selected_student" @submit="transferOk">
-        <h1 slot="header" class="text-center">Transfer Student {{selected_student.first_name}} {{selected_student.last_name}}</h1>
+        <h1 slot="header" class="text-center">Transfer <span> {{selected_student.first_name}} {{selected_student.last_name}} </span> To</h1>
     </transfer-modal>
 </div>
 </template>

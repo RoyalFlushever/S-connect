@@ -4,7 +4,7 @@ Web application and API
 ## Deployment Guide
 
 ### First-time
-1. composer install --no-dev --optimize-autoloader`
+1. composer install --no-dev --optimize-autoloader
 1. Create the MySQL database. Assign the user all privileges to the database.
 1. Copy `.env.example` to `.env` and update environment variable values
     1. Set the correct environment (e.g. `APP_ENV=staging`).
