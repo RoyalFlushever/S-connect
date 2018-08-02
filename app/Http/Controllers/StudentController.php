@@ -140,7 +140,7 @@ class StudentController extends Controller
             } else {
 
                 if($district_id != 0) {
-                    $query->where('sch.district_id', Auth::user()->district_id);
+                    $query->where('s.district_id', $district_id);
                 }
                 if($filter->input('level') && $filter->input('level') != 0) {
                     $query->where('sch.level', $filter->input('level'));
@@ -253,9 +253,16 @@ class StudentController extends Controller
         ];
 
         if(Auth::user()->user_role_id < 3) {
-            $validate_arr['school_id'] = 'required|integer|min:1';
+            // $validate_arr['school_id'] = 'required|integer|min:1';
+            if(Auth::user()->user_role_id == 2) {
+                $attributes['district_id']  = Auth::user()->district_id;
+            } else {
+                $attributes['district_id']  = 0;
+            }
+            $attributes['school_id']    = 0;
         } else {
-            $attributes['school_id'] = Auth::user()->school_id;
+            $attributes['district_id']  = School::find(Auth::user()->school_id)->district->id;
+            $attributes['school_id']    = Auth::user()->school_id;
         }
 
         $this->validate($request, $validate_arr);
