@@ -37,8 +37,18 @@
                                             <input type="text" class="form-control" placeholder="Midle name (Optional)">
                                         </div>
                                         <div class="col-xs-6">
-                                            <input id="birthdate" name="birthdate" class="form-control" required v-model="studentInfo.birthdate" :defaultViewDate="studentInfo.birthdate" placeholder="Select Birthdate" data-provide="datepicker" data-date-autoclose="true" data-date-disable-touch-keyboard="true" data-date-assume-nearby-year="true"
-                                                data-date-end-date="0d" data-date-today-btn="linked" data-date-format="yyyy-mm-dd" data-date-today-highlight="true">
+                                            <input id="birthdate" name="birthdate" class="form-control" required 
+                                                v-model="studentInfo.birthdate"
+                                                :defaultViewDate="studentInfo.birthdate" 
+                                                placeholder="Select Birthdate" 
+                                                data-provide="datepicker" 
+                                                data-date-autoclose="true" 
+                                                data-date-disable-touch-keyboard="true" 
+                                                data-date-assume-nearby-year="true"
+                                                data-date-end-date="0d" 
+                                                data-date-today-btn="linked" 
+                                                data-date-format="yyyy-mm-dd" 
+                                                data-date-today-highlight="true">
                                         </div>
                                     </div>
                                     <div class="options form-group row">
@@ -179,6 +189,9 @@ export default {
         };
     },
     methods: {
+        selBirthdate: function(event) {
+            console.log(event);
+        },
         close: function () {
             this.$emit("close");
         },
@@ -202,14 +215,14 @@ export default {
         gotoStep2: function (e) {
             if (this.$refs.stepForm1.checkValidity()) {
                 e.preventDefault();
-                if(this.options.userRole < 3 && this.studentInfo.school_id == 0) {
-                    this.$toasted.show("Please select a school", {
-                        theme: "outline",
-                        position: "top-center",
-                        duration: 3000,
-                    });
-                    return;
-                }
+                // if(this.options.userRole < 3 && this.studentInfo.school_id == 0) {
+                //     this.$toasted.show("Please select a school", {
+                //         theme: "outline",
+                //         position: "top-center",
+                //         duration: 3000,
+                //     });
+                //     return;
+                // }
                 $(this.$refs.navTab2).tab("show");
             }
         },
@@ -218,13 +231,6 @@ export default {
         }
     },
     created() {
-        $('#birthdate').datepicker({
-			format: 'yyyy-mm-dd',
-		}).on(
-            'changeDate', () => {
-                this.studentInfo.birthdate = $('#birthdate').val()
-            }
-        )
         Axios.get("/create-student/get-options")
             .then(
                 result => {
@@ -239,6 +245,15 @@ export default {
 					}
                 }
             );
+    },
+    mounted() {
+        $('#birthdate').datepicker({
+			format: 'yyyy-mm-dd',
+		}).on(
+            'changeDate', (e) => {
+                this.studentInfo.birthdate = $('#birthdate').val()
+            }
+        )
     },
 };
 </script>
