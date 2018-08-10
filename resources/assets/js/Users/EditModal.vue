@@ -15,7 +15,7 @@
 								<v-layout row wrap justify-center>
 									<h2 v-if="!userInfo.is_enabled">(Disabled)</h2>
 								</v-layout>
-								<v-layout row wrap>
+								<v-layout row wrap mb-3>
 									<v-flex xs12 sm6 md6>
 										<v-text-field
 											label="First Name"
@@ -33,13 +33,13 @@
 										></v-text-field>
 									</v-flex>
 								</v-layout>
-								<v-layout row wrap>
+								<v-layout row wrap mb-3>
 									<select v-model="userInfo.user_role_id" name="user_role" id="user_role" class="form-control">
 										<option value="0">Choose User Role(No Selected)</option>
 										<option v-for="user_role in user_roles" :key="user_role.id" :value="user_role.id" :disabled="auth.user_role_id != 1 && user_role.id <= auth.user_role_id">{{user_role.name}}</option>
 									</select>
 								</v-layout>
-								<v-layout row wrap>
+								<v-layout row wrap mb-3>
 									<v-flex xs12 sm6 md3>
 										<!-- <v-select 
 											:items="states"
@@ -81,7 +81,7 @@
 										</select>
 									</v-flex>
 								</v-layout>
-								<v-layout row wrap>
+								<v-layout row wrap mb-3>
 									<a class="modal-default-button btn btn-cta" :class="{'btn-red' : userInfo.is_enabled, 'btn-lightblue' : !userInfo.is_enabled}" style="width: max-content;" @click="userInfo.is_enabled=!userInfo.is_enabled">
 											{{userInfo.is_enabled ? 'Disable' : 'Enable'}}
 									</a>

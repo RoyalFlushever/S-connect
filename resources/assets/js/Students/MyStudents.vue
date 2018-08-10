@@ -13,25 +13,25 @@
     <div class="filter">
         <div class="row">
             <template>
-                <div v-if="auth.user_role_id == 2" class="form-group col-xs-2 text-center">
+                <div v-if="auth.user_role_id == 2" class="form-group col-md-2 text-center">
                     <select name="school level" @change="getFilterSchools" id="school_level" v-model="filter.level" class="form-control">
                         <option v-for="level in levels" :value="level.id" :key="level.id">{{level.name}}</option>
                         <option value="0">School Level(No Selected)</option>
                     </select>
                 </div>
-                <div  v-if="auth.user_role_id == 2" class="form-group col-xs-2 text-center">
+                <div  v-if="auth.user_role_id == 2" class="form-group col-md-2 text-center">
                     <select name="school name" @change="getFilterMentors" id="school_name" class="form-control" v-model="filter.schoolId">
                         <option v-for="school in schools" :value="school.id" :key="school.id">{{school.name}}</option>
                         <option value="0">School Name(No Selected)</option>
                     </select>
                 </div>
-                <div v-if="auth.user_role_id == 2 || auth.user_role_id == 3" class="form-group col-xs-2 text-center">
+                <div v-if="auth.user_role_id == 2 || auth.user_role_id == 3" class="form-group col-md-2 text-center">
                     <select name="mentor" id="mentor" @change="reloadPage" class="form-control" v-model="filter.mentorId">
                         <option v-for="mentor in mentors" :value="mentor.id" :key="mentor.id">{{mentor.last_name}} {{mentor.first_name}}</option>
                         <option value="0">Mentor(No Selected)</option>
                     </select>
                 </div>
-                <div class="form-group col-xs-2 text-center">
+                <div class="form-group col-md-2 text-center">
                     <input type="text" v-model="filter.searchKeyword" @change="reloadPage" placeholder="Search Students ...">
                 </div>
             </template>

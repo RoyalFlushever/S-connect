@@ -12,9 +12,33 @@
 //     padding-bottom: 30px;
 // }
 
+.navbar-wrapper {
+    @media screen and (max-width: 1200px) {
+        clear: both !important;
+    }
+
+    @media screen and (max-width: 768px) {
+        
+    }
+}
+
 .navbar-nav {
     margin-left: 100px !important;
     margin-top: 20px;
+
+    @media screen and (max-width: 980px) {
+        margin-left: 0px!important; 
+    }
+}
+
+.welcome-name {
+    margin-top: 0px;
+}
+
+.navbar-right {
+    @media screen and (max-width: 1200px) {
+        margin-bottom: 20px;
+    }
 }
 
 .btn-link {
@@ -31,9 +55,23 @@
     &:hover {
         color: $iconnect-red !important;
     }
+
+    @media screen and (max-width: 768px) {
+        width: 100px;
+        float: left;
+    }
 }
 
 .dropdown-toggle {
     padding: 0px 10px !important;
     margin: 10px !important;
+
+}
+
+    
+.dropdown {
+    @media screen and (max-width: 768px) {
+        width: 140px;
+        float: left;
+    }
 }
