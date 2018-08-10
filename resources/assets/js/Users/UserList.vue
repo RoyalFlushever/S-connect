@@ -12,14 +12,14 @@
     </div>
     <div class="filter">
         <div class="row">
-            <div class="form-group col-xs-4">
-                <h2>Users</h2>
+            <div class="form-group col-md-4">
+                <h2 class="table-title">Users</h2>
             </div>
-            <div class="form-group col-xs-3 text-center">
+            <div class="form-group col-md-3 text-center">
                 <a v-if="auth.user_role_id != 4" href="#" class="btn btn-lg btn-cta" @click="addUser">Add New User</a>
             </div>
-            <div class="form-group col-xs-5 text-center">
-                <input type="text" v-model="filter.searchKeyword" @change="reloadPage" placeholder="Search Students ...">
+            <div class="form-group col-md-5 text-center">
+                <input type="text" v-model="filter.searchKeyword" @change="reloadPage" placeholder="Search Users ...">
             </div>
         </div>
     </div>

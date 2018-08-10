@@ -16792,7 +16792,7 @@ var render = function() {
               _vm.auth.user_role_id == 2
                 ? _c(
                     "div",
-                    { staticClass: "form-group col-xs-2 text-center" },
+                    { staticClass: "form-group col-md-2 text-center" },
                     [
                       _c(
                         "select",
@@ -16852,7 +16852,7 @@ var render = function() {
               _vm.auth.user_role_id == 2
                 ? _c(
                     "div",
-                    { staticClass: "form-group col-xs-2 text-center" },
+                    { staticClass: "form-group col-md-2 text-center" },
                     [
                       _c(
                         "select",
@@ -16915,7 +16915,7 @@ var render = function() {
               _vm.auth.user_role_id == 2 || _vm.auth.user_role_id == 3
                 ? _c(
                     "div",
-                    { staticClass: "form-group col-xs-2 text-center" },
+                    { staticClass: "form-group col-md-2 text-center" },
                     [
                       _c(
                         "select",
@@ -16981,7 +16981,7 @@ var render = function() {
                   )
                 : _vm._e(),
               _vm._v(" "),
-              _c("div", { staticClass: "form-group col-xs-2 text-center" }, [
+              _c("div", { staticClass: "form-group col-md-2 text-center" }, [
                 _c("input", {
                   directives: [
                     {
@@ -17900,7 +17900,7 @@ var render = function() {
                       [
                         _c(
                           "v-layout",
-                          { attrs: { row: "", wrap: "" } },
+                          { attrs: { row: "", wrap: "", "mb-3": "" } },
                           [
                             _c(
                               "v-flex",
@@ -17971,69 +17971,73 @@ var render = function() {
                           1
                         ),
                         _vm._v(" "),
-                        _c("v-layout", { attrs: { row: "", wrap: "" } }, [
-                          _c(
-                            "select",
-                            {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.userInfo.user_role_id,
-                                  expression: "userInfo.user_role_id"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: { name: "user_role", id: "user_role" },
-                              on: {
-                                change: function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.$set(
-                                    _vm.userInfo,
-                                    "user_role_id",
-                                    $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  )
-                                }
-                              }
-                            },
-                            [
-                              _c("option", { attrs: { value: "0" } }, [
-                                _vm._v("Choose User Role(No Selected)")
-                              ]),
-                              _vm._v(" "),
-                              _vm._l(_vm.user_roles, function(user_role) {
-                                return _c(
-                                  "option",
+                        _c(
+                          "v-layout",
+                          { attrs: { row: "", wrap: "", "mb-3": "" } },
+                          [
+                            _c(
+                              "select",
+                              {
+                                directives: [
                                   {
-                                    key: user_role.id,
-                                    attrs: {
-                                      disabled:
-                                        _vm.auth.user_role_id != 1 &&
-                                        user_role.id <= _vm.auth.user_role_id
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.userInfo.user_role_id,
+                                    expression: "userInfo.user_role_id"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: { name: "user_role", id: "user_role" },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.userInfo,
+                                      "user_role_id",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _c("option", { attrs: { value: "0" } }, [
+                                  _vm._v("Choose User Role(No Selected)")
+                                ]),
+                                _vm._v(" "),
+                                _vm._l(_vm.user_roles, function(user_role) {
+                                  return _c(
+                                    "option",
+                                    {
+                                      key: user_role.id,
+                                      attrs: {
+                                        disabled:
+                                          _vm.auth.user_role_id != 1 &&
+                                          user_role.id <= _vm.auth.user_role_id
+                                      },
+                                      domProps: { value: user_role.id }
                                     },
-                                    domProps: { value: user_role.id }
-                                  },
-                                  [_vm._v(_vm._s(user_role.name))]
-                                )
-                              })
-                            ],
-                            2
-                          )
-                        ]),
+                                    [_vm._v(_vm._s(user_role.name))]
+                                  )
+                                })
+                              ],
+                              2
+                            )
+                          ]
+                        ),
                         _vm._v(" "),
                         _c(
                           "v-layout",
-                          { attrs: { row: "", wrap: "" } },
+                          { attrs: { row: "", wrap: "", "mb-3": "" } },
                           [
                             _c(
                               "v-flex",
@@ -18328,25 +18332,29 @@ var render = function() {
                           1
                         ),
                         _vm._v(" "),
-                        _c("v-layout", { attrs: { row: "", wrap: "" } }, [
-                          _c(
-                            "a",
-                            {
-                              staticClass:
-                                "modal-default-button btn btn-cta btn-lightblue",
-                              staticStyle: { width: "max-content" },
-                              on: { click: _vm.submit }
-                            },
-                            [
-                              _vm._t("action", [
-                                _vm._v(
-                                  "\n\t\t\t\t\t\t\t\t\t\t\tSubmit\n\t\t\t\t\t\t\t\t\t\t"
-                                )
-                              ])
-                            ],
-                            2
-                          )
-                        ])
+                        _c(
+                          "v-layout",
+                          { attrs: { row: "", wrap: "", "mb-3": "" } },
+                          [
+                            _c(
+                              "a",
+                              {
+                                staticClass:
+                                  "modal-default-button btn btn-cta btn-lightblue",
+                                staticStyle: { width: "max-content" },
+                                on: { click: _vm.submit }
+                              },
+                              [
+                                _vm._t("action", [
+                                  _vm._v(
+                                    "\n\t\t\t\t\t\t\t\t\t\t\tSubmit\n\t\t\t\t\t\t\t\t\t\t"
+                                  )
+                                ])
+                              ],
+                              2
+                            )
+                          ]
+                        )
                       ],
                       1
                     )
@@ -18824,7 +18832,7 @@ var render = function() {
                         _vm._v(" "),
                         _c(
                           "v-layout",
-                          { attrs: { row: "", wrap: "" } },
+                          { attrs: { row: "", wrap: "", "mb-3": "" } },
                           [
                             _c(
                               "v-flex",
@@ -18873,69 +18881,73 @@ var render = function() {
                           1
                         ),
                         _vm._v(" "),
-                        _c("v-layout", { attrs: { row: "", wrap: "" } }, [
-                          _c(
-                            "select",
-                            {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.userInfo.user_role_id,
-                                  expression: "userInfo.user_role_id"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: { name: "user_role", id: "user_role" },
-                              on: {
-                                change: function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.$set(
-                                    _vm.userInfo,
-                                    "user_role_id",
-                                    $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  )
-                                }
-                              }
-                            },
-                            [
-                              _c("option", { attrs: { value: "0" } }, [
-                                _vm._v("Choose User Role(No Selected)")
-                              ]),
-                              _vm._v(" "),
-                              _vm._l(_vm.user_roles, function(user_role) {
-                                return _c(
-                                  "option",
+                        _c(
+                          "v-layout",
+                          { attrs: { row: "", wrap: "", "mb-3": "" } },
+                          [
+                            _c(
+                              "select",
+                              {
+                                directives: [
                                   {
-                                    key: user_role.id,
-                                    attrs: {
-                                      disabled:
-                                        _vm.auth.user_role_id != 1 &&
-                                        user_role.id <= _vm.auth.user_role_id
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.userInfo.user_role_id,
+                                    expression: "userInfo.user_role_id"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: { name: "user_role", id: "user_role" },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.userInfo,
+                                      "user_role_id",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _c("option", { attrs: { value: "0" } }, [
+                                  _vm._v("Choose User Role(No Selected)")
+                                ]),
+                                _vm._v(" "),
+                                _vm._l(_vm.user_roles, function(user_role) {
+                                  return _c(
+                                    "option",
+                                    {
+                                      key: user_role.id,
+                                      attrs: {
+                                        disabled:
+                                          _vm.auth.user_role_id != 1 &&
+                                          user_role.id <= _vm.auth.user_role_id
+                                      },
+                                      domProps: { value: user_role.id }
                                     },
-                                    domProps: { value: user_role.id }
-                                  },
-                                  [_vm._v(_vm._s(user_role.name))]
-                                )
-                              })
-                            ],
-                            2
-                          )
-                        ]),
+                                    [_vm._v(_vm._s(user_role.name))]
+                                  )
+                                })
+                              ],
+                              2
+                            )
+                          ]
+                        ),
                         _vm._v(" "),
                         _c(
                           "v-layout",
-                          { attrs: { row: "", wrap: "" } },
+                          { attrs: { row: "", wrap: "", "mb-3": "" } },
                           [
                             _c(
                               "v-flex",
@@ -19230,54 +19242,58 @@ var render = function() {
                           1
                         ),
                         _vm._v(" "),
-                        _c("v-layout", { attrs: { row: "", wrap: "" } }, [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "modal-default-button btn btn-cta",
-                              class: {
-                                "btn-red": _vm.userInfo.is_enabled,
-                                "btn-lightblue": !_vm.userInfo.is_enabled
-                              },
-                              staticStyle: { width: "max-content" },
-                              on: {
-                                click: function($event) {
-                                  _vm.userInfo.is_enabled = !_vm.userInfo
-                                    .is_enabled
+                        _c(
+                          "v-layout",
+                          { attrs: { row: "", wrap: "", "mb-3": "" } },
+                          [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "modal-default-button btn btn-cta",
+                                class: {
+                                  "btn-red": _vm.userInfo.is_enabled,
+                                  "btn-lightblue": !_vm.userInfo.is_enabled
+                                },
+                                staticStyle: { width: "max-content" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.userInfo.is_enabled = !_vm.userInfo
+                                      .is_enabled
+                                  }
                                 }
-                              }
-                            },
-                            [
-                              _vm._v(
-                                "\n\t\t\t\t\t\t\t\t\t\t\t" +
-                                  _vm._s(
-                                    _vm.userInfo.is_enabled
-                                      ? "Disable"
-                                      : "Enable"
-                                  ) +
-                                  "\n\t\t\t\t\t\t\t\t\t"
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "a",
-                            {
-                              staticClass:
-                                "modal-default-button btn btn-cta btn-lightblue",
-                              staticStyle: { width: "max-content" },
-                              on: { click: _vm.submit }
-                            },
-                            [
-                              _vm._t("action", [
+                              },
+                              [
                                 _vm._v(
-                                  "\n\t\t\t\t\t\t\t\t\t\t\tSubmit\n\t\t\t\t\t\t\t\t\t\t"
+                                  "\n\t\t\t\t\t\t\t\t\t\t\t" +
+                                    _vm._s(
+                                      _vm.userInfo.is_enabled
+                                        ? "Disable"
+                                        : "Enable"
+                                    ) +
+                                    "\n\t\t\t\t\t\t\t\t\t"
                                 )
-                              ])
-                            ],
-                            2
-                          )
-                        ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "a",
+                              {
+                                staticClass:
+                                  "modal-default-button btn btn-cta btn-lightblue",
+                                staticStyle: { width: "max-content" },
+                                on: { click: _vm.submit }
+                              },
+                              [
+                                _vm._t("action", [
+                                  _vm._v(
+                                    "\n\t\t\t\t\t\t\t\t\t\t\tSubmit\n\t\t\t\t\t\t\t\t\t\t"
+                                  )
+                                ])
+                              ],
+                              2
+                            )
+                          ]
+                        )
                       ],
                       1
                     )
@@ -19346,7 +19362,7 @@ var render = function() {
         _c("div", { staticClass: "row" }, [
           _vm._m(1),
           _vm._v(" "),
-          _c("div", { staticClass: "form-group col-xs-3 text-center" }, [
+          _c("div", { staticClass: "form-group col-md-3 text-center" }, [
             _vm.auth.user_role_id != 4
               ? _c(
                   "a",
@@ -19360,7 +19376,7 @@ var render = function() {
               : _vm._e()
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "form-group col-xs-5 text-center" }, [
+          _c("div", { staticClass: "form-group col-md-5 text-center" }, [
             _c("input", {
               directives: [
                 {
@@ -19370,7 +19386,7 @@ var render = function() {
                   expression: "filter.searchKeyword"
                 }
               ],
-              attrs: { type: "text", placeholder: "Search Students ..." },
+              attrs: { type: "text", placeholder: "Search Users ..." },
               domProps: { value: _vm.filter.searchKeyword },
               on: {
                 change: _vm.reloadPage,
@@ -19541,8 +19557,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group col-xs-4" }, [
-      _c("h2", [_vm._v("Users")])
+    return _c("div", { staticClass: "form-group col-md-4" }, [
+      _c("h2", { staticClass: "table-title" }, [_vm._v("Users")])
     ])
   },
   function() {

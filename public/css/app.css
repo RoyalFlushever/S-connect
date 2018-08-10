@@ -13287,9 +13287,31 @@ button.close {
   height: 80px;
 }
 
+@media screen and (max-width: 1200px) {
+  .navbar-wrapper {
+    clear: both !important;
+  }
+}
+
 .navbar-nav {
   margin-left: 100px !important;
   margin-top: 20px;
+}
+
+@media screen and (max-width: 980px) {
+  .navbar-nav {
+    margin-left: 0px !important;
+  }
+}
+
+.welcome-name {
+  margin-top: 0px;
+}
+
+@media screen and (max-width: 1200px) {
+  .navbar-right {
+    margin-bottom: 20px;
+  }
 }
 
 .btn-link {
@@ -13309,9 +13331,23 @@ button.close {
   color: #f44336 !important;
 }
 
+@media screen and (max-width: 768px) {
+  .logout {
+    width: 100px;
+    float: left;
+  }
+}
+
 .dropdown-toggle {
   padding: 0px 10px !important;
   margin: 10px !important;
+}
+
+@media screen and (max-width: 768px) {
+  .dropdown {
+    width: 140px;
+    float: left;
+  }
 }
 
 .dashboard {
@@ -13481,6 +13517,10 @@ table.my-students select {
 
 .filter.no-margin {
   margin: 10px;
+}
+
+.table-title {
+  margin-top: 0px !important;
 }
 
 .reports-type .reports-img {
