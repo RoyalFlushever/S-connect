@@ -34,16 +34,21 @@ Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
-// Home Page
+// Multistep Registration
+Route::get('registration', 'RegistrationController@registration');
+// Route::post('registration', 'RegistrationController@create');
+Route::get('referralSource',    'RegistrationController@referralSource');
+Route::post('registerUser',     'RegistrationController@registerUser');
+Route::post('saveIssue',        'RegistrationController@saveIssue');
+
+// Home Page after login
 Route::get('home', 'HomeController@index')->name('home');
 Route::get('site_admin', 'HomeController@site_admin')->name('site-admin');
-
 
 // Students
 Route::resource('students', 'StudentController', ['only' => [
     'index', 'create', 'store'
 ]]);
-Route::get('my-students', 'StudentController@myStudents');
 Route::post('my-students/get-list', 'StudentController@getList');
 Route::get('my-students/get-filter-levels', 'StudentController@getFilterLevels');
 Route::post('my-students/get-filter-schools', 'StudentController@getFilterSchools');
@@ -54,8 +59,6 @@ Route::post('create-student/get-student', 'StudentController@getStudent');
 Route::post('create-student/save-student', 'StudentController@saveStudent');
 Route::post('transfer-student', 'StudentController@transfer');
 
-Route::get('transfer', 'StudentController@transfer');
-
 // Users
 Route::resource('users', 'UserController', ['only' => [
     'index', 'create', 'store'
@@ -65,18 +68,11 @@ Route::post('users/get-location', 'UserController@getLocation');
 Route::post('users/save', 'UserController@store');
 Route::get('user-roles', 'UserController@getUserRoles');
 
-// Multistep Registration
-Route::get('registration', 'RegistrationController@registration');
-// Route::post('registration', 'RegistrationController@create');
-Route::get('referralSource',    'RegistrationController@referralSource');
-Route::post('registerUser',     'RegistrationController@registerUser');
-Route::post('saveIssue',        'RegistrationController@saveIssue');
 
 // Stakeholder
 Route::resource('stakeholders', 'StakeholderController', ['only' => [
     'index', 'create', 'store'
 ]]);
-
 
 // As a Stakeholder…
 //
@@ -91,7 +87,7 @@ Route::get('stakeholder-home', 'Stakeholders\HomeController@index');
 // Reports
 Route::get('report', 'ReportController@index');
 
-// Global 
+// Location
 Route::get('states',            'LocationController@states');
 Route::post('counties',         'LocationController@counties');
 Route::post('districts',        'LocationController@districts');

@@ -51,38 +51,8 @@ class StudentController extends Controller
     }
 
     /**
-     * Display a list of students being directly mentored by the authenticated user
-     *
-     * @return \Illuminate\Http\Response
+     * Store a student transfer data.
      */
-    public function myStudents()
-    {
-        return view('students.my-students');
-    }
-
-
-    // Administrator : 1
-    // Facilitator : 2
-    // Site Facilitator : 3
-    // Mentor : 4
-
-    // private function getStudentData($param, $isCount)
-    // {
-    //     $query = DB::table('students as s');
-    //         $query->select(
-    //             's.id',
-    //             's.first_name',
-    //             's.last_name',
-    //             's.birthdate',
-    //             's.mentor_id',
-    //             'u.first_name as mentor_first_name',
-    //             'u.last_name as mentor_last_name'
-    //         );
-    //     $query->leftjoin('users as u', 's.mentor_id', '=', 'u.id');
-
-    //     return $query->paginate(2);
-    // }
-
     public function transfer(Request $request) {
         $student = Student::find($request->input('id'));
         $student->school_id = $request->input('school_id');

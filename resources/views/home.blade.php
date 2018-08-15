@@ -40,7 +40,7 @@
                 </div>
                 <div class="dashboard-content">
                     <div>
-                        <h3 class="module-title"><a href="/my-students">Manage Students</a></h3>
+                        <h3 class="module-title"><a href="/students">Manage Students</a></h3>
                         <ul>
                             <!-- <li><a>Add</a></li>
                             <li><a>Edit</a></li>
@@ -76,7 +76,7 @@
                     </div>
                     <div class="dashboard-content">
                         <div>
-                            <h3 class="module-title"><a href="/my-students">Manage Students</a></h3>
+                            <h3 class="module-title"><a href="/students">Manage Students</a></h3>
                             <ul>
                                 <!-- <li><a>Add</a></li>
                                 <li><a>Edit</a></li>
