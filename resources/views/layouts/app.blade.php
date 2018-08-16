@@ -13,6 +13,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
 
     <!-- Scripts -->

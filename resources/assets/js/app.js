@@ -33,6 +33,7 @@ Vue.component('usage-report', require('./Reports/UsageReport.vue'));
 
 import Toasted from 'vue-toasted';
 import Vuetify from 'vuetify';
+window.toastr = require('toastr/build/toastr.min.js');
 
 Vue.use(Vuetify);
 
@@ -42,4 +43,35 @@ Vue.use(Toasted);
 // Instantiate root Vue
 var app = new Vue({
     el: '#app',
+    data: {
+        reportType: 'type',
+    },
+    methods: {
+        clickReport: function() {
+            console.log(this.reportType);
+            if(this.reportType == 'type')
+                toastr["error"]("Please select a report type!", "Error!");
+            else
+                this.$refs.reporttypeform.submit();
+        }
+    },
+    mounted() {
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+    }
 });
