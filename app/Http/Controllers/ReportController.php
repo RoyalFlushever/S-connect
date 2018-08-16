@@ -29,11 +29,23 @@ class ReportController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * select a report type
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
         return view('reports.index');
+    }
+
+
+    /**
+     * Display various report pages by type
+     */
+    public function show(Request $request) {
+        $report_type = $request->input('type');
+        $userRoleId = (int)Auth::user()->user_role_id;
+
+        return view('reports.show', ['type' => $report_type, 'role' => $userRoleId] );
     }
 
 }

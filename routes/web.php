@@ -85,7 +85,8 @@ Route::get('stakeholder-home', 'Stakeholders\HomeController@index');
 
 
 // Reports
-Route::get('report', 'ReportController@index');
+Route::get('report/index', 'ReportController@index');
+Route::post('reports', 'ReportController@show');
 
 // Location
 Route::get('states',            'LocationController@states');

@@ -24,14 +24,19 @@ Vue.component('my-students', require('./students/MyStudents.vue'));
 Vue.component('user-list', require('./users/UserList.vue'));
 // Vue.component('create-modal', require('./students/CreateModal.vue'));
 
+// Report components
+Vue.component('demographic-summary', require('./Reports/DemographicSummary.vue'));
+Vue.component('demographic-report', require('./Reports/DemographicReport.vue'));
+Vue.component('citizenship-mentoring', require('./Reports/CitizenshipMentoring.vue'));
+Vue.component('usage-report', require('./Reports/UsageReport.vue'));
+
+
 import Toasted from 'vue-toasted';
 import Vuetify from 'vuetify';
-
 
 Vue.use(Vuetify);
 
 Vue.use(Toasted);
-
 
 
 // Instantiate root Vue

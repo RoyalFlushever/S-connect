@@ -37,7 +37,6 @@ class HomeController extends Controller
         elseif ($userRoleId === 2 || $userRoleId === 3) {
             // Facilitator or Site Facilitator
             $dashboardItems = [
-                ['url' => url('my-students')     , 'label' => 'My students'],
                 ['url' => url('students')        , 'label' => 'View students'],
                 ['url' => url('students/create') , 'label' => 'New student'],
                 ['url' => url('users')           , 'label' => 'View users'],
@@ -47,7 +46,7 @@ class HomeController extends Controller
         elseif ($userRoleId == 4) {
             // Mentor
             $dashboardItems = [
-                ['url' => url('my-students')         , 'label' => 'My students'],
+                ['url' => url('students')         , 'label' => 'My students'],
                 ['url' => url('students/create')     , 'label' => 'New student'],
                 ['url' => url('stakeholders')        , 'label' => 'View stakeholders'],
                 ['url' => url('stakeholders/create') , 'label' => 'New stakeholder']

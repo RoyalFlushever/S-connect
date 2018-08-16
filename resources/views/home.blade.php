@@ -96,9 +96,9 @@
                     </div>
                     <div class="dashboard-content">
                         <div>
-                        <h3 class="module-title"><a href="/report">Reports</a></h3>
+                        <h3 class="module-title"><a href="/report/index">Reports</a></h3>
                         <ul>
-                            <li><a href="/reports">Create</a></li>
+                            <li><a href="#">Create</a></li>
                             <li><a>View Summary Reports</a></li>
                         </ul>
                         </div>

@@ -15,20 +15,25 @@
         
         <div class="panel-body">
             <div class="row">
-                <div class="reports-type text-center">
+                <form id="reporttypeform" class="reports-type text-center" action="/reports" method="POST">
+                    {{ csrf_field() }}
                     <div class="reports-img">
                     </div>
                     <h4>Reports</h4>
-                    <select name="type" id="report-type">
+                    <select name="type" id="report-type" form="reporttypeform">
                         <option value="type" disabled selected>Select Report Type</option>
-                        <option value="student demographic">Student Demographic Report</option>
-                        <option value="summary demographic">Summary Demographic</option>
-                        <option value="summary citizenship">Summary Citizenship Mentoring</option>
+                        <option value="demographic report">Student Demographic Report</option>
+                        <option value="demographic summary">Summary Demographic</option>
+                        <option value="citizenship mentoring">Summary Citizenship Mentoring</option>
                         <option value="usage report">School/Mentor Usage Report</option>
                     </select>
-                </div>
+                    <button class="btn btn-lg btn-cta btn-lightblue next report">Next</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
 @endsection
+
+<script>
+</script>

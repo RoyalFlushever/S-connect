@@ -13691,6 +13691,12 @@ div.checkbox {
   border-color: #ffeb3b;
 }
 
+.btn.next.report {
+  margin: 20px auto 0px auto;
+  display: block;
+  padding: 15px 80px;
+}
+
 .input-green {
   background-color: #5cb85c;
   color: white;
