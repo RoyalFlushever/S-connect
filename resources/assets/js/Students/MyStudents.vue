@@ -19,7 +19,7 @@
                         <option value="0">School Level(No Selected)</option>
                     </select>
                 </div>
-                <div  v-if="auth.user_role_id == 2" class="form-group col-md-2 text-center">
+                <div v-if="auth.user_role_id == 2" class="form-group col-md-2 text-center">
                     <select name="school name" @change="getFilterMentors" id="school_name" class="form-control" v-model="filter.schoolId">
                         <option v-for="school in schools" :value="school.id" :key="school.id">{{school.name}}</option>
                         <option value="0">School Name(No Selected)</option>

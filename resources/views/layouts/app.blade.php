@@ -14,6 +14,8 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <!--1. Link VCalendar CSS-->
+    <!-- <link rel='stylesheet' href='https://unpkg.com/v-calendar/lib/v-calendar.min.css'> -->
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
@@ -148,5 +150,6 @@
     </div>
 
     <script src="{{ mix('/js/app.js') }}"></script>
+    <!-- <script src='https://unpkg.com/v-calendar'></script> -->
 </body>
 </html>

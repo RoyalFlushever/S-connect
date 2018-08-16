@@ -25,7 +25,9 @@
                         <option value="demographic report">Student Demographic Report</option>
                         <option value="demographic summary">Summary Demographic</option>
                         <option value="citizenship mentoring">Summary Citizenship Mentoring</option>
-                        <option value="usage report">School/Mentor Usage Report</option>
+                        @if ($role == 2)
+                            <option value="usage report">School/Mentor Usage Report</option>
+                        @endif
                     </select>
                     <button class="btn btn-lg btn-cta btn-lightblue next report" @click.prevent="clickReport">Next</button>
                 </form>

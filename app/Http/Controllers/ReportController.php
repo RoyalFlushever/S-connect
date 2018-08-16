@@ -34,7 +34,8 @@ class ReportController extends Controller
      */
     public function index()
     {
-        return view('reports.index');
+        $userRoleId = (int)Auth::user()->user_role_id;
+        return view('reports.index', ['role' => $userRoleId]);
     }
 
 

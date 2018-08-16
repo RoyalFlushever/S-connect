@@ -8,6 +8,7 @@
 // Bootstrap
 // TODO: If we start using Bootstrap 4, we can start using bootstrap with built-in SASS
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+//@import '../../../node_modules/v-calendar/lib/v-calendar.min.css';
 
 // Bootstrap datepicker
 // Note that bootstrap-datepicker v1 doesn't provide any SASS, so we can't readily mix anything in
@@ -15,7 +16,8 @@
 // See also [Bootstrap 4 support](https://github.com/uxsolutions/bootstrap-datepicker/issues/1574)
 // See also [Release 2.0.0](https://github.com/uxsolutions/bootstrap-datepicker/issues/2034)
 // TODO: If we start using Bootstrap 4, we can start using bootstrap with built-in SASS
-@import "../../../node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css";
+//@import "../../../node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css";
+
 
 // Import variables
 @import "variables";
@@ -280,4 +282,8 @@ a.register {
     .error--text {
         color: red;
     }
+}
+
+.homeheading {
+    margin-bottom: 80px;
 }

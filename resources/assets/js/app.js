@@ -33,12 +33,11 @@ Vue.component('usage-report', require('./Reports/UsageReport.vue'));
 
 import Toasted from 'vue-toasted';
 import Vuetify from 'vuetify';
+
 window.toastr = require('toastr/build/toastr.min.js');
 
 Vue.use(Vuetify);
-
 Vue.use(Toasted);
-
 
 // Instantiate root Vue
 var app = new Vue({
