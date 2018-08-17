@@ -19818,6 +19818,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -19836,10 +19868,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             levels: [],
             schools: [],
+            mentors: [],
+            students: [],
             filter: {
                 level: 0,
                 schoolId: 0,
                 mentorId: 0,
+                selectedMentors: [],
+                selectedStudents: [],
+                selectedReportOptions: [],
+                exportFormat: '',
                 searchKeyword: "",
 
                 page: 1,
@@ -19864,17 +19902,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     created: function created() {
-        console.log(this.role);
-        console.log(this.selectedDate);
-        switch (this.role) {
-            case '2':
-                this.getFilterLevels();
-                break;
-
-            case '3':
-                break;
+        if (this.role == 2) {
+            this.getFilterLevels();
+        } else {
+            this.getFilterMentors();
         }
-        this.getFilterLevels();
     },
 
 
@@ -19887,19 +19919,66 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this2.filter.level = 0;
                 _this2.filter.schoolId = 0;
                 _this2.filter.mentorId = 0;
-                _this2.getFilterSchools();
             });
         },
 
         getFilterSchools: function getFilterSchools() {
             var _this3 = this;
 
+            this.filter.schoolId = 0;
+            if (this.filter.level == 0) {
+                return;
+            }
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/my-students/get-filter-schools', this.filter).then(function (response) {
                 _this3.schools = response.data;
-                _this3.filter.schoolId = 0;
-                _this3.filter.mentorId = 0;
-                // this.getFilterMentors();
             });
+        },
+        getFilterMentors: function getFilterMentors() {
+            var _this4 = this;
+
+            this.filter.selectedMentors = [];
+            this.mentors = [];
+            if (this.filter.schoolId == 0 && this.role == 2) return;
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/my-students/get-filter-mentors', this.filter).then(function (response) {
+                _this4.mentors = response.data;
+            });
+        },
+        getFilterStudents: function getFilterStudents() {
+            var _this5 = this;
+
+            this.filter.selectedStudents = [];
+            this.students = [];
+            if (this.filter.selectedMentors === undefined || this.filter.selectedMentors.length == 0) return;
+
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/my-students/get-filter-students', this.filter).then(function (response) {
+                _this5.students = response.data;
+            });
+        },
+        filterValidation: function filterValidation() {
+            if (this.role == 2) {
+                if (this.filter.level == 0) toastr["error"]("Please select school level!", "Error!");
+
+                if (this.filter.schoolId == 0) toastr["error"]("Please select a school name!", "Error!");
+            }
+            if (this.filter.selectedReportOptions === undefined || this.filter.selectedReportOptions.length == 0) toastr["error"]("Please select a Report Option!", "Error!");
+
+            if (this.filter.exportFormat == 0) toastr["error"]("Please select the Export Format!", "Error!");else toastr["success"]("Preview Coming Soon!", "Success!");
+        },
+        clearFilter: function clearFilter() {
+            if (this.role == 2) {
+                this.schools = [];
+                this.mentors = [];
+            }
+            this.students = [];
+            this.filter = {
+                level: 0,
+                schoolId: 0,
+                mentorId: 0,
+                selectedMentors: [],
+                selectedStudents: [],
+                selectedReportOptions: [],
+                exportFormat: ''
+            };
         }
     }
 });
@@ -19983,8 +20062,33 @@ var render = function() {
             _c(
               "select",
               {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filter.schoolId,
+                    expression: "filter.schoolId"
+                  }
+                ],
                 staticClass: "form-control",
-                attrs: { name: "school name", id: "school_name" }
+                attrs: { name: "school name", id: "school_name" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.filter,
+                      "schoolId",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
+                }
               },
               [
                 _vm._l(_vm.schools, function(school) {
@@ -20004,7 +20108,311 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
-      _vm._m(0),
+      _c("div", { staticClass: "col-md-3 list-option" }, [
+        _c("h3", { staticClass: "text-center" }, [_vm._v("Report Options")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "gray-border" }, [
+          _c("div", { staticClass: "checkbox" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filter.selectedReportOptions,
+                    expression: "filter.selectedReportOptions"
+                  }
+                ],
+                attrs: { type: "checkbox", value: "fullname" },
+                domProps: {
+                  checked: Array.isArray(_vm.filter.selectedReportOptions)
+                    ? _vm._i(_vm.filter.selectedReportOptions, "fullname") > -1
+                    : _vm.filter.selectedReportOptions
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.filter.selectedReportOptions,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "fullname",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(
+                            _vm.filter,
+                            "selectedReportOptions",
+                            $$a.concat([$$v])
+                          )
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.filter,
+                            "selectedReportOptions",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.filter, "selectedReportOptions", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v("Student Full Name")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filter.selectedReportOptions,
+                    expression: "filter.selectedReportOptions"
+                  }
+                ],
+                attrs: { type: "checkbox", value: "iep" },
+                domProps: {
+                  checked: Array.isArray(_vm.filter.selectedReportOptions)
+                    ? _vm._i(_vm.filter.selectedReportOptions, "iep") > -1
+                    : _vm.filter.selectedReportOptions
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.filter.selectedReportOptions,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "iep",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(
+                            _vm.filter,
+                            "selectedReportOptions",
+                            $$a.concat([$$v])
+                          )
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.filter,
+                            "selectedReportOptions",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.filter, "selectedReportOptions", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v("IEP")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filter.selectedReportOptions,
+                    expression: "filter.selectedReportOptions"
+                  }
+                ],
+                attrs: { type: "checkbox", value: "ethnicity" },
+                domProps: {
+                  checked: Array.isArray(_vm.filter.selectedReportOptions)
+                    ? _vm._i(_vm.filter.selectedReportOptions, "ethnicity") > -1
+                    : _vm.filter.selectedReportOptions
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.filter.selectedReportOptions,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "ethnicity",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(
+                            _vm.filter,
+                            "selectedReportOptions",
+                            $$a.concat([$$v])
+                          )
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.filter,
+                            "selectedReportOptions",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.filter, "selectedReportOptions", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v("Ethnicity")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filter.selectedReportOptions,
+                    expression: "filter.selectedReportOptions"
+                  }
+                ],
+                attrs: { type: "checkbox", value: "age" },
+                domProps: {
+                  checked: Array.isArray(_vm.filter.selectedReportOptions)
+                    ? _vm._i(_vm.filter.selectedReportOptions, "age") > -1
+                    : _vm.filter.selectedReportOptions
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.filter.selectedReportOptions,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "age",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(
+                            _vm.filter,
+                            "selectedReportOptions",
+                            $$a.concat([$$v])
+                          )
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.filter,
+                            "selectedReportOptions",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.filter, "selectedReportOptions", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v("Age")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filter.selectedReportOptions,
+                    expression: "filter.selectedReportOptions"
+                  }
+                ],
+                attrs: { type: "checkbox", value: "gender" },
+                domProps: {
+                  checked: Array.isArray(_vm.filter.selectedReportOptions)
+                    ? _vm._i(_vm.filter.selectedReportOptions, "gender") > -1
+                    : _vm.filter.selectedReportOptions
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.filter.selectedReportOptions,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "gender",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(
+                            _vm.filter,
+                            "selectedReportOptions",
+                            $$a.concat([$$v])
+                          )
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.filter,
+                            "selectedReportOptions",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.filter, "selectedReportOptions", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v("Gender")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filter.selectedReportOptions,
+                    expression: "filter.selectedReportOptions"
+                  }
+                ],
+                attrs: { type: "checkbox", value: "bdate" },
+                domProps: {
+                  checked: Array.isArray(_vm.filter.selectedReportOptions)
+                    ? _vm._i(_vm.filter.selectedReportOptions, "bdate") > -1
+                    : _vm.filter.selectedReportOptions
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.filter.selectedReportOptions,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "bdate",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(
+                            _vm.filter,
+                            "selectedReportOptions",
+                            $$a.concat([$$v])
+                          )
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.filter,
+                            "selectedReportOptions",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.filter, "selectedReportOptions", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v("Birth Dates")
+            ])
+          ])
+        ])
+      ]),
       _vm._v(" "),
       this.role == 3
         ? _c("div", { staticClass: "col-md-6 list-option" }, [
@@ -20036,7 +20444,103 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
-      _vm._m(1)
+      _c("div", { staticClass: "col-md-3 list-option" }, [
+        _c("h3", { staticClass: "text-center" }, [_vm._v("Export Format")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "gray-border" }, [
+          _c("div", { staticClass: "radio" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filter.exportFormat,
+                    expression: "filter.exportFormat"
+                  }
+                ],
+                attrs: { type: "radio", value: "word" },
+                domProps: { checked: _vm._q(_vm.filter.exportFormat, "word") },
+                on: {
+                  change: function($event) {
+                    _vm.$set(_vm.filter, "exportFormat", "word")
+                  }
+                }
+              }),
+              _vm._v("Word")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "radio" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filter.exportFormat,
+                    expression: "filter.exportFormat"
+                  }
+                ],
+                attrs: { type: "radio", value: "csv" },
+                domProps: { checked: _vm._q(_vm.filter.exportFormat, "csv") },
+                on: {
+                  change: function($event) {
+                    _vm.$set(_vm.filter, "exportFormat", "csv")
+                  }
+                }
+              }),
+              _vm._v("CSV")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "radio" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filter.exportFormat,
+                    expression: "filter.exportFormat"
+                  }
+                ],
+                attrs: { type: "radio", value: "excel" },
+                domProps: { checked: _vm._q(_vm.filter.exportFormat, "excel") },
+                on: {
+                  change: function($event) {
+                    _vm.$set(_vm.filter, "exportFormat", "excel")
+                  }
+                }
+              }),
+              _vm._v("Excel")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "radio" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filter.exportFormat,
+                    expression: "filter.exportFormat"
+                  }
+                ],
+                attrs: { type: "radio", value: "pdf" },
+                domProps: { checked: _vm._q(_vm.filter.exportFormat, "pdf") },
+                on: {
+                  change: function($event) {
+                    _vm.$set(_vm.filter, "exportFormat", "pdf")
+                  }
+                }
+              }),
+              _vm._v("PDF")
+            ])
+          ])
+        ])
+      ])
     ]),
     _vm._v(" "),
     this.role == 2
@@ -20063,57 +20567,43 @@ var render = function() {
     _vm._v(" "),
     _c("hr"),
     _vm._v(" "),
-    _vm._m(2)
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3 list-option" }, [
-      _c("h3", { staticClass: "text-center" }, [_vm._v("Report Options")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "gray-border" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3 list-option" }, [
-      _c("h3", { staticClass: "text-center" }, [_vm._v("Export Format")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "gray-border" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row list-wrapper" }, [
+    _c("div", { staticClass: "row list-wrapper" }, [
       _c("div", { staticClass: "col-md-3 list-option" }, [
-        _c("button", { staticClass: "btn btn-cta btn-large reselect" }, [
-          _vm._v("Re-select")
-        ])
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-cta btn-large reselect",
+            on: { click: _vm.clearFilter }
+          },
+          [_vm._v("Re-select")]
+        )
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-3 list-option" }, [
         _c(
           "button",
-          { staticClass: "btn btn-cta btn-large btn-blue preview action" },
+          {
+            staticClass: "btn btn-cta btn-large btn-blue preview action",
+            on: { click: _vm.filterValidation }
+          },
           [_vm._v("Preview Report")]
         )
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-3 list-option" }, [
-        _c("button", { staticClass: "btn btn-cta btn-large print action" }, [
-          _vm._v("Print")
-        ])
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-cta btn-large print action",
+            on: { click: _vm.filterValidation }
+          },
+          [_vm._v("Print")]
+        )
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -20443,7 +20933,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         getFilterStudents: function getFilterStudents() {
             var _this5 = this;
 
-            console.log('students');
             this.filter.selectedStudents = [];
             this.students = [];
             if (this.filter.selectedMentors === undefined || this.filter.selectedMentors.length == 0) return;
@@ -21318,7 +21807,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.report-title[data-v-27162c7f] {\n  margin-bottom: 40px;\n}\nselect[data-v-27162c7f] {\n  height: 35px;\n  line-height: 35px;\n  font-size: 18px;\n  border-radius: 0px;\n  outline: 1px inset black;\n  outline-offset: -1px;\n}\n.list-wrapper[data-v-27162c7f] {\n  margin: 20px;\n}\n.list-wrapper .list-option[data-v-27162c7f] {\n    padding: 0px 10px;\n}\n.list-wrapper .list-option h3[data-v-27162c7f] {\n      font-size: 1.4em;\n      font-weight: 600;\n}\n.list-wrapper .list-option .gray-border[data-v-27162c7f] {\n      height: 200px;\n      padding: 0px 10px;\n}\n.list-wrapper .list-option button[data-v-27162c7f] {\n      display: block;\n}\n.list-wrapper .list-option .reselect[data-v-27162c7f] {\n      margin: 20px 0px;\n}\n.list-wrapper .list-option .preview[data-v-27162c7f] {\n      margin: 20px auto;\n      padding: 5px 20px;\n}\n.list-wrapper .list-option .print[data-v-27162c7f] {\n      margin: 20px auto;\n      padding: 5px 70px;\n}\n", ""]);
+exports.push([module.i, "\n.report-title[data-v-27162c7f] {\n  margin-bottom: 40px;\n}\nselect[data-v-27162c7f] {\n  width: 100%;\n  height: 35px;\n  line-height: 35px;\n  font-size: 18px;\n  border-radius: 0px;\n  outline: 1px inset black;\n  outline-offset: -1px;\n}\n.list-wrapper[data-v-27162c7f] {\n  margin: 20px;\n}\n.list-wrapper .list-option[data-v-27162c7f] {\n    padding: 0px 10px;\n}\n.list-wrapper .list-option h3[data-v-27162c7f] {\n      font-size: 1.4em;\n      font-weight: 600;\n}\n.list-wrapper .list-option .gray-border[data-v-27162c7f] {\n      height: 200px;\n      padding: 0px 10px;\n}\n.list-wrapper .list-option button[data-v-27162c7f] {\n      display: block;\n}\n.list-wrapper .list-option .reselect[data-v-27162c7f] {\n      margin: 20px 0px;\n}\n.list-wrapper .list-option .preview[data-v-27162c7f] {\n      margin: 20px auto;\n      padding: 5px 20px;\n}\n.list-wrapper .list-option .print[data-v-27162c7f] {\n      margin: 20px auto;\n      padding: 5px 70px;\n}\n", ""]);
 
 // exports
 
@@ -21329,6 +21818,28 @@ exports.push([module.i, "\n.report-title[data-v-27162c7f] {\n  margin-bottom: 40
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -21370,8 +21881,106 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['role']
+    props: ['role'],
+
+    data: function data() {
+        return {
+            levels: [],
+            schools: [],
+            mentors: [],
+            students: [],
+            filter: {
+                level: 0,
+                schoolId: 0,
+                mentorId: 0,
+                selectedMentors: [],
+                selectedStudents: [],
+                selectedReportOptions: [],
+                exportFormat: ''
+            }
+        };
+    },
+    created: function created() {
+        if (this.role == 2) {
+            this.getFilterLevels();
+        } else {
+            this.getFilterMentors();
+        }
+    },
+
+
+    methods: {
+        getFilterLevels: function getFilterLevels() {
+            var _this = this;
+
+            this.filter.level = 0;
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/my-students/get-filter-levels').then(function (response) {
+                _this.levels = response.data;
+            });
+        },
+
+        getFilterSchools: function getFilterSchools() {
+            var _this2 = this;
+
+            this.filter.schoolId = 0;
+            if (this.filter.level == 0) {
+                return;
+            }
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/my-students/get-filter-schools', this.filter).then(function (response) {
+                _this2.schools = response.data;
+                _this2.getFilterMentors();
+            });
+        },
+        getFilterMentors: function getFilterMentors() {
+            var _this3 = this;
+
+            this.filter.selectedMentors = [];
+            this.mentors = [];
+            if (this.filter.schoolId == 0 && this.role == 2) return;
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/my-students/get-filter-mentors', this.filter).then(function (response) {
+                _this3.mentors = response.data;
+            });
+        },
+        getFilterStudents: function getFilterStudents() {
+            var _this4 = this;
+
+            this.filter.selectedStudents = [];
+            this.students = [];
+            if (this.filter.selectedMentors === undefined || this.filter.selectedMentors.length == 0) return;
+
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/my-students/get-filter-students', this.filter).then(function (response) {
+                _this4.students = response.data;
+            });
+        },
+        filterValidation: function filterValidation() {
+            if (this.role == 2) {
+                if (this.filter.level == 0) toastr["error"]("Please select school level!", "Error!");
+                if (this.filter.schoolId == 0) toastr["error"]("Please select a school name!", "Error!");
+            }
+            if (this.filter.selectedMentors === undefined || this.filter.selectedMentors.length == 0) toastr["error"]("Please select a mentor!", "Error!");
+            if (this.filter.exportFormat == 0) toastr["error"]("Please select the Export Format!", "Error!");else toastr["success"]("Preview Coming Soon!", "Success!");
+        },
+        clearFilter: function clearFilter() {
+            if (this.role == 2) {
+                this.schools = [];
+                this.mentors = [];
+            }
+            this.students = [];
+            this.filter = {
+                level: 0,
+                schoolId: 0,
+                mentorId: 0,
+                selectedMentors: [],
+                selectedStudents: [],
+                selectedReportOptions: [],
+                exportFormat: ''
+            };
+        }
+    }
+
 });
 
 /***/ }),
@@ -21392,7 +22001,56 @@ var render = function() {
         ? _c("div", { staticClass: "col-md-3 list-option form-group" }, [
             _c("h3", { staticClass: "text-center" }, [_vm._v("Select Level")]),
             _vm._v(" "),
-            _vm._m(0)
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filter.level,
+                    expression: "filter.level"
+                  }
+                ],
+                attrs: { name: "school level", id: "school_level" },
+                on: {
+                  change: [
+                    function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.filter,
+                        "level",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    },
+                    _vm.getFilterSchools
+                  ]
+                }
+              },
+              [
+                _vm._l(_vm.levels, function(level) {
+                  return _c(
+                    "option",
+                    { key: level.id, domProps: { value: level.id } },
+                    [_vm._v(_vm._s(level.name))]
+                  )
+                }),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "0" } }, [
+                  _vm._v("School Level(No Selected)")
+                ])
+              ],
+              2
+            )
           ])
         : _vm._e(),
       _vm._v(" "),
@@ -21402,7 +22060,60 @@ var render = function() {
               _vm._v("Select Schools")
             ]),
             _vm._v(" "),
-            _vm._m(1)
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filter.schoolId,
+                    expression: "filter.schoolId"
+                  }
+                ],
+                attrs: {
+                  name: "school name",
+                  id: "school_name",
+                  disabled: _vm.filter.exportFormat == null
+                },
+                on: {
+                  change: [
+                    function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.filter,
+                        "schoolId",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    },
+                    _vm.getFilterMentors
+                  ]
+                }
+              },
+              [
+                _vm._l(_vm.schools, function(school) {
+                  return _c(
+                    "option",
+                    { key: school.id, domProps: { value: school.id } },
+                    [_vm._v(_vm._s(school.name))]
+                  )
+                }),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "0" } }, [
+                  _vm._v("School Name(No Selected)")
+                ])
+              ],
+              2
+            )
           ])
         : _vm._e(),
       _vm._v(" "),
@@ -21418,7 +22129,67 @@ var render = function() {
         [
           _c("h3", { staticClass: "text-center" }, [_vm._v("Select Mentors")]),
           _vm._v(" "),
-          _c("div", { staticClass: "gray-border" })
+          _c(
+            "div",
+            { staticClass: "gray-border" },
+            _vm._l(_vm.mentors, function(mentor) {
+              return _c("div", { key: mentor.id, staticClass: "checkbox" }, [
+                _c("label", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.filter.selectedMentors,
+                        expression: "filter.selectedMentors"
+                      }
+                    ],
+                    attrs: { type: "checkbox" },
+                    domProps: {
+                      value: mentor.id,
+                      checked: Array.isArray(_vm.filter.selectedMentors)
+                        ? _vm._i(_vm.filter.selectedMentors, mentor.id) > -1
+                        : _vm.filter.selectedMentors
+                    },
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$a = _vm.filter.selectedMentors,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = mentor.id,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 &&
+                                _vm.$set(
+                                  _vm.filter,
+                                  "selectedMentors",
+                                  $$a.concat([$$v])
+                                )
+                            } else {
+                              $$i > -1 &&
+                                _vm.$set(
+                                  _vm.filter,
+                                  "selectedMentors",
+                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                )
+                            }
+                          } else {
+                            _vm.$set(_vm.filter, "selectedMentors", $$c)
+                          }
+                        },
+                        _vm.getFilterStudents
+                      ]
+                    }
+                  }),
+                  _vm._v(
+                    _vm._s(mentor.first_name) + " " + _vm._s(mentor.last_name)
+                  )
+                ])
+              ])
+            })
+          )
         ]
       ),
       _vm._v(" "),
@@ -21434,68 +22205,146 @@ var render = function() {
         [
           _c("h3", { staticClass: "text-center" }, [_vm._v("Export Format")]),
           _vm._v(" "),
-          _c("div", { staticClass: "gray-border" })
+          _c("div", { staticClass: "gray-border" }, [
+            _c("div", { staticClass: "radio" }, [
+              _c("label", [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.filter.exportFormat,
+                      expression: "filter.exportFormat"
+                    }
+                  ],
+                  attrs: { type: "radio", value: "word" },
+                  domProps: {
+                    checked: _vm._q(_vm.filter.exportFormat, "word")
+                  },
+                  on: {
+                    change: function($event) {
+                      _vm.$set(_vm.filter, "exportFormat", "word")
+                    }
+                  }
+                }),
+                _vm._v("Word")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "radio" }, [
+              _c("label", [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.filter.exportFormat,
+                      expression: "filter.exportFormat"
+                    }
+                  ],
+                  attrs: { type: "radio", value: "csv" },
+                  domProps: { checked: _vm._q(_vm.filter.exportFormat, "csv") },
+                  on: {
+                    change: function($event) {
+                      _vm.$set(_vm.filter, "exportFormat", "csv")
+                    }
+                  }
+                }),
+                _vm._v("CSV")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "radio" }, [
+              _c("label", [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.filter.exportFormat,
+                      expression: "filter.exportFormat"
+                    }
+                  ],
+                  attrs: { type: "radio", value: "excel" },
+                  domProps: {
+                    checked: _vm._q(_vm.filter.exportFormat, "excel")
+                  },
+                  on: {
+                    change: function($event) {
+                      _vm.$set(_vm.filter, "exportFormat", "excel")
+                    }
+                  }
+                }),
+                _vm._v("Excel")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "radio" }, [
+              _c("label", [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.filter.exportFormat,
+                      expression: "filter.exportFormat"
+                    }
+                  ],
+                  attrs: { type: "radio", value: "pdf" },
+                  domProps: { checked: _vm._q(_vm.filter.exportFormat, "pdf") },
+                  on: {
+                    change: function($event) {
+                      _vm.$set(_vm.filter, "exportFormat", "pdf")
+                    }
+                  }
+                }),
+                _vm._v("PDF")
+              ])
+            ])
+          ])
         ]
       )
     ]),
     _vm._v(" "),
     _c("hr"),
     _vm._v(" "),
-    _vm._m(2)
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "select",
-      { attrs: { name: "school level", id: "school_level" } },
-      [
-        _c("option", { attrs: { value: "0" } }, [
-          _vm._v("School Level(No Selected)")
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("select", { attrs: { name: "school name", id: "school_name" } }, [
-      _c("option", { attrs: { value: "0" } }, [
-        _vm._v("School Name(No Selected)")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row list-wrapper" }, [
+    _c("div", { staticClass: "row list-wrapper" }, [
       _c("div", { staticClass: "col-md-3 list-option" }, [
-        _c("button", { staticClass: "btn btn-cta btn-large reselect" }, [
-          _vm._v("Re-select")
-        ])
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-cta btn-large reselect",
+            on: { click: _vm.clearFilter }
+          },
+          [_vm._v("Re-select")]
+        )
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-3 list-option" }, [
         _c(
           "button",
-          { staticClass: "btn btn-cta btn-large btn-blue preview action" },
+          {
+            staticClass: "btn btn-cta btn-large btn-blue preview action",
+            on: { click: _vm.filterValidation }
+          },
           [_vm._v("Preview Report")]
         )
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-3 list-option" }, [
-        _c("button", { staticClass: "btn btn-cta btn-large print action" }, [
-          _vm._v("Print")
-        ])
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-cta btn-large print action",
+            on: { click: _vm.filterValidation }
+          },
+          [_vm._v("Print")]
+        )
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -21510,17 +22359,22 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(157)
+  __webpack_require__(159)
+}
 var normalizeComponent = __webpack_require__(0)
 /* script */
 var __vue_script__ = __webpack_require__(125)
 /* template */
-var __vue_template__ = __webpack_require__(126)
+var __vue_template__ = __webpack_require__(161)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = null
+var __vue_scopeId__ = "data-v-4ed6a1e3"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -21558,6 +22412,73 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -21566,35 +22487,110 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['role']
+    props: ['role'],
+
+    data: function data() {
+        return {
+            levels: [],
+            schools: [],
+            mentors: [],
+            students: [],
+            filter: {
+                level: 0,
+                schoolId: 0,
+                mentorId: 0,
+                selectedMentors: [],
+                selectedStudents: [],
+                selectedReportOptions: [],
+                exportFormat: ''
+            }
+        };
+    },
+    created: function created() {
+        if (this.role == 2) {
+            this.getFilterLevels();
+        } else {
+            this.getFilterMentors();
+        }
+    },
+
+
+    methods: {
+        getFilterLevels: function getFilterLevels() {
+            var _this = this;
+
+            this.filter.level = 0;
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/my-students/get-filter-levels').then(function (response) {
+                _this.levels = response.data;
+            });
+        },
+
+        getFilterSchools: function getFilterSchools() {
+            var _this2 = this;
+
+            this.filter.schoolId = 0;
+            if (this.filter.level == 0) {
+                return;
+            }
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/my-students/get-filter-schools', this.filter).then(function (response) {
+                _this2.schools = response.data;
+                _this2.getFilterMentors();
+            });
+        },
+        getFilterMentors: function getFilterMentors() {
+            var _this3 = this;
+
+            this.filter.selectedMentors = [];
+            this.mentors = [];
+            if (this.filter.schoolId == 0 && this.role == 2) return;
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/my-students/get-filter-mentors', this.filter).then(function (response) {
+                _this3.mentors = response.data;
+            });
+        },
+        getFilterStudents: function getFilterStudents() {
+            var _this4 = this;
+
+            this.filter.selectedStudents = [];
+            this.students = [];
+            if (this.filter.selectedMentors === undefined || this.filter.selectedMentors.length == 0) return;
+
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/my-students/get-filter-students', this.filter).then(function (response) {
+                _this4.students = response.data;
+            });
+        },
+        filterValidation: function filterValidation() {
+            if (this.role == 2) {
+                if (this.filter.level == 0) toastr["error"]("Please select school level!", "Error!");
+                if (this.filter.schoolId == 0) toastr["error"]("Please select a school name!", "Error!");
+            }
+            if (this.filter.selectedReportOptions === undefined || this.filter.selectedReportOptions.length == 0) toastr["error"]("Please select a Report Option!", "Error!");
+            if (this.filter.exportFormat == 0) toastr["error"]("Please select the Export Format!", "Error!");else toastr["success"]("Preview Coming Soon!", "Success!");
+        },
+        clearFilter: function clearFilter() {
+            if (this.role == 2) {
+                this.schools = [];
+                this.mentors = [];
+            }
+            this.students = [];
+            this.filter = {
+                level: 0,
+                schoolId: 0,
+                mentorId: 0,
+                selectedMentors: [],
+                selectedStudents: [],
+                selectedReportOptions: [],
+                exportFormat: ''
+            };
+        }
+    }
+
 });
 
 /***/ }),
-/* 126 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h1", [_vm._v("Usage Report")]),
-    _vm._v(" "),
-    _c("h3", [_vm._v(_vm._s(_vm.role))])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-4ed6a1e3", module.exports)
-  }
-}
-
-/***/ }),
+/* 126 */,
 /* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -41702,6 +42698,654 @@ module.exports = function() {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */,
+/* 138 */,
+/* 139 */,
+/* 140 */,
+/* 141 */,
+/* 142 */,
+/* 143 */,
+/* 144 */,
+/* 145 */,
+/* 146 */,
+/* 147 */,
+/* 148 */,
+/* 149 */,
+/* 150 */,
+/* 151 */,
+/* 152 */,
+/* 153 */,
+/* 154 */,
+/* 155 */,
+/* 156 */,
+/* 157 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(158);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("f9d9a030", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4ed6a1e3\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./UsageReport.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4ed6a1e3\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./UsageReport.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 158 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.homeheading {\n  margin-bottom: 20px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 159 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(160);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("00e380f4", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4ed6a1e3\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./UsageReport.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4ed6a1e3\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./UsageReport.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 160 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.report-title[data-v-4ed6a1e3] {\n  margin-bottom: 40px;\n}\nselect[data-v-4ed6a1e3] {\n  width: 100%;\n  height: 35px;\n  line-height: 35px;\n  font-size: 18px;\n  border-radius: 0px;\n  outline: 1px inset black;\n  outline-offset: -1px;\n}\n.list-wrapper[data-v-4ed6a1e3] {\n  margin: 20px;\n}\n.list-wrapper .list-option[data-v-4ed6a1e3] {\n    padding: 0px 10px;\n}\n.list-wrapper .list-option h3[data-v-4ed6a1e3] {\n      font-size: 1.4em;\n      font-weight: 600;\n}\n.list-wrapper .list-option .gray-border[data-v-4ed6a1e3] {\n      height: 200px;\n      padding: 0px 10px;\n}\n.list-wrapper .list-option button[data-v-4ed6a1e3] {\n      display: block;\n}\n.list-wrapper .list-option .reselect[data-v-4ed6a1e3] {\n      margin: 20px 0px;\n}\n.list-wrapper .list-option .preview[data-v-4ed6a1e3] {\n      margin: 20px auto;\n      padding: 5px 20px;\n}\n.list-wrapper .list-option .print[data-v-4ed6a1e3] {\n      margin: 20px auto;\n      padding: 5px 70px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 161 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container gray-border" }, [
+    _c("h1", { staticClass: "text-center" }, [_vm._v("Usage Report")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row list-wrapper" }, [
+      this.role == 2
+        ? _c("div", { staticClass: "col-md-3 list-option form-group" }, [
+            _c("h3", { staticClass: "text-center" }, [_vm._v("Select Level")]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filter.level,
+                    expression: "filter.level"
+                  }
+                ],
+                attrs: { name: "school level", id: "school_level" },
+                on: {
+                  change: [
+                    function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.filter,
+                        "level",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    },
+                    _vm.getFilterSchools
+                  ]
+                }
+              },
+              [
+                _vm._l(_vm.levels, function(level) {
+                  return _c(
+                    "option",
+                    { key: level.id, domProps: { value: level.id } },
+                    [_vm._v(_vm._s(level.name))]
+                  )
+                }),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "0" } }, [
+                  _vm._v("School Level(No Selected)")
+                ])
+              ],
+              2
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      this.role == 2
+        ? _c("div", { staticClass: "col-md-3 list-option form-group" }, [
+            _c("h3", { staticClass: "text-center" }, [
+              _vm._v("Select Schools")
+            ]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filter.schoolId,
+                    expression: "filter.schoolId"
+                  }
+                ],
+                attrs: {
+                  name: "school name",
+                  id: "school_name",
+                  disabled: _vm.filter.exportFormat == null
+                },
+                on: {
+                  change: [
+                    function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.filter,
+                        "schoolId",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    },
+                    _vm.getFilterMentors
+                  ]
+                }
+              },
+              [
+                _vm._l(_vm.schools, function(school) {
+                  return _c(
+                    "option",
+                    { key: school.id, domProps: { value: school.id } },
+                    [_vm._v(_vm._s(school.name))]
+                  )
+                }),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "0" } }, [
+                  _vm._v("School Name(No Selected)")
+                ])
+              ],
+              2
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-3 list-option" }, [
+        _c("h3", { staticClass: "text-center" }, [_vm._v("Report Options")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "gray-border" }, [
+          _c("div", { staticClass: "checkbox" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filter.selectedReportOptions,
+                    expression: "filter.selectedReportOptions"
+                  }
+                ],
+                attrs: { type: "checkbox", value: "site_facilitator_name" },
+                domProps: {
+                  checked: Array.isArray(_vm.filter.selectedReportOptions)
+                    ? _vm._i(
+                        _vm.filter.selectedReportOptions,
+                        "site_facilitator_name"
+                      ) > -1
+                    : _vm.filter.selectedReportOptions
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.filter.selectedReportOptions,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "site_facilitator_name",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(
+                            _vm.filter,
+                            "selectedReportOptions",
+                            $$a.concat([$$v])
+                          )
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.filter,
+                            "selectedReportOptions",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.filter, "selectedReportOptions", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v("Name of Site Facilitators")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filter.selectedReportOptions,
+                    expression: "filter.selectedReportOptions"
+                  }
+                ],
+                attrs: { type: "checkbox", value: "numMentor" },
+                domProps: {
+                  checked: Array.isArray(_vm.filter.selectedReportOptions)
+                    ? _vm._i(_vm.filter.selectedReportOptions, "numMentor") > -1
+                    : _vm.filter.selectedReportOptions
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.filter.selectedReportOptions,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "numMentor",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(
+                            _vm.filter,
+                            "selectedReportOptions",
+                            $$a.concat([$$v])
+                          )
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.filter,
+                            "selectedReportOptions",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.filter, "selectedReportOptions", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v("Number of Mentors")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filter.selectedReportOptions,
+                    expression: "filter.selectedReportOptions"
+                  }
+                ],
+                attrs: { type: "checkbox", value: "mentor_name" },
+                domProps: {
+                  checked: Array.isArray(_vm.filter.selectedReportOptions)
+                    ? _vm._i(_vm.filter.selectedReportOptions, "mentor_name") >
+                      -1
+                    : _vm.filter.selectedReportOptions
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.filter.selectedReportOptions,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "mentor_name",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(
+                            _vm.filter,
+                            "selectedReportOptions",
+                            $$a.concat([$$v])
+                          )
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.filter,
+                            "selectedReportOptions",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.filter, "selectedReportOptions", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v("Mentors Name Last Log in Date")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filter.selectedReportOptions,
+                    expression: "filter.selectedReportOptions"
+                  }
+                ],
+                attrs: { type: "checkbox", value: "numActiveStudents" },
+                domProps: {
+                  checked: Array.isArray(_vm.filter.selectedReportOptions)
+                    ? _vm._i(
+                        _vm.filter.selectedReportOptions,
+                        "numActiveStudents"
+                      ) > -1
+                    : _vm.filter.selectedReportOptions
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.filter.selectedReportOptions,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "numActiveStudents",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(
+                            _vm.filter,
+                            "selectedReportOptions",
+                            $$a.concat([$$v])
+                          )
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.filter,
+                            "selectedReportOptions",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.filter, "selectedReportOptions", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v("Number of Active Students")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filter.selectedReportOptions,
+                    expression: "filter.selectedReportOptions"
+                  }
+                ],
+                attrs: { type: "checkbox", value: "student_name" },
+                domProps: {
+                  checked: Array.isArray(_vm.filter.selectedReportOptions)
+                    ? _vm._i(_vm.filter.selectedReportOptions, "student_name") >
+                      -1
+                    : _vm.filter.selectedReportOptions
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.filter.selectedReportOptions,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "student_name",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(
+                            _vm.filter,
+                            "selectedReportOptions",
+                            $$a.concat([$$v])
+                          )
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.filter,
+                            "selectedReportOptions",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.filter, "selectedReportOptions", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v("Student Name Last Log in Date")
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-3 list-option" }, [
+        _c("h3", { staticClass: "text-center" }, [_vm._v("Export Format")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "gray-border" }, [
+          _c("div", { staticClass: "radio" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filter.exportFormat,
+                    expression: "filter.exportFormat"
+                  }
+                ],
+                attrs: { type: "radio", value: "word" },
+                domProps: { checked: _vm._q(_vm.filter.exportFormat, "word") },
+                on: {
+                  change: function($event) {
+                    _vm.$set(_vm.filter, "exportFormat", "word")
+                  }
+                }
+              }),
+              _vm._v("Word")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "radio" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filter.exportFormat,
+                    expression: "filter.exportFormat"
+                  }
+                ],
+                attrs: { type: "radio", value: "csv" },
+                domProps: { checked: _vm._q(_vm.filter.exportFormat, "csv") },
+                on: {
+                  change: function($event) {
+                    _vm.$set(_vm.filter, "exportFormat", "csv")
+                  }
+                }
+              }),
+              _vm._v("CSV")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "radio" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filter.exportFormat,
+                    expression: "filter.exportFormat"
+                  }
+                ],
+                attrs: { type: "radio", value: "excel" },
+                domProps: { checked: _vm._q(_vm.filter.exportFormat, "excel") },
+                on: {
+                  change: function($event) {
+                    _vm.$set(_vm.filter, "exportFormat", "excel")
+                  }
+                }
+              }),
+              _vm._v("Excel")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "radio" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filter.exportFormat,
+                    expression: "filter.exportFormat"
+                  }
+                ],
+                attrs: { type: "radio", value: "pdf" },
+                domProps: { checked: _vm._q(_vm.filter.exportFormat, "pdf") },
+                on: {
+                  change: function($event) {
+                    _vm.$set(_vm.filter, "exportFormat", "pdf")
+                  }
+                }
+              }),
+              _vm._v("PDF")
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("hr"),
+    _vm._v(" "),
+    _c("div", { staticClass: "row list-wrapper" }, [
+      _c("div", { staticClass: "col-md-3 list-option" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-cta btn-large reselect",
+            on: { click: _vm.clearFilter }
+          },
+          [_vm._v("Re-select")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-3 list-option" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-cta btn-large btn-blue preview action",
+            on: { click: _vm.filterValidation }
+          },
+          [_vm._v("Preview Report")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-3 list-option" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-cta btn-large print action",
+            on: { click: _vm.filterValidation }
+          },
+          [_vm._v("Print")]
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4ed6a1e3", module.exports)
+  }
+}
 
 /***/ })
 ],[24]);

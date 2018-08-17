@@ -172,7 +172,6 @@ export default {
             });
         },
         getFilterStudents: function() {
-            console.log('students');
             this.filter.selectedStudents = [];
             this.students = [];
             if(this.filter.selectedMentors === undefined || this.filter.selectedMentors.length == 0) return;
