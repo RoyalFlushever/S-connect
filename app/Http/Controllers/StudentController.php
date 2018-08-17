@@ -12,7 +12,6 @@ use App\Ethnicity;
 use App\Iep;
 use App\SchoolLevel;
 use App\School;
-
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -494,6 +493,20 @@ class StudentController extends Controller
         $schools = $schoolQuery->get();
         return response()->json($schools);
         // return response()->json(['district_id' => Auth::user()->district_id]);
+    }
+
+    /**
+     * Get Students by Mentors
+     * @param \Illuminate\Http\Request  $request
+     * mentor id array
+     * @return \JSON
+     */
+    public function getFilterStudents(Request $request) {
+        $studentQuery = Student::query();
+
+        $studentQuery->whereIn('mentor_id', $request->input('selectedMentors'));
+        $students = $studentQuery->get();
+        return response()->json($students);
     }
 
     /**

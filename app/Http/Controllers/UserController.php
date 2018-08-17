@@ -97,28 +97,41 @@ class UserController extends Controller
 
     public function mentors(Request $request) {
 
-        $userQuery = User::query();
-        $userQuery->select(
-            'users.id',
-            'users.first_name',
-            'users.last_name'
-        );
-        $userQuery->leftjoin('us_schools as sch', 'school_id', 'sch.id');
+        if( Auth::user()->user_role_id == 2) {
+            $userQuery = User::query();
+            $userQuery->select(
+                'users.id',
+                'users.first_name',
+                'users.last_name'
+            );
+            $userQuery->leftjoin('us_schools as sch', 'school_id', 'sch.id');
 
-        $district_id = Auth::user()->district_id;
+            $district_id = Auth::user()->district_id;
 
-        // $userQuery->where('user_role_id', 4);
-        $userQuery->whereBetween('user_role_id', [2, 4]);
-        if($district_id != 0) {
-            $userQuery->where('sch.district_id', $district_id);
-        }
-        if($request->input('level') && $request->input('level') != 0) {
-            $userQuery->where('sch.level', $request->input('level'));
-        }
-        if($request->input('schoolId') && $request->input('schoolId') != 0) {
-            $userQuery->where('school_id', $request->input('schoolId'));
-        }
+            $userQuery->whereBetween('user_role_id', [2, 4]);
+            if($district_id != 0) {
+                $userQuery->where('sch.district_id', $district_id);
+            }
+            if($request->input('level') && $request->input('level') != 0) {
+                $userQuery->where('sch.level', $request->input('level'));
+            }
+            if($request->input('schoolId') && $request->input('schoolId') != 0) {
+                $userQuery->where('school_id', $request->input('schoolId'));
+            }
 
+        } else {
+            $userQuery = User::query();
+            $userQuery->select(
+                'users.id',
+                'users.first_name',
+                'users.last_name'
+            );
+            $userQuery->leftjoin('us_schools as sch', 'school_id', 'sch.id');
+            $school_id = Auth::user()->school_id;
+            if( $school_id != 0 ) {
+                $userQuery->where('sch.id', $school_id);
+            }
+        }
         $mentors = $userQuery->get();
         return response()->json($mentors);
     }

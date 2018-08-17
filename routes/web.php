@@ -53,6 +53,7 @@ Route::post('my-students/get-list', 'StudentController@getList');
 Route::get('my-students/get-filter-levels', 'StudentController@getFilterLevels');
 Route::post('my-students/get-filter-schools', 'StudentController@getFilterSchools');
 Route::post('my-students/get-filter-mentors', 'UserController@mentors');
+Route::post('my-students/get-filter-students', 'StudentController@getFilterStudents');
 
 Route::get('create-student/get-options', 'StudentController@getOptions');
 Route::post('create-student/get-student', 'StudentController@getStudent');

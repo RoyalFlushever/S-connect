@@ -12,6 +12,7 @@
             <div class="col-md-3 list-option" v-if="this.role == 2">
                 <h3 class="text-center">School Name</h3>
                 <select name="school name" id="school_name" class="form-control">
+                    <option v-for="school in schools" :value="school.id" :key="school.id">{{school.name}}</option>
                     <option value="0">School Name(No Selected)</option>
                 </select>
             </div>
@@ -108,6 +109,7 @@ export default {
             case '3':
                 break;
         }
+        this.getFilterLevels();
     },
 
     methods: {
