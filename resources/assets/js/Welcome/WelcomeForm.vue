@@ -71,17 +71,9 @@ export default {
         });
 
         if(check1) {
-            this.$toasted.show("Please acknowledge i-Connect can only be accessed with an internet connection.", {
-                theme: "outline",
-                position: "top-center",
-                duration: 3000,
-            });
+            toastr["error"]("Please acknowledge i-Connect can only be accessed with an internet connection.", "Error!");
         } else if(check2) {
-            this.$toasted.show("Please read and accept the Terms and Conditions", {
-                theme: "outline",
-                position: "top-center",
-                duration: 3000,
-            });
+            toastr["error"]("Please read and accept the Terms and Conditions", "Error!");
         }
 
         e.preventDefault();

@@ -4,7 +4,7 @@
         <div class="col-md-6 col-md-offset-3 text-center welcome">
             Welcome to the I-Connect project managementsite <br>
             You must login in to use this application. If you do not have a username 
-            and password, please click here to <a href="/registration" class="register">register</a>.
+            and password, please click here to <a href="/welcome" class="register">register</a>.
         </div>
         <form class="form-horizontal login-form" role="form" method="POST" action="{{ $submitUrl }}">
             {{ csrf_field() }}
