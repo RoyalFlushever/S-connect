@@ -1365,9 +1365,9 @@ var app = new Vue({
             "preventDuplicates": false,
             "onclick": null,
             "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
+            "hideDuration": "500",
+            "timeOut": "2000",
+            "extendedTimeOut": "500",
             "showEasing": "swing",
             "hideEasing": "linear",
             "showMethod": "fadeIn",
@@ -6700,47 +6700,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            checkList: []
-        };
-    },
-    methods: {
-        submit: function submit(e) {
-            if (this.checkList.length < 2) {
+  data: function data() {
+    return {
+      checkList: []
+    };
+  },
+  methods: {
+    submit: function submit(e) {
+      if (this.checkList.length < 2) {
 
-                var check1 = true,
-                    check2 = true;
+        var check1 = true,
+            check2 = true;
 
-                this.checkList.forEach(function (element) {
-                    switch (element) {
-                        case 'check1':
-                            check1 = false;
-                            break;
-                        case 'check2':
-                            check2 = false;
-                            break;
-                    }
-                });
+        this.checkList.forEach(function (element) {
+          switch (element) {
+            case 'check1':
+              check1 = false;
+              break;
+            case 'check2':
+              check2 = false;
+              break;
+          }
+        });
 
-                if (check1) {
-                    this.$toasted.show("Please acknowledge i-Connect can only be accessed with an internet connection.", {
-                        theme: "outline",
-                        position: "top-center",
-                        duration: 3000
-                    });
-                } else if (check2) {
-                    this.$toasted.show("Please read and accept the Terms and Conditions", {
-                        theme: "outline",
-                        position: "top-center",
-                        duration: 3000
-                    });
-                }
-
-                e.preventDefault();
-            } else {}
+        if (check1) {
+          toastr["error"]("Please acknowledge i-Connect can only be accessed with an internet connection.", "Error!");
+        } else if (check2) {
+          toastr["error"]("Please read and accept the Terms and Conditions", "Error!");
         }
+
+        e.preventDefault();
+      } else {}
     }
+  }
 });
 
 /***/ }),

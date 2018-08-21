@@ -15,7 +15,7 @@
 // Route::get('/', function() {
 //     return redirect('/home');
 // })->middleware('auth');
-Route::get('/', 'RegistrationController@welcome');
+Route::get('/welcome', 'RegistrationController@welcome');
 Route::get('/', function() {
     return redirect('/home');
 })->middleware('auth');
