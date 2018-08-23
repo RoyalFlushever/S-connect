@@ -7967,10 +7967,43 @@ var render = function() {
                                     _c(
                                       "select",
                                       {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.studentInfo.mentor,
+                                            expression: "studentInfo.mentor"
+                                          }
+                                        ],
                                         staticClass: "form-control",
                                         attrs: {
                                           name: "designateMentor",
                                           id: "designateMentor"
+                                        },
+                                        on: {
+                                          change: function($event) {
+                                            var $$selectedVal = Array.prototype.filter
+                                              .call(
+                                                $event.target.options,
+                                                function(o) {
+                                                  return o.selected
+                                                }
+                                              )
+                                              .map(function(o) {
+                                                var val =
+                                                  "_value" in o
+                                                    ? o._value
+                                                    : o.value
+                                                return val
+                                              })
+                                            _vm.$set(
+                                              _vm.studentInfo,
+                                              "mentor",
+                                              $event.target.multiple
+                                                ? $$selectedVal
+                                                : $$selectedVal[0]
+                                            )
+                                          }
                                         }
                                       },
                                       [

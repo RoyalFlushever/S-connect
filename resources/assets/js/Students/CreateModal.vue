@@ -71,7 +71,7 @@
                                     </div>
                                     <div v-if="options.userRole < 4" class="form-group row">
                                         <div class="col-xs-8 col-xs-offset-2">
-                                            <select name="designateMentor" id="designateMentor" class="form-control">
+                                            <select name="designateMentor" id="designateMentor" class="form-control" v-model="studentInfo.mentor">
 												<option v-for="mentor in options.availableMentors" :value="mentor.id" :key="mentor.id">{{mentor.last_name}}, {{mentor.first_name}}</option>
 												<option value="0" selected>Designate Mentor(No Selected)</option>
 											</select>

@@ -228,7 +228,7 @@ class StudentController extends Controller
             } else {
                 $attributes['district_id']  = 0;
             }
-            $attributes['school_id']    = 0;
+            $attributes['school_id']    = $attributes['school_id'];
         } else {
             $attributes['district_id']  = School::find(Auth::user()->school_id)->district->id;
             $attributes['school_id']    = Auth::user()->school_id;
