@@ -31,6 +31,14 @@ class CreateStudentsTable extends Migration
                 ->references('id')->on('schools')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');;
+            $table->integer('iep_id')->unsigned()
+                ->references('id')->on('ieps')
+                ->onUpdate('cascade')
+                ->onDelete('restrict');;
+            $table->integer('ethnicity_id')->unsigned()
+                ->references('id')->on('ethnicities')
+                ->onUpdate('cascade')
+                ->onDelete('restrict');;
             $table->integer('mentor_id')->unsigned()->nullable();
             $table->timestamps();
 

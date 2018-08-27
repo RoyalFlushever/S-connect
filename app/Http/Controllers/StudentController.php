@@ -209,7 +209,7 @@ class StudentController extends Controller
     {
         $this->authorize('create', Student::class);
 
-        $attributes = $request->only([ 'first_name', 'middle_name', 'last_name', 'username', 'school_id' ]);
+        $attributes = $request->only([ 'first_name', 'middle_name', 'last_name', 'username', 'school_id', 'iep_id', 'ethnicity_id' ]);
         
         $validate_arr = [
             'first_name' => 'required',
@@ -237,6 +237,7 @@ class StudentController extends Controller
         $this->validate($request, $validate_arr);
 
         $attributes['birthdate'] = date('Y-m-d', strtotime($request->input('birthdate')));
+
         if($request->input('id') == 0 && $request->input('password') != '') {
             $attributes['password'] = Hash::make($request->input('password'));
         }

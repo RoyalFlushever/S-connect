@@ -24,7 +24,7 @@ class Student extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'middle_name', 'last_name', 'username', 'password', 'birthdate', 'district_id', 'school_id'
+        'first_name', 'middle_name', 'last_name', 'username', 'password', 'birthdate', 'district_id', 'school_id', 'iep_id', 'ethnicity_id'
     ];
 
     /**
@@ -50,6 +50,16 @@ class Student extends Authenticatable
     public function gender()
     {
         return $this->belongsTo('App\Gender');
+    }
+
+    public function iep()
+    {
+        return $this->belongsTo('App\Iep');
+    }
+    
+    public function ethnicity()
+    {
+        return $this->belongsTo('App\Ethnicity');
     }
 
     public function school()

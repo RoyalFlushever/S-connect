@@ -57,14 +57,14 @@
                                             <label class="radio-inline"><input type="radio" name="gender" id="gender-male" required v-model="studentInfo.gender_id" :value="2">Female</label>
                                         </div>
                                         <div class="col-xs-3 form-group">
-                                            <select name="ethnicity" id="ethnicity" class="form-control">
-												<option>Ethnicity(optional)</option>
+                                            <select name="ethnicity" id="ethnicity" class="form-control" v-model="studentInfo.ethnicity_id">
+												<option value="0">Ethnicity(optional)</option>
 												<option v-for="ethnicity in options.ethnicities" :value="ethnicity.id" :key="ethnicity.id">{{ethnicity.name}}</option>
 											</select>
                                         </div>
                                         <div class="col-xs-3 form-group">
-                                            <select name="iep" id="iep" class="form-control">
-												<option>IEP(optional)</option>
+                                            <select name="iep" id="iep" class="form-control" v-model="studentInfo.iep_id">
+												<option value="0">IEP(optional)</option>
 												<option v-for="iep in options.ieps" :value="iep.id" :key="iep.id">{{iep.contents}}</option>
 											</select>
                                         </div>
@@ -181,8 +181,9 @@ export default {
                 last_name: '',
                 birthdate: '',
 				gender_id: 0,
-				ethnicity: 0,
-                mentor: null,
+				ethnicity_id: 0,
+                iep_id: 0,
+                mentor: 0,
                 school_id: 0,
 
             },

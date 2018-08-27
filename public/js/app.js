@@ -7475,8 +7475,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 last_name: '',
                 birthdate: '',
                 gender_id: 0,
-                ethnicity: 0,
-                mentor: null,
+                ethnicity_id: 0,
+                iep_id: 0,
+                mentor: 0,
                 school_id: 0
 
             }
@@ -7909,11 +7910,43 @@ var render = function() {
                               _c(
                                 "select",
                                 {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.studentInfo.ethnicity_id,
+                                      expression: "studentInfo.ethnicity_id"
+                                    }
+                                  ],
                                   staticClass: "form-control",
-                                  attrs: { name: "ethnicity", id: "ethnicity" }
+                                  attrs: { name: "ethnicity", id: "ethnicity" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        _vm.studentInfo,
+                                        "ethnicity_id",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
                                 },
                                 [
-                                  _c("option", [_vm._v("Ethnicity(optional)")]),
+                                  _c("option", { attrs: { value: "0" } }, [
+                                    _vm._v("Ethnicity(optional)")
+                                  ]),
                                   _vm._v(" "),
                                   _vm._l(_vm.options.ethnicities, function(
                                     ethnicity
@@ -7936,11 +7969,43 @@ var render = function() {
                               _c(
                                 "select",
                                 {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.studentInfo.iep_id,
+                                      expression: "studentInfo.iep_id"
+                                    }
+                                  ],
                                   staticClass: "form-control",
-                                  attrs: { name: "iep", id: "iep" }
+                                  attrs: { name: "iep", id: "iep" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        _vm.studentInfo,
+                                        "iep_id",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
                                 },
                                 [
-                                  _c("option", [_vm._v("IEP(optional)")]),
+                                  _c("option", { attrs: { value: "0" } }, [
+                                    _vm._v("IEP(optional)")
+                                  ]),
                                   _vm._v(" "),
                                   _vm._l(_vm.options.ieps, function(iep) {
                                     return _c(
