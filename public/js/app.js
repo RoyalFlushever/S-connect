@@ -1733,6 +1733,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['citizenshipValuesByType', 'monitoringLocationNamesById', 'monitoringLocationsByCategory', 'selectedLocationIds', 'locationLabels', 'selectedPromptIds', 'useVariableInterval', 'desiredMeanInSeconds', 'intervalHours', 'intervalMinutes', 'intervalSeconds', 'customPrompts', 'goalPercent'],
@@ -1742,8 +1743,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             // selectedLocationIds: [],
             // locationLabels     : [],
             // selectedPromptIds  : [],
-            //customPrompts      : [],
-            //goalPercent        : [],
+            // customPrompts      : [],
+            // goalPercent        : [],
             //useVariableInterval: []
         };
     },
@@ -1771,10 +1772,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 Appropriateness: true,
                 Comprehension: true
             });
+            this.desiredMeanInSeconds.push({
+                Engagement: 0,
+                Appropriateness: 0,
+                Comprehension: 0
+            });
+            this.intervalHours.push({
+                Engagement: 0,
+                Appropriateness: 0,
+                Comprehension: 0
+            });
+            this.intervalMinutes.push({
+                Engagement: 0,
+                Appropriateness: 0,
+                Comprehension: 0
+            });
+            this.intervalSeconds.push({
+                Engagement: 0,
+                Appropriateness: 0,
+                Comprehension: 0
+            });
             this.goalPercent.push({
-                Engagement: null,
-                Appropriateness: null,
-                Comprehension: null
+                Engagement: 0,
+                Appropriateness: 0,
+                Comprehension: 0
             });
         }
     },
@@ -2725,18 +2746,6 @@ var render = function() {
                                           _c(
                                             "select",
                                             {
-                                              directives: [
-                                                {
-                                                  name: "model",
-                                                  rawName: "v-model",
-                                                  value:
-                                                    _vm.intervalSeconds[
-                                                      locationIndex
-                                                    ][typeName],
-                                                  expression:
-                                                    "intervalSeconds[locationIndex][typeName]"
-                                                }
-                                              ],
                                               staticClass: "form-control",
                                               attrs: {
                                                 name: _vm.formAttributeAsPhpArray(
@@ -2749,37 +2758,14 @@ var render = function() {
                                                   locationIndex,
                                                   typeName
                                                 ),
+                                                "v-model":
+                                                  _vm.intervalSeconds[
+                                                    locationIndex
+                                                  ][typeName],
                                                 disabled: !_vm
                                                   .selectedPromptIds[
                                                   locationIndex
                                                 ][typeName]
-                                              },
-                                              on: {
-                                                change: function($event) {
-                                                  var $$selectedVal = Array.prototype.filter
-                                                    .call(
-                                                      $event.target.options,
-                                                      function(o) {
-                                                        return o.selected
-                                                      }
-                                                    )
-                                                    .map(function(o) {
-                                                      var val =
-                                                        "_value" in o
-                                                          ? o._value
-                                                          : o.value
-                                                      return val
-                                                    })
-                                                  _vm.$set(
-                                                    _vm.intervalSeconds[
-                                                      locationIndex
-                                                    ],
-                                                    typeName,
-                                                    $event.target.multiple
-                                                      ? $$selectedVal
-                                                      : $$selectedVal[0]
-                                                  )
-                                                }
                                               }
                                             },
                                             _vm._l(60, function(i) {
@@ -2812,6 +2798,18 @@ var render = function() {
                                   _c(
                                     "select",
                                     {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value:
+                                            _vm.goalPercent[locationIndex][
+                                              typeName
+                                            ],
+                                          expression:
+                                            "goalPercent[locationIndex][typeName]"
+                                        }
+                                      ],
                                       staticClass: "form-control",
                                       attrs: {
                                         name: _vm.formAttributeAsPhpArray(
@@ -2827,6 +2825,31 @@ var render = function() {
                                         disabled: !_vm.selectedPromptIds[
                                           locationIndex
                                         ][typeName]
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          var $$selectedVal = Array.prototype.filter
+                                            .call(
+                                              $event.target.options,
+                                              function(o) {
+                                                return o.selected
+                                              }
+                                            )
+                                            .map(function(o) {
+                                              var val =
+                                                "_value" in o
+                                                  ? o._value
+                                                  : o.value
+                                              return val
+                                            })
+                                          _vm.$set(
+                                            _vm.goalPercent[locationIndex],
+                                            typeName,
+                                            $event.target.multiple
+                                              ? $$selectedVal
+                                              : $$selectedVal[0]
+                                          )
+                                        }
                                       }
                                     },
                                     [
@@ -7700,16 +7723,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         submit: function submit() {
             var _this = this;
 
-            this.studentInfo.monitoringLocations = this.selectedLocationIds;
-            this.studentInfo.locationLabels = this.locationLabels;
-            this.studentInfo.citizenshipValues = this.selectedPromptIds;
-            this.studentInfo.isVariableInterval = this.useVariableInterval;
-            this.studentInfo.desiredMeanInSeconds = this.desiredMeanInSeconds;
-            this.studentInfo.intervalHours = this.intervalHours;
-            this.studentInfo.intervalMinutes = this.intervalMinutes;
-            this.studentInfo.intervalSeconds = this.intervalSeconds;
-            this.studentInfo.customPrompts = this.customPrompts;
-            this.studentInfo.goals = this.goalPercent;
+            this.studentInfo.monitoringLocations = this.selectedLocationIds.filter(function (locationId) {
+                return locationId != null;
+            });
+            var locations = this.studentInfo.monitoringLocations.length;
+            this.studentInfo.locationLabels = this.locationLabels.slice(0, locations);
+            this.studentInfo.citizenshipValues = this.selectedPromptIds.slice(0, locations);
+            this.studentInfo.isVariableInterval = this.useVariableInterval.slice(0, locations);
+            this.studentInfo.desiredMeanInSeconds = this.desiredMeanInSeconds.slice(0, locations);
+            this.studentInfo.intervalHours = this.intervalHours.slice(0, locations);
+            this.studentInfo.intervalMinutes = this.intervalMinutes.slice(0, locations);
+            this.studentInfo.intervalSeconds = this.intervalSeconds.slice(0, locations);
+            this.studentInfo.customPrompts = this.customPrompts.slice(0, locations);
+            this.studentInfo.goals = this.goalPercent.slice(0, locations);
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/create-student/save-student", this.studentInfo).then(function (response) {
                 if (response.data.result == 'ok') {

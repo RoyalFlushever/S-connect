@@ -106,7 +106,7 @@
                                     :selectedLocationIds="selectedLocationIds"
                                     :selectedPromptIds="selectedPromptIds"
                                     :locationLabels="locationLabels" 
-                                    :useVariableInterval="useVariableInterval" 
+                                    :useVariableInterval="useVariableInterval"
                                     :desiredMeanInSeconds="desiredMeanInSeconds"
                                     :intervalHours="intervalHours"
                                     :intervalMinutes="intervalMinutes"
@@ -245,16 +245,19 @@ export default {
             this.$emit("close");
         },
         submit: function () {
-            this.studentInfo.monitoringLocations = this.selectedLocationIds
-            this.studentInfo.locationLabels = this.locationLabels
-            this.studentInfo.citizenshipValues = this.selectedPromptIds
-            this.studentInfo.isVariableInterval = this.useVariableInterval
-            this.studentInfo.desiredMeanInSeconds = this.desiredMeanInSeconds
-            this.studentInfo.intervalHours = this.intervalHours
-            this.studentInfo.intervalMinutes = this.intervalMinutes
-            this.studentInfo.intervalSeconds = this.intervalSeconds
-            this.studentInfo.customPrompts = this.customPrompts
-            this.studentInfo.goals = this.goalPercent
+            this.studentInfo.monitoringLocations = this.selectedLocationIds.filter(function (locationId) {
+                return locationId != null
+            })
+            let locations = this.studentInfo.monitoringLocations.length
+            this.studentInfo.locationLabels = this.locationLabels.slice(0, locations)
+            this.studentInfo.citizenshipValues = this.selectedPromptIds.slice(0, locations)
+            this.studentInfo.isVariableInterval = this.useVariableInterval.slice(0, locations)
+            this.studentInfo.desiredMeanInSeconds = this.desiredMeanInSeconds.slice(0, locations)
+            this.studentInfo.intervalHours = this.intervalHours.slice(0, locations)
+            this.studentInfo.intervalMinutes = this.intervalMinutes.slice(0, locations)
+            this.studentInfo.intervalSeconds = this.intervalSeconds.slice(0, locations)
+            this.studentInfo.customPrompts = this.customPrompts.slice(0, locations)
+            this.studentInfo.goals = this.goalPercent.slice(0, locations)
 
 			Axios.post("/create-student/save-student", this.studentInfo)
 			.then(response => {

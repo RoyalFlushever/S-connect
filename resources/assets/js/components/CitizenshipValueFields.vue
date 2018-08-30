@@ -111,9 +111,9 @@
                                                     </label>
                                                     <select
                                                         v-show="useVariableInterval[locationIndex][typeName]"
-                                                        v-model="desiredMeanInSeconds[locationIndex][typeName]"
                                                         class="form-control" :name="formAttributeAsPhpArray('desiredMeanInSeconds', locationIndex, typeName)"
                                                         :id="formAttributeAsPhpArray('desiredMeanInSeconds', locationIndex, typeName)"
+                                                        v-model="desiredMeanInSeconds[locationIndex][typeName]"
                                                         :disabled="!selectedPromptIds[locationIndex][typeName]"
                                                     >
                                                         <option value selected>Select a desired mean</option>
@@ -173,7 +173,7 @@
                                                                 class="form-control"
                                                                 :name="formAttributeAsPhpArray('intervalSeconds', locationIndex, typeName)"
                                                                 :id="formAttributeAsPhpArray('intervalSeconds', locationIndex, typeName)"
-                                                                v-model="intervalSeconds[locationIndex][typeName]"
+                                                                :v-model="intervalSeconds[locationIndex][typeName]"
                                                                 :disabled="!selectedPromptIds[locationIndex][typeName]"
                                                             >
                                                                 <!-- v-for range starts at 1 -->
@@ -189,6 +189,7 @@
                                                         class="form-control"
                                                         :name="formAttributeAsPhpArray('goals', locationIndex, typeName)"
                                                         :id="formAttributeAsPhpArray('goals', locationIndex, typeName)"
+                                                        v-model="goalPercent[locationIndex][typeName]"
                                                         :disabled="!selectedPromptIds[locationIndex][typeName]"
                                                 >
                                                     <option value selected>No goal</option>
@@ -245,8 +246,8 @@
                 // selectedLocationIds: [],
                 // locationLabels     : [],
                 // selectedPromptIds  : [],
-                //customPrompts      : [],
-                //goalPercent        : [],
+                // customPrompts      : [],
+                // goalPercent        : [],
                 //useVariableInterval: []
             };
         },
@@ -275,10 +276,30 @@
                     Appropriateness : true,
                     Comprehension   : true
                 });
+                this.desiredMeanInSeconds.push({
+                    Engagement      : 0,
+                    Appropriateness : 0,
+                    Comprehension   : 0
+                });
+                this.intervalHours.push({
+                    Engagement      : 0,
+                    Appropriateness : 0,
+                    Comprehension   : 0
+                });
+                this.intervalMinutes.push({
+                    Engagement      : 0,
+                    Appropriateness : 0,
+                    Comprehension   : 0
+                });
+                this.intervalSeconds.push({
+                    Engagement      : 0,
+                    Appropriateness : 0,
+                    Comprehension   : 0
+                });
                 this.goalPercent.push({
-                    Engagement      : null,
-                    Appropriateness : null,
-                    Comprehension   : null
+                    Engagement      : 0,
+                    Appropriateness : 0,
+                    Comprehension   : 0
                 });
             }
         },
