@@ -1729,10 +1729,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['citizenshipValuesByType', 'monitoringLocationNamesById', 'monitoringLocationsByCategory'],
+    props: ['citizenshipValuesByType', 'monitoringLocationNamesById', 'monitoringLocationsByCategory', 'selectedLocationIds', 'locationLabels', 'selectedPromptIds', 'useVariableInterval', 'desiredMeanInSeconds', 'intervalHours', 'intervalMinutes', 'intervalSeconds', 'customPrompts', 'goalPercent'],
 
+    data: function data() {
+        return {
+            // selectedLocationIds: [],
+            // locationLabels     : [],
+            // selectedPromptIds  : [],
+            //customPrompts      : [],
+            //goalPercent        : [],
+            //useVariableInterval: []
+        };
+    },
     created: function created() {
         // Set up non-reactive properties
         this.maxNumberOfLocations = 10;
@@ -1763,16 +1777,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 Comprehension: null
             });
         }
-    },
-    data: function data() {
-        return {
-            selectedLocationIds: [],
-            locationLabels: [],
-            selectedPromptIds: [],
-            customPrompts: [],
-            goalPercent: [],
-            useVariableInterval: []
-        };
     },
 
 
@@ -2397,6 +2401,16 @@ var render = function() {
                                                 ][typeName],
                                               expression:
                                                 "useVariableInterval[locationIndex][typeName]"
+                                            },
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value:
+                                                _vm.desiredMeanInSeconds[
+                                                  locationIndex
+                                                ][typeName],
+                                              expression:
+                                                "desiredMeanInSeconds[locationIndex][typeName]"
                                             }
                                           ],
                                           staticClass: "form-control",
@@ -2414,6 +2428,33 @@ var render = function() {
                                             disabled: !_vm.selectedPromptIds[
                                               locationIndex
                                             ][typeName]
+                                          },
+                                          on: {
+                                            change: function($event) {
+                                              var $$selectedVal = Array.prototype.filter
+                                                .call(
+                                                  $event.target.options,
+                                                  function(o) {
+                                                    return o.selected
+                                                  }
+                                                )
+                                                .map(function(o) {
+                                                  var val =
+                                                    "_value" in o
+                                                      ? o._value
+                                                      : o.value
+                                                  return val
+                                                })
+                                              _vm.$set(
+                                                _vm.desiredMeanInSeconds[
+                                                  locationIndex
+                                                ],
+                                                typeName,
+                                                $event.target.multiple
+                                                  ? $$selectedVal
+                                                  : $$selectedVal[0]
+                                              )
+                                            }
                                           }
                                         },
                                         [
@@ -2542,6 +2583,18 @@ var render = function() {
                                           _c(
                                             "select",
                                             {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value:
+                                                    _vm.intervalHours[
+                                                      locationIndex
+                                                    ][typeName],
+                                                  expression:
+                                                    "intervalHours[locationIndex][typeName]"
+                                                }
+                                              ],
                                               staticClass: "form-control",
                                               attrs: {
                                                 name: _vm.formAttributeAsPhpArray(
@@ -2558,6 +2611,33 @@ var render = function() {
                                                   .selectedPromptIds[
                                                   locationIndex
                                                 ][typeName]
+                                              },
+                                              on: {
+                                                change: function($event) {
+                                                  var $$selectedVal = Array.prototype.filter
+                                                    .call(
+                                                      $event.target.options,
+                                                      function(o) {
+                                                        return o.selected
+                                                      }
+                                                    )
+                                                    .map(function(o) {
+                                                      var val =
+                                                        "_value" in o
+                                                          ? o._value
+                                                          : o.value
+                                                      return val
+                                                    })
+                                                  _vm.$set(
+                                                    _vm.intervalHours[
+                                                      locationIndex
+                                                    ],
+                                                    typeName,
+                                                    $event.target.multiple
+                                                      ? $$selectedVal
+                                                      : $$selectedVal[0]
+                                                  )
+                                                }
                                               }
                                             },
                                             _vm._l(25, function(i) {
@@ -2572,6 +2652,18 @@ var render = function() {
                                           _c(
                                             "select",
                                             {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value:
+                                                    _vm.intervalMinutes[
+                                                      locationIndex
+                                                    ][typeName],
+                                                  expression:
+                                                    "intervalMinutes[locationIndex][typeName]"
+                                                }
+                                              ],
                                               staticClass: "form-control",
                                               attrs: {
                                                 name: _vm.formAttributeAsPhpArray(
@@ -2588,6 +2680,33 @@ var render = function() {
                                                   .selectedPromptIds[
                                                   locationIndex
                                                 ][typeName]
+                                              },
+                                              on: {
+                                                change: function($event) {
+                                                  var $$selectedVal = Array.prototype.filter
+                                                    .call(
+                                                      $event.target.options,
+                                                      function(o) {
+                                                        return o.selected
+                                                      }
+                                                    )
+                                                    .map(function(o) {
+                                                      var val =
+                                                        "_value" in o
+                                                          ? o._value
+                                                          : o.value
+                                                      return val
+                                                    })
+                                                  _vm.$set(
+                                                    _vm.intervalMinutes[
+                                                      locationIndex
+                                                    ],
+                                                    typeName,
+                                                    $event.target.multiple
+                                                      ? $$selectedVal
+                                                      : $$selectedVal[0]
+                                                  )
+                                                }
                                               }
                                             },
                                             _vm._l(60, function(i) {
@@ -2606,6 +2725,18 @@ var render = function() {
                                           _c(
                                             "select",
                                             {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value:
+                                                    _vm.intervalSeconds[
+                                                      locationIndex
+                                                    ][typeName],
+                                                  expression:
+                                                    "intervalSeconds[locationIndex][typeName]"
+                                                }
+                                              ],
                                               staticClass: "form-control",
                                               attrs: {
                                                 name: _vm.formAttributeAsPhpArray(
@@ -2622,6 +2753,33 @@ var render = function() {
                                                   .selectedPromptIds[
                                                   locationIndex
                                                 ][typeName]
+                                              },
+                                              on: {
+                                                change: function($event) {
+                                                  var $$selectedVal = Array.prototype.filter
+                                                    .call(
+                                                      $event.target.options,
+                                                      function(o) {
+                                                        return o.selected
+                                                      }
+                                                    )
+                                                    .map(function(o) {
+                                                      var val =
+                                                        "_value" in o
+                                                          ? o._value
+                                                          : o.value
+                                                      return val
+                                                    })
+                                                  _vm.$set(
+                                                    _vm.intervalSeconds[
+                                                      locationIndex
+                                                    ],
+                                                    typeName,
+                                                    $event.target.multiple
+                                                      ? $$selectedVal
+                                                      : $$selectedVal[0]
+                                                  )
+                                                }
                                               }
                                             },
                                             _vm._l(60, function(i) {
@@ -7451,6 +7609,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 // import DatePicker from 'vue2-datepicker'
 
@@ -7478,20 +7651,65 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 ethnicity_id: 0,
                 iep_id: 0,
                 mentor: 0,
-                school_id: 0
+                school_id: 0,
 
-            }
+                // for Citzenship Value Field
+                monitoringLocations: [],
+                locationLabels: [],
+                citizenshipValues: [],
+                isVariableInterval: [],
+                desiredMeanInSeconds: [],
+                intervalHours: [],
+                intervalMinutes: [],
+                intervalSeconds: [],
+                customPrompts: [],
+                goals: []
+            },
+
+            selectedLocationIds: [],
+            locationLabels: [],
+            selectedPromptIds: [],
+            useVariableInterval: [],
+            desiredMeanInSeconds: [],
+            intervalHours: [],
+            intervalMinutes: [],
+            intervalSeconds: [],
+            customPrompts: [],
+            goalPercent: []
         };
     },
     methods: {
+        formAttributeAsPhpArray: function formAttributeAsPhpArray(primaryName, key1, key2) {
+            // key1 is required, key2 is optional. TODO: Generalize this
+            var value = primaryName + '[' + key1 + ']';
+            if (key2) {
+                value += '[' + key2 + ']';
+            };
+            return value;
+        },
+
         selBirthdate: function selBirthdate(event) {
             console.log(event);
+        },
+        onMonitoringUpdate: function onMonitoringUpdate(selectedLocationIds) {
+            this.selectedLocationIds = selectedLocationIds;
         },
         close: function close() {
             this.$emit("close");
         },
         submit: function submit() {
             var _this = this;
+
+            this.studentInfo.monitoringLocations = this.selectedLocationIds;
+            this.studentInfo.locationLabels = this.locationLabels;
+            this.studentInfo.citizenshipValues = this.selectedPromptIds;
+            this.studentInfo.isVariableInterval = this.useVariableInterval;
+            this.studentInfo.desiredMeanInSeconds = this.desiredMeanInSeconds;
+            this.studentInfo.intervalHours = this.intervalHours;
+            this.studentInfo.intervalMinutes = this.intervalMinutes;
+            this.studentInfo.intervalSeconds = this.intervalSeconds;
+            this.studentInfo.customPrompts = this.customPrompts;
+            this.studentInfo.goals = this.goalPercent;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/create-student/save-student", this.studentInfo).then(function (response) {
                 if (response.data.result == 'ok') {
@@ -7510,14 +7728,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         gotoStep2: function gotoStep2(e) {
             if (this.$refs.stepForm1.checkValidity()) {
                 e.preventDefault();
-                // if(this.options.userRole < 3 && this.studentInfo.school_id == 0) {
-                //     this.$toasted.show("Please select a school", {
-                //         theme: "outline",
-                //         position: "top-center",
-                //         duration: 3000,
-                //     });
-                //     return;
-                // }
                 $(this.$refs.navTab2).tab("show");
             }
         },
@@ -8304,13 +8514,24 @@ var render = function() {
                       _vm._v(" "),
                       _c("citizenship-value-fields", {
                         attrs: {
+                          selectedLocationIds: _vm.selectedLocationIds,
+                          selectedPromptIds: _vm.selectedPromptIds,
+                          locationLabels: _vm.locationLabels,
+                          useVariableInterval: _vm.useVariableInterval,
+                          desiredMeanInSeconds: _vm.desiredMeanInSeconds,
+                          intervalHours: _vm.intervalHours,
+                          intervalMinutes: _vm.intervalMinutes,
+                          intervalSeconds: _vm.intervalSeconds,
+                          customPrompts: _vm.customPrompts,
+                          goalPercent: _vm.goalPercent,
                           "monitoring-location-names-by-id":
                             _vm.options.monitoringLocationNamesById,
                           "monitoring-locations-by-category":
                             _vm.options.monitoringLocationsByCategory,
                           "citizenship-values-by-type":
                             _vm.options.citizenshipValuesByType
-                        }
+                        },
+                        on: { update: _vm.onMonitoringUpdate }
                       }),
                       _vm._v(" "),
                       _c(

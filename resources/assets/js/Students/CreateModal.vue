@@ -37,17 +37,17 @@
                                             <input type="text" class="form-control" placeholder="Midle name (Optional)">
                                         </div>
                                         <div class="col-xs-6">
-                                            <input id="birthdate" name="birthdate" class="form-control" required 
+                                            <input id="birthdate" name="birthdate" class="form-control" required
                                                 v-model="studentInfo.birthdate"
-                                                :defaultViewDate="studentInfo.birthdate" 
-                                                placeholder="Select Birthdate" 
-                                                data-provide="datepicker" 
-                                                data-date-autoclose="true" 
-                                                data-date-disable-touch-keyboard="true" 
+                                                :defaultViewDate="studentInfo.birthdate"
+                                                placeholder="Select Birthdate"
+                                                data-provide="datepicker"
+                                                data-date-autoclose="true"
+                                                data-date-disable-touch-keyboard="true"
                                                 data-date-assume-nearby-year="true"
-                                                data-date-end-date="0d" 
-                                                data-date-today-btn="linked" 
-                                                data-date-format="yyyy-mm-dd" 
+                                                data-date-end-date="0d"
+                                                data-date-today-btn="linked"
+                                                data-date-format="yyyy-mm-dd"
                                                 data-date-today-highlight="true">
                                         </div>
                                     </div>
@@ -102,7 +102,22 @@
                             </form>
                             <div class="tab-pane fade" role="tabpanel" id="stepper-step-2">
                                 <span>Monitoring and Citizenship</span>
-                                <citizenship-value-fields :monitoring-location-names-by-id="options.monitoringLocationNamesById" :monitoring-locations-by-category="options.monitoringLocationsByCategory" :citizenship-values-by-type="options.citizenshipValuesByType"></citizenship-value-fields>
+                                <citizenship-value-fields 
+                                    :selectedLocationIds="selectedLocationIds"
+                                    :selectedPromptIds="selectedPromptIds"
+                                    :locationLabels="locationLabels" 
+                                    :useVariableInterval="useVariableInterval" 
+                                    :desiredMeanInSeconds="desiredMeanInSeconds"
+                                    :intervalHours="intervalHours"
+                                    :intervalMinutes="intervalMinutes"
+                                    :intervalSeconds="intervalSeconds"
+                                    :customPrompts="customPrompts"
+                                    :goalPercent="goalPercent"
+                                    @update="onMonitoringUpdate"
+                                    :monitoring-location-names-by-id="options.monitoringLocationNamesById"
+                                    :monitoring-locations-by-category="options.monitoringLocationsByCategory"
+                                    :citizenship-values-by-type="options.citizenshipValuesByType">
+                                </citizenship-value-fields>
                                 <a class="btn btn-lg btn-cta btn-lightblue next" @click="gotoStep3()">Next Step 3</a>
 
                             </div>
@@ -186,17 +201,61 @@ export default {
                 mentor: 0,
                 school_id: 0,
 
+                // for Citzenship Value Field
+                monitoringLocations: [],
+                locationLabels: [],
+                citizenshipValues: [],
+                isVariableInterval: [],
+                desiredMeanInSeconds: [],
+                intervalHours: [],
+                intervalMinutes: [],
+                intervalSeconds: [],
+                customPrompts: [],
+                goals: [],
             },
+
+            selectedLocationIds : [],
+            locationLabels      : [],
+            selectedPromptIds   : [],
+            useVariableInterval : [],
+            desiredMeanInSeconds: [],
+            intervalHours       : [],
+            intervalMinutes     : [],
+            intervalSeconds     : [],
+            customPrompts       : [],
+            goalPercent         : [],
         };
     },
     methods: {
+        formAttributeAsPhpArray(primaryName, key1, key2) {
+            // key1 is required, key2 is optional. TODO: Generalize this
+            let value = `${primaryName}[${key1}]`;
+            if (key2) {
+                value += `[${key2}]`;
+            };
+            return value;
+        },
         selBirthdate: function(event) {
             console.log(event);
+        },
+        onMonitoringUpdate: function(selectedLocationIds) {
+            this.selectedLocationIds = selectedLocationIds
         },
         close: function () {
             this.$emit("close");
         },
         submit: function () {
+            this.studentInfo.monitoringLocations = this.selectedLocationIds
+            this.studentInfo.locationLabels = this.locationLabels
+            this.studentInfo.citizenshipValues = this.selectedPromptIds
+            this.studentInfo.isVariableInterval = this.useVariableInterval
+            this.studentInfo.desiredMeanInSeconds = this.desiredMeanInSeconds
+            this.studentInfo.intervalHours = this.intervalHours
+            this.studentInfo.intervalMinutes = this.intervalMinutes
+            this.studentInfo.intervalSeconds = this.intervalSeconds
+            this.studentInfo.customPrompts = this.customPrompts
+            this.studentInfo.goals = this.goalPercent
+
 			Axios.post("/create-student/save-student", this.studentInfo)
 			.then(response => {
 				if(response.data.result == 'ok') {
@@ -216,14 +275,6 @@ export default {
         gotoStep2: function (e) {
             if (this.$refs.stepForm1.checkValidity()) {
                 e.preventDefault();
-                // if(this.options.userRole < 3 && this.studentInfo.school_id == 0) {
-                //     this.$toasted.show("Please select a school", {
-                //         theme: "outline",
-                //         position: "top-center",
-                //         duration: 3000,
-                //     });
-                //     return;
-                // }
                 $(this.$refs.navTab2).tab("show");
             }
         },

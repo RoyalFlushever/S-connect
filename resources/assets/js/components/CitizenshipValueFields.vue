@@ -111,6 +111,7 @@
                                                     </label>
                                                     <select
                                                         v-show="useVariableInterval[locationIndex][typeName]"
+                                                        v-model="desiredMeanInSeconds[locationIndex][typeName]"
                                                         class="form-control" :name="formAttributeAsPhpArray('desiredMeanInSeconds', locationIndex, typeName)"
                                                         :id="formAttributeAsPhpArray('desiredMeanInSeconds', locationIndex, typeName)"
                                                         :disabled="!selectedPromptIds[locationIndex][typeName]"
@@ -143,6 +144,7 @@
                                                                 class="form-control"
                                                                 :name="formAttributeAsPhpArray('intervalHours', locationIndex, typeName)"
                                                                 :id="formAttributeAsPhpArray('intervalHours', locationIndex, typeName)"
+                                                                v-model="intervalHours[locationIndex][typeName]"
                                                                 :disabled="!selectedPromptIds[locationIndex][typeName]"
                                                             >
                                                                 <!-- v-for range starts at 1 -->
@@ -154,6 +156,7 @@
                                                                 class="form-control"
                                                                 :name="formAttributeAsPhpArray('intervalMinutes', locationIndex, typeName)"
                                                                 :id="formAttributeAsPhpArray('intervalMinutes', locationIndex, typeName)"
+                                                                v-model="intervalMinutes[locationIndex][typeName]"
                                                                 :disabled="!selectedPromptIds[locationIndex][typeName]"
                                                             >
                                                                 <!-- v-for range starts at 1 -->
@@ -170,6 +173,7 @@
                                                                 class="form-control"
                                                                 :name="formAttributeAsPhpArray('intervalSeconds', locationIndex, typeName)"
                                                                 :id="formAttributeAsPhpArray('intervalSeconds', locationIndex, typeName)"
+                                                                v-model="intervalSeconds[locationIndex][typeName]"
                                                                 :disabled="!selectedPromptIds[locationIndex][typeName]"
                                                             >
                                                                 <!-- v-for range starts at 1 -->
@@ -223,8 +227,29 @@
         props: [
             'citizenshipValuesByType',
             'monitoringLocationNamesById',
-            'monitoringLocationsByCategory'
+            'monitoringLocationsByCategory',
+            'selectedLocationIds',
+            'locationLabels',
+            'selectedPromptIds',
+            'useVariableInterval', 
+            'desiredMeanInSeconds',
+            'intervalHours',
+            'intervalMinutes',     
+            'intervalSeconds',     
+            'customPrompts',       
+            'goalPercent',         
         ],
+
+        data() {
+            return {
+                // selectedLocationIds: [],
+                // locationLabels     : [],
+                // selectedPromptIds  : [],
+                //customPrompts      : [],
+                //goalPercent        : [],
+                //useVariableInterval: []
+            };
+        },
 
         created() {
             // Set up non-reactive properties
@@ -256,17 +281,6 @@
                     Comprehension   : null
                 });
             }
-        },
-
-        data() {
-            return {
-                selectedLocationIds: [],
-                locationLabels: [],
-                selectedPromptIds: [],
-                customPrompts: [],
-                goalPercent: [],
-                useVariableInterval: []
-            };
         },
 
         methods: {
