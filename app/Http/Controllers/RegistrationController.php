@@ -50,7 +50,7 @@ class RegistrationController extends Controller
     }
 
     /**
-     * Register a user 
+     * Register a user
      * 
      * @param
      * @return

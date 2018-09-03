@@ -75,6 +75,7 @@ Route::resource('stakeholders', 'StakeholderController', ['only' => [
     'index', 'create', 'store'
 ]]);
 
+Route::post('registerStakeholder', 'StakeholderController@register');
 // As a Stakeholder…
 //
 // Authentication routes for Stakeholders

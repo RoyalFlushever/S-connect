@@ -133,7 +133,8 @@
 									</div>
 								</div>
 							</div>
-							<button class="btn btn-lg btn-cta registration-btn"  id="show-modal" @click.prevent="regUser()">Finish Registration!</button>
+							<button v-if="userInfo.isEmployee" class="btn btn-lg btn-cta registration-btn"  id="show-modal" @click.prevent="regUser()">Finish Registration!</button>
+							<button v-else class="btn btn-lg btn-cta registration-btn"  id="show-modal" @click.prevent="regStakeholder()">Finish Registration!</button>
 							<div>
 								<button id="issue-modal" type="button" class="btn btn-lg issue btn-red" @click="issueModal = true">
 									Registration Issue
@@ -381,11 +382,36 @@ export default {
 					error => {
 						console.log(error.response);
 						for (const key in error.response.data) {
-							this.$toasted.show(error.response.data[key], {
-									theme: "outline",
-									position: "top-center",
-									duration: 3000,
-							});
+							toastr["error"](error.response.data[key], "Error!");
+						}
+					}
+				);
+		},
+
+		regStakeholder: function () {
+			this.userInfo.password = this.userInfo.email;
+
+			Axios.post("/registerStakeholder", this.userInfo)
+				.then(
+					result => {
+						if(this.userInfo.isEmployee == 0) {
+							this.msSubmited_modal = true;
+							return;
+						}
+						switch (this.userInfo.user_role) {
+							case 2:
+							case 3:
+								this.fSubmited_modal = true;
+								break;
+							case 4:
+								this.msSubmited_modal = true;
+								break;
+						}
+					},
+					error => {
+						console.log(error.response);
+						for (const key in error.response.data) {
+							toastr["error"](error.response.data[key], "Error!");
 						}
 					}
 				);

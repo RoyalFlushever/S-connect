@@ -21,8 +21,8 @@ class StakeholderProductionSeeder extends Seeder
                         'created_at' => $now, 'updated_at' => $now ];
                 },
                 [
-                    [ 'id' => 1 , 'username' => 'stakeholder1' , 'student_id' => 1 ],
-                    [ 'id' => 2 , 'username' => 'stakeholder2' , 'student_id' => 2 ]
+                    [ 'id' => 1 , 'email' => 'stakeholder1@iconnect.edu' , 'student_id' => 1 ],
+                    [ 'id' => 2 , 'email' => 'stakeholder2@iconnect.edu' , 'student_id' => 2 ]
                 ]
             )
         );

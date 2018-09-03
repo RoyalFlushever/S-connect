@@ -16,7 +16,7 @@ class Stakeholder extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'middle_name', 'last_name', 'username', 'password',
+        'first_name', 'email', 'last_name', 'password', 'referral_source_id'
     ];
 
     /**

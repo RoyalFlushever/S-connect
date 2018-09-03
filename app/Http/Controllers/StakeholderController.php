@@ -9,6 +9,7 @@ use App\Repositories\StakeholderRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use DB;
 
 class StakeholderController extends Controller
 {
@@ -21,7 +22,7 @@ class StakeholderController extends Controller
      */
     public function __construct(StakeholderRepository $stakeholderRepo)
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => 'register']);
         $this->stakeholders = $stakeholderRepo;
     }
 
@@ -58,6 +59,37 @@ class StakeholderController extends Controller
     }
 
     /**
+     * Register a stakeholder
+     * 
+     */
+    public function register(Request $request) {
+        $validate_arr = [
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|email|unique:stakeholders,email',
+            'state_id' => 'required|integer|min:1',
+            'county_id' => 'required|integer|min:1',
+        ];
+
+        $this->validate($request, $validate_arr);
+        $attributes = $request->only(['first_name', 'last_name', 'email', 'referral_source_id']);
+        // set a password same as email
+        $attributes['password'] = Hash::make($request->input('email'));
+        $stakeholder = new Stakeholder($attributes);
+
+        DB::beginTransaction();
+
+        if ($stakeholder->save()) {
+            DB::commit();
+            return json_encode(["result" => "success"]);
+        }
+        else {
+            DB::rollBack();
+            return json_encode(["result" => "failure"]);
+        }
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -65,29 +97,28 @@ class StakeholderController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $validate_arr = [
             'first_name' => 'required',
-            'last_name'  => 'required',
-            'username'   => 'bail|required|min:6|regex:/[0-9]+/|regex:/[a-zA-Z]+/|unique:stakeholders,username',
-            'password'   => 'required',
-            'student'    => 'required|integer'
-        ]);
+            'last_name' => 'required',
+            'email' => 'required|email|unique:stakeholders,email',
+            'state_id' => 'required|integer|min:1',
+            'county_id' => 'required|integer|min:1',
+        ];
 
-        // Password needs to be hashed before storing
-        $attributes = $request->only([ 'first_name', 'middle_name', 'last_name', 'username' ]);
-        $attributes['password'] = Hash::make($request->input('password'));
-
-        // TODO: If saving separate relationships (e.g. multiple insertions), wrap this in a transaction
+        $this->validate($request, $validate_arr);
+        $attributes = $request->only(['first_name', 'last_name', 'email', 'referral_source_id']);
+        // set a password same as email
+        $attributes['password'] = Hash::make($request->input('email'));
         $stakeholder = new Stakeholder($attributes);
-        $stakeholder->student()->associate($request->input('student'));
+
+        DB::beginTransaction();
 
         if ($stakeholder->save()) {
-            return redirect()->route('home')->with('status', 'New account created');
-        }
-        else {
-            return redirect()->action('StakeholderController@create')
-                ->withErrors('Stakeholder account was not saved. Please try again')
-                ->withInput($request->only([ 'first_name', 'middle_name', 'last_name', 'username', 'student' ]));
+            DB::commit();
+            return json_encode(["result" => "success"]);
+        } else {
+            DB::rollBack();
+            return json_encode(["result" => "failure"]);
         }
     }
 

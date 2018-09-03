@@ -3986,153 +3986,177 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-		data: function data() {
-				return {
-						fSubmited_modal: false,
-						msSubmited_modal: false,
-						issueModal: false,
-						issueSaveNotice_modal: false,
-						userInfo: {
-								isEmployee: 0,
-								user_role: null,
-								first_name: "",
-								last_name: "",
-								email: "",
-								password: "",
-								state_id: 0,
-								county_id: 0,
-								district_id: 0,
-								school_id: 0,
-								referral_source_id: 0,
+	data: function data() {
+		return {
+			fSubmited_modal: false,
+			msSubmited_modal: false,
+			issueModal: false,
+			issueSaveNotice_modal: false,
+			userInfo: {
+				isEmployee: 0,
+				user_role: null,
+				first_name: "",
+				last_name: "",
+				email: "",
+				password: "",
+				state_id: 0,
+				county_id: 0,
+				district_id: 0,
+				school_id: 0,
+				referral_source_id: 0,
 
-								reason: 0,
-								description: ""
-						},
-						referralSource: [],
-						states: [],
-						counties: [],
-						districts: [],
-						schools: []
-				};
+				reason: 0,
+				description: ""
+			},
+			referralSource: [],
+			states: [],
+			counties: [],
+			districts: [],
+			schools: []
+		};
+	},
+	methods: {
+		alertYN: function alertYN() {
+			this.$toasted.show("Please select your answer.", {
+				theme: "outline",
+				position: "top-center",
+				duration: 3000
+			});
 		},
-		methods: {
-				alertYN: function alertYN() {
-						this.$toasted.show("Please select your answer.", {
-								theme: "outline",
-								position: "top-center",
-								duration: 3000
-						});
-				},
-				goto: function goto(tabName) {
-						if (tabName == "stepper-step-3" && this.userInfo.isEmployee == 1) {
-								this.$toasted.show("Please select your role!", {
-										theme: "outline",
-										position: "top-center",
-										duration: 3000
-								});
-								return;
-						}
-						$('.nav-tabs a[href="#' + tabName + '"]').tab("show");
-				},
-				selIsEmployee: function selIsEmployee(employee) {
-						this.userInfo.isEmployee = employee;
-						this.goto("stepper-step-2");
-				},
-				selUserRole: function selUserRole(user_role) {
-						this.userInfo.user_role = user_role;
-						$('.nav-tabs a[href="#stepper-step-3"]').tab("show");
-				},
+		goto: function goto(tabName) {
+			if (tabName == "stepper-step-3" && this.userInfo.isEmployee == 1) {
+				this.$toasted.show("Please select your role!", {
+					theme: "outline",
+					position: "top-center",
+					duration: 3000
+				});
+				return;
+			}
+			$('.nav-tabs a[href="#' + tabName + '"]').tab("show");
+		},
+		selIsEmployee: function selIsEmployee(employee) {
+			this.userInfo.isEmployee = employee;
+			this.goto("stepper-step-2");
+		},
+		selUserRole: function selUserRole(user_role) {
+			this.userInfo.user_role = user_role;
+			$('.nav-tabs a[href="#stepper-step-3"]').tab("show");
+		},
 
 
-				selState: function selState() {
-						var _this = this;
+		selState: function selState() {
+			var _this = this;
 
-						this.userInfo.county_id = 0;
-						this.userInfo.district_id = 0;
-						this.userInfo.school_id = 0;
-						__WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/counties", { state_id: this.userInfo.state_id }).then(function (result) {
-								_this.counties = result.data;
-						});
-				},
-				selCounty: function selCounty() {
-						var _this2 = this;
+			this.userInfo.county_id = 0;
+			this.userInfo.district_id = 0;
+			this.userInfo.school_id = 0;
+			__WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/counties", { state_id: this.userInfo.state_id }).then(function (result) {
+				_this.counties = result.data;
+			});
+		},
+		selCounty: function selCounty() {
+			var _this2 = this;
 
-						this.userInfo.district_id = 0;
-						this.userInfo.school_id = 0;
-						__WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/districts", { county_id: this.userInfo.county_id }).then(function (result) {
-								_this2.districts = result.data;
-						});
-				},
-				selDistrict: function selDistrict() {
-						var _this3 = this;
+			this.userInfo.district_id = 0;
+			this.userInfo.school_id = 0;
+			__WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/districts", { county_id: this.userInfo.county_id }).then(function (result) {
+				_this2.districts = result.data;
+			});
+		},
+		selDistrict: function selDistrict() {
+			var _this3 = this;
 
-						this.userInfo.school_id = 0;
-						__WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/schools", { district_id: this.userInfo.district_id }).then(function (result) {
-								_this3.schools = result.data;
-						});
-				},
-				selSchool: function selSchool() {},
+			this.userInfo.school_id = 0;
+			__WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/schools", { district_id: this.userInfo.district_id }).then(function (result) {
+				_this3.schools = result.data;
+			});
+		},
+		selSchool: function selSchool() {},
 
-				regUser: function regUser() {
-						var _this4 = this;
+		regUser: function regUser() {
+			var _this4 = this;
 
-						this.userInfo.password = this.userInfo.email;
+			this.userInfo.password = this.userInfo.email;
 
-						__WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/registerUser", this.userInfo).then(function (result) {
-								if (_this4.userInfo.isEmployee == 0) {
-										_this4.msSubmited_modal = true;
-										return;
-								}
-								switch (_this4.userInfo.user_role) {
-										case 2:
-										case 3:
-												_this4.fSubmited_modal = true;
-												break;
-										case 4:
-												_this4.msSubmited_modal = true;
-												break;
-								}
-						}, function (error) {
-								console.log(error.response);
-								for (var key in error.response.data) {
-										_this4.$toasted.show(error.response.data[key], {
-												theme: "outline",
-												position: "top-center",
-												duration: 3000
-										});
-								}
-						});
-				},
-
-				saveIssue: function saveIssue() {
-						var _this5 = this;
-
-						__WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/saveIssue", this.userInfo).then(function (result) {
-								_this5.issueModal = false;
-								_this5.issueSaveNotice_modal = true;
-						}, function (error) {
-								console.log(error.response);
-						});
-				},
-				goLoginPage: function goLoginPage() {
-						location.href = "/login";
+			__WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/registerUser", this.userInfo).then(function (result) {
+				if (_this4.userInfo.isEmployee == 0) {
+					_this4.msSubmited_modal = true;
+					return;
 				}
+				switch (_this4.userInfo.user_role) {
+					case 2:
+					case 3:
+						_this4.fSubmited_modal = true;
+						break;
+					case 4:
+						_this4.msSubmited_modal = true;
+						break;
+				}
+			}, function (error) {
+				console.log(error.response);
+				for (var key in error.response.data) {
+					toastr["error"](error.response.data[key], "Error!");
+				}
+			});
 		},
-		created: function created() {
-				var _this6 = this;
 
-				__WEBPACK_IMPORTED_MODULE_1_axios___default.a.get("/states").then(function (result) {
-						_this6.states = result.data;
-				});
-				__WEBPACK_IMPORTED_MODULE_1_axios___default.a.get("/referralSource").then(function (result) {
-						_this6.referralSource = result.data;
-				});
+		regStakeholder: function regStakeholder() {
+			var _this5 = this;
+
+			this.userInfo.password = this.userInfo.email;
+
+			__WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/registerStakeholder", this.userInfo).then(function (result) {
+				if (_this5.userInfo.isEmployee == 0) {
+					_this5.msSubmited_modal = true;
+					return;
+				}
+				switch (_this5.userInfo.user_role) {
+					case 2:
+					case 3:
+						_this5.fSubmited_modal = true;
+						break;
+					case 4:
+						_this5.msSubmited_modal = true;
+						break;
+				}
+			}, function (error) {
+				console.log(error.response);
+				for (var key in error.response.data) {
+					toastr["error"](error.response.data[key], "Error!");
+				}
+			});
+		},
+
+		saveIssue: function saveIssue() {
+			var _this6 = this;
+
+			__WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/saveIssue", this.userInfo).then(function (result) {
+				_this6.issueModal = false;
+				_this6.issueSaveNotice_modal = true;
+			}, function (error) {
+				console.log(error.response);
+			});
+		},
+		goLoginPage: function goLoginPage() {
+			location.href = "/login";
 		}
+	},
+	created: function created() {
+		var _this7 = this;
+
+		__WEBPACK_IMPORTED_MODULE_1_axios___default.a.get("/states").then(function (result) {
+			_this7.states = result.data;
+		});
+		__WEBPACK_IMPORTED_MODULE_1_axios___default.a.get("/referralSource").then(function (result) {
+			_this7.referralSource = result.data;
+		});
+	}
 });
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(5)))
 
@@ -5878,20 +5902,35 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-lg btn-cta registration-btn",
-                      attrs: { id: "show-modal" },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          _vm.regUser()
-                        }
-                      }
-                    },
-                    [_vm._v("Finish Registration!")]
-                  ),
+                  _vm.userInfo.isEmployee
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-lg btn-cta registration-btn",
+                          attrs: { id: "show-modal" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              _vm.regUser()
+                            }
+                          }
+                        },
+                        [_vm._v("Finish Registration!")]
+                      )
+                    : _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-lg btn-cta registration-btn",
+                          attrs: { id: "show-modal" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              _vm.regStakeholder()
+                            }
+                          }
+                        },
+                        [_vm._v("Finish Registration!")]
+                      ),
                   _vm._v(" "),
                   _c("div", [
                     _c(
